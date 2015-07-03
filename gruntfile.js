@@ -102,10 +102,10 @@ module.exports = function(grunt) {
                 files: ['assets/sass/{,*/}*.scss'],
                 tasks: ['sass:dev', 'sakugawa', 'sass:dist']
             },
-            // concat: {
-            //     files: ['assets/js/{,*/}*.js'],
-            //     tasks: ['concat', 'uglify']
-            // },
+            concat: {
+                files: ['assets/js/{,*/}*.js'],
+                tasks: ['concat']
+            },
             mustatic: {
                 files: ['includes/{,*/}*.html', 'includes/{,*/}*.json', 'includes/partials/{,*/}*.html', 'includes/pages/{,*/}*.html'],
                 tasks: ['mustatic']

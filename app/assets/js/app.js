@@ -18869,13 +18869,15 @@
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
-var chart = c3.generate({
-    bindto: '#chart',
-    data: {
-        url: '../data/test.json',
-        type: 'line'
-    }
-});
+    var chart = c3.generate({
+        bindto: '#chart',
+        data: {
+            url: '../data/test.json',
+            type: 'line',
+            mimeType: "json"
+        }
+
+    });
 });
 
 

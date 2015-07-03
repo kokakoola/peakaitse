@@ -51,7 +51,8 @@ $(function () {
         bindto: '#chart',
         data: {
             url: '../data/test.json',
-            type: 'line'
+            type: 'line',
+            mimeType: "json"
         }
 
     });
