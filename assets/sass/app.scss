@@ -56,9 +56,8 @@
 @import "../../bower_components/fontawesome/scss/font-awesome";
 
 // App style
-@import "_flexbox"; 
-@import "_style"; 
+@import "_flexbox";
+@import "_style";
 
 // Other
-@import "../../bower_components/c3/c3";
-
+@import "c3.css";

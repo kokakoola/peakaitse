@@ -18869,13 +18869,31 @@
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
-var chart = c3.generate({
-    bindto: '#chart',
-    data: {
-        url: '../data/test.json',
-        type: 'line'
-    }
+    var chart = c3.generate({
+        bindto: '#chart',
+        data: {
+            x: 'x',
+            url: '../data/test.json',
+            mimeType: 'json',
+            keys: {
+                x: 'EIC',
+                value: ['38ZEE-0012345-0']
+            },
+            names: {
+                '38ZEE-0012345-0': 'kWh'
+            },
+            type: 'area-spline'
+        },
+        axis: {
+            x: {
+               type: 'category'
+            }
+        },
+        zoom: {
+            enabled: true
+        },
+        subchart: {
+            show: true
+        }
+    });
 });
-});
-
-

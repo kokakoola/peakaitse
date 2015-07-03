@@ -6,6 +6,7 @@ module.exports = function(grunt) {
                 files: [
                     {expand: true, src: ['bower_components/fontawesome/fonts/*'], dest: 'app/assets/fonts/', filter: 'isFile', flatten: true},
                     {expand: true, src: ['bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'], dest: 'app/assets/fonts/bootstrap', filter: 'isFile', flatten: true},
+                    {expand: true, src: ['bower_components/c3/c3.css'], dest: 'app/assets/css', filter: 'isFile', flatten: true},
 
                     {expand: true, src: ['bower_components/modernizr/modernizr.js'], dest: 'app/assets/js/vendor/', filter: 'isFile', flatten: true},
                     {expand: true, src: ['bower_components/jquery/dist/jquery.min.js'], dest: 'app/assets/js/vendor/', filter: 'isFile', flatten: true}
@@ -102,10 +103,10 @@ module.exports = function(grunt) {
                 files: ['assets/sass/{,*/}*.scss'],
                 tasks: ['sass:dev', 'sakugawa', 'sass:dist']
             },
-            // concat: {
-            //     files: ['assets/js/{,*/}*.js'],
-            //     tasks: ['concat', 'uglify']
-            // },
+            concat: {
+                files: ['assets/js/{,*/}*.js'],
+                tasks: ['concat']
+            },
             mustatic: {
                 files: ['includes/{,*/}*.html', 'includes/{,*/}*.json', 'includes/partials/{,*/}*.html', 'includes/pages/{,*/}*.html'],
                 tasks: ['mustatic']
