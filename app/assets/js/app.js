@@ -18873,14 +18873,14 @@ $(function () {
         bindto: '#chart',
         data: {
             x: 'x',
-            url: '../data/test.json',
+            url: '../data/longtest.json',
             mimeType: 'json',
             keys: {
-                x: 'EIC',
-                value: ['38ZEE-0012345-0']
+                x: 'STARTTIME',
+                value: ['ENERGY']
             },
             names: {
-                '38ZEE-0012345-0': 'kWh'
+                'ENERGY': 'kWh'
             },
             type: 'area-spline'
         },
