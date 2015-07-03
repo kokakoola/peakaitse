@@ -1,0 +1,10 @@
+{
+  "name": "peakaitse",
+  "version": "0.0.0",
+  "dependencies": {
+    "modernizr": "*",
+    "bootstrap-sass-official": "*",
+    "fontawesome": "*",
+    "c3": "~0.4.10"
+  }
+}

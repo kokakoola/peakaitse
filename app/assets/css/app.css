@@ -1,0 +1,54 @@
+/*
+Error: File to import not found or unreadable: ../../bower_components/c3/c3.
+       Load path: /Volumes/Data/Documents/Work/NG/peakaitse
+        on line 63 of assets/sass/app.scss
+
+58: // App style
+59: @import "_flexbox"; 
+60: @import "_style"; 
+61: 
+62: // Other
+63: @import "../../bower_components/c3/c3";
+
+Backtrace:
+assets/sass/app.scss:63
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/import_node.rb:66:in `rescue in import'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/import_node.rb:45:in `import'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/import_node.rb:28:in `imported_file'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/import_node.rb:37:in `css_import?'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:311:in `visit_import'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/stack.rb:79:in `block in with_base'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/stack.rb:115:in `with_frame'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/stack.rb:79:in `with_base'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/base.rb:52:in `map'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/root_node.rb:36:in `css_tree'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/engine.rb:368:in `_render_with_sourcemap'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/engine.rb:285:in `render_with_sourcemap'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/exec/sass_scss.rb:396:in `run'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/exec/sass_scss.rb:62:in `process_result'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/exec/base.rb:52:in `parse'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/lib/sass/exec/base.rb:19:in `parse!'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/gems/sass-3.4.10/bin/sass:13:in `<top (required)>'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/bin/sass:19:in `load'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/bin/sass:19:in `<main>'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/bin/ruby_noexec_wrapper:14:in `eval'
+/usr/local/rvm/gems/ruby-1.9.3-p327@rails3tutorial2ndEd/bin/ruby_noexec_wrapper:14:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: ../../bower_components/c3/c3.\A        Load path: /Volumes/Data/Documents/Work/NG/peakaitse\A         on line 63 of assets/sass/app.scss\A \A 58: // App style\A 59: @import \"_flexbox\"; \A 60: @import \"_style\"; \A 61: \A 62: // Other\A 63: @import \"../../bower_components/c3/c3\";"; }
