@@ -18844,11 +18844,11 @@
 }());
 
 /*!
- * IE10 viewport hack for Surface/desktop Windows 8 bug
- * Copyright 2014 Twitter, Inc.
- * Licensed under the Creative Commons Attribution 3.0 Unported License. For
- * details, see http://creativecommons.org/licenses/by/3.0/.
- */
+* IE10 viewport hack for Surface/desktop Windows 8 bug
+* Copyright 2014 Twitter, Inc.
+* Licensed under the Creative Commons Attribution 3.0 Unported License. For
+* details, see http://creativecommons.org/licenses/by/3.0/.
+*/
 
 // See the Getting Started docs for more information:
 // http://getbootstrap.com/getting-started/#support-ie10-width
@@ -18869,45 +18869,39 @@
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
-//http://jsfiddle.net/ha3L5z3b/
-    var grad2 = 
-        '<linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%" >'+
-        '  <stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1" />'+
-        '  <stop offset="50%" style="stop-color:rgb(255,0,0);stop-opacity:1" />'+
-        '  <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:0" />'+
-        '</linearGradient>';
+    updateC3Chart('#chart');
+});
 
-    var chart = c3.generate({
-        bindto: '#chart',
-        data: {
-            x: 'x',
-            url: '../data/quarter.json',
-            mimeType: 'json',
-            keys: {
-                x: 'STARTTIME',
-                value: ['ENERGY']
+//http://jsfiddle.net/ha3L5z3b/
+var grad2 =
+    '<linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%" >'+
+    '  <stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1" />'+
+    '  <stop offset="50%" style="stop-color:rgb(255,0,0);stop-opacity:1" />'+
+    '  <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:0" />'+
+    '</linearGradient>';
+
+var updateC3Chart = function(chartId){
+    console.log('updateC3Chart(' + chartId + ')');
+    function onDataReceived(seriesCallback){
+        console.log(seriesCallback);
+
+        var chart = c3.generate({
+            bindto: chartId,
+            data: {
+                x: 'x',
+                columns: [],
+                type: 'area-spline'
             },
-            names: {
-                'ENERGY': 'kWh'
-            },
-            type: 'area-spline'
-            },
-            size: {
-              height: 600
+            axis: {
+                x: {
+                    type: 'category',
+                }
             },
             color: {
                 pattern: ['url(#grad2)']
             },
-            // color: {
-            //     ENERGY: 'url(#grad2)'
-            // },
             oninit: function() {
                 this.svg[0][0].getElementsByTagName('defs')[0].innerHTML += grad2;
-            },
-            axis: {
-                x: {
-                   type: 'category'
-                }
             },
             zoom: {
                 enabled: true
@@ -18916,8 +18910,52 @@ $(function () {
                 show: true
             },
             point: {
-  show: false
-}
+                show: false
+            },
+            size: {
+                height: 600
+            }
         });
 
-});
+        var seriesLength = seriesCallback.length;
+        if (seriesLength > 0) {
+            var time_array = ['x'];
+            var kwh_array = ['kwh'];
+            for (var i = 0; i<seriesLength; i++) {
+                time_array.push(seriesCallback[i].time);
+                kwh_array.push(seriesCallback[i].kWh);
+            }
+            console.log(time_array);
+            console.log(kwh_array);
+            chart.load({
+                columns: [
+                    time_array,
+                    kwh_array
+                ]
+            });
+        } else {
+            chart.load({
+                columns: [0,0]
+            });
+        }
+
+        // hideChartLoader();
+    }
+    function getChartData(){
+        $.ajax({
+            type: "POST",
+            url: '../data/test.json',
+            dataType: 'json',
+            method: 'GET'
+        })
+        .done(function(data){
+            console.log(data.graphReadings);
+            onDataReceived(data.graphReadings);
+        })
+        .fail(function(jqXHR, status){
+            console.log('Ajax Error Triggered : ' + status);
+            console.log('Error: ' + jqXHR);
+        });
+    }
+    getChartData();
+};

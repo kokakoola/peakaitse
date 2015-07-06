@@ -1,10 +1,6 @@
 /*-- Chart --*/
 .c3 svg {
-  font-size: 10px;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 300;
-  color: #565655;
-}
+  font: 10px sans-serif; }
 
 .c3 path, .c3 line {
   fill: none;
@@ -83,7 +79,7 @@
 /*-- Select - Drag --*/
 /*-- Legend --*/
 .c3-legend-item {
-  font-size: 16px; }
+  font-size: 12px; }
 
 .c3-legend-item-hidden {
   opacity: 0.15; }
