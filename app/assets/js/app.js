@@ -18871,10 +18871,10 @@ $(function () {
 
 //http://jsfiddle.net/ha3L5z3b/
     var grad2 = 
-        '<linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%" >'+
-        '  <stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1" />'+
-        '  <stop offset="50%" style="stop-color:rgb(255,0,0);stop-opacity:1" />'+
-        '  <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:0" />'+
+        '<linearGradient id="grad2" x1="100%" y1="0%" x2="8%" y2="100%" gradientUnits="objectBoundingBox">'+
+        '  <stop offset="4%" style="stop-color:rgb(241, 251, 255); stop-opacity:1"></stop>'+
+        '  <stop offset="46%" style="stop-color:rgb(0, 174, 230); stop-opacity:1"></stop>'+
+        '  <stop offset="98%" style="stop-color:rgb(230, 249, 255); stop-opacity:1"></stop>'+
         '</linearGradient>';
 
     var chart = c3.generate({
@@ -18906,7 +18906,10 @@ $(function () {
             },
             axis: {
                 x: {
-                   type: 'category'
+                   type: 'category',
+                    tick: {
+                      culling: true,
+                    }
                 }
             },
             zoom: {
@@ -18916,8 +18919,8 @@ $(function () {
                 show: true
             },
             point: {
-  show: false
-}
+              show: false
+            }
         });
 
 });
