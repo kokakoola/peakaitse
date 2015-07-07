@@ -5,6 +5,7 @@
     "modernizr": "*",
     "bootstrap-sass-official": "*",
     "fontawesome": "*",
-    "c3": "~0.4.10"
+    "c3": "~0.4.10",
+    "moment": "~2.10.3"
   }
 }

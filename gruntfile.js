@@ -53,6 +53,7 @@ module.exports = function(grunt) {
                     'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js',
                     'bower_components/d3/d3.js',
                     'bower_components/c3/c3.js',
+                    'bower_components/moment/min/moment.min.js',
                     'assets/js/*.js'
                 ],
                 dest: 'app/assets/js/app.js'
