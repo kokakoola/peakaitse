@@ -1,0 +1,12 @@
+﻿<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dig="http://www.sk.ee/DigiDocService/DigiDocService_2_3.wsdl">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dig:MobileAuthenticate soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <PhoneNo xsi:type="xsd:string">{0}</PhoneNo>
+         <MessageToDisplay xsi:type="xsd:string">{1}</MessageToDisplay>
+         <Language xsi:type="xsd:string">EST</Language>
+         <MessagingMode xsi:type="xsd:string">asynchClientServer</MessagingMode>
+         <ServiceName xsi:type="xsd:string">{2}</ServiceName>
+      </dig:MobileAuthenticate>
+   </soapenv:Body>
+</soapenv:Envelope>

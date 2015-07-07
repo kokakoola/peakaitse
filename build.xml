@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="localdeploy" name="mainfuse">
+
+  <target name="init">
+    <property environment="env"/>
+    <property name="profilename" value="meta/profiles/default.profile"/>
+    <property file="${profilename}"/>
+    <tstamp>
+      <format property="timestamp" pattern="yyyyMMddhhmm"/>
+    </tstamp>
+  </target>
+
+  <target name="javac">
+    <mkdir dir="war/WEB-INF/classes"/>
+    <javac debug="true" deprecation="true" destdir="war/WEB-INF/classes" encoding="utf8" includeAntRuntime="false">
+      <src path="src"/>
+      <classpath>
+        <fileset dir="war/WEB-INF/lib"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="webapp" depends="init,javac">
+    <copy todir="war/WEB-INF/classes/resources">
+      <fileset dir="meta/resources"/>
+    </copy>
+  </target>
+
+  <target name="war" depends="webapp">
+    <copy file="${profilename}" tofile="war/WEB-INF/classes/profile.properties"/>
+    <war basedir="war" destfile="build/mainfuse.war" webxml="war/WEB-INF/web.xml" excludes="**/servlet-api*"/>
+  </target>
+
+  <target name="live-war">
+    <property name="profilename" value="meta/profiles/live.profile"/>
+    <antcall target="war"/>
+  </target>
+
+  <target name="localdeploy" depends="webapp">
+    <mkdir dir="${webapps.dir}/mainfuse"/>
+    <copy todir="${webapps.dir}/mainfuse"><fileset dir="war" excludes="**/servlet-api*"/></copy>
+    <copy todir="${webapps.dir}/mainfuse/WEB-INF/classes">
+      <fileset dir="meta" includes="registry.txt rollfile* labels/** templates/**"/>
+    </copy>
+    <echo message="Copying ${profilename} to ${webapps.dir}/fox2/WEB-INF/classes/profile.properties"/>
+    <copy file="${profilename}" tofile="${webapps.dir}/mainfuse/WEB-INF/classes/profile.properties"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="build"/>
+    <delete dir="war/WEB-INF/classes"/>
+  </target>
+</project>
