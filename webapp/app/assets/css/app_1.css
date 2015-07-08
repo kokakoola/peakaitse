@@ -9111,10 +9111,6 @@ button.close {
   content: "";
 }
 
-body {
-  background: #e6e6e6;
-}
-
 .page-loader {
   position: fixed;
   left: 0px;
@@ -9135,8 +9131,8 @@ body {
   margin-top: -50px;
 }
 
-.regionY {
-  fill: red;
+.navbar {
+  margin-bottom: 0;
 }
 
 .jumbotron {
@@ -9174,6 +9170,31 @@ body {
   top: 0;
   bottom: 0;
   z-index: -1;
+}
+
+.jumbotron.imaged p {
+  font-size: inherit;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.03rem;
+}
+
+.btn-outline-inverse {
+  color: #FFF;
+  background-color: transparent;
+  border-color: #CDBFE3;
+}
+
+.btn-outline-inverse:active,
+.btn-outline-inverse:focus,
+.btn-outline-inverse:hover {
+  color: #563D7C;
+  text-shadow: none;
+  background-color: #FFF;
+  border-color: #FFF;
+}
+
+.regionY {
+  fill: red;
 }
 
 .c3-axis-x .tick text tspan:first-child {
