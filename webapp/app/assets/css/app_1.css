@@ -9111,4 +9111,24 @@ button.close {
   content: "";
 }
 
+.jumbotron {
+  z-index: 50;
+  left: 0;
+  width: 100%;
+  position: relative;
+  padding-top: 360px;
+  padding-bottom: 270px;
+  color: #FFF;
+  text-align: center;
+  background: linear-gradient(cyan, transparent), linear-gradient(-45deg, magenta, transparent), linear-gradient(45deg, yellow, transparent);
+  background-blend-mode: screen;
+}
+
+.c3 path,
+.c3 line {
+  fill: none;
+  stroke: #fff;
+  opacity: 0.7;
+}
+
 /*# sourceMappingURL=app.css.map */
