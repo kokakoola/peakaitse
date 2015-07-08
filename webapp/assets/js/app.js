@@ -134,7 +134,7 @@ var updateChart = function(chartId, unit){
             var time_array = ['x'];
             switch(unit) {
                 case 'kwh':
-                    var data_array = ['kwh'];
+                    var data_array = ['kWh'];
                     var day_array = [];
                     var date_str = seriesGraphReadings[0].time.slice(0,10);
                     for (var i = 0; i<seriesLength; i++) {
@@ -144,12 +144,11 @@ var updateChart = function(chartId, unit){
                             var dayArrayLength = day_array.length;
                             // add up all days values
                             for (var j = 0; j< dayArrayLength; j++) {
-                                data += day_array[j];
+                                var int = parseFloat(day_array[j]) ? day_array[j] : 0;
+                                data += int;
                             }
-                            // get weighted avarage
-                            avg = data / dayArrayLength;
                             // push to data array
-                            data_array.push(avg);
+                            data_array.push(data);
                             // parse unix timestamp
                             var unix_timestamp = Date.parse(seriesGraphReadings[i-1].time.slice(0,10))/1000;
                             // format date with moment and push to time array (x axis)
@@ -163,20 +162,72 @@ var updateChart = function(chartId, unit){
                         // push every kWh to specific day array
                         day_array.push(seriesGraphReadings[i].kWh);
                     }
+                    console.log(time_array);
+                    console.log(data_array);
+                    chart.load({
+                        columns: [
+                            time_array,
+                            data_array
+                        ]
+                    });
                 break;
                 case '1F':
                     var data_array = ['1F'];
+                    var day_array = [];
+                    var date_str = seriesGraphReadings[0].time.slice(0,10);
                     for (var i = 0; i<seriesLength; i++) {
-                        var data = seriesGraphReadings[i].A1;
-                        var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
-                        time_array.push(moment.unix(unix_timestamp).utc().format('ll HH:mm'));
-                        data_array.push(data);
+
+                        if (seriesGraphReadings[i].time.slice(0,10) != date_str) {
+                            var data = 0;
+                            var dayArrayLength = day_array.length;
+                            // add up all days values
+                            for (var j = 0; j< dayArrayLength; j++) {
+                                var int = parseFloat(day_array[j]) ? day_array[j] : 0;
+                                data += int;
+                            }
+                            // get day avg
+                            var avg = data / dayArrayLength;
+                            // push to data array
+                            data_array.push(avg);
+                            // parse unix timestamp
+                            var unix_timestamp = Date.parse(seriesGraphReadings[i-1].time.slice(0,10))/1000;
+                            // format date with moment and push to time array (x axis)
+                            time_array.push(moment.unix(unix_timestamp).utc().format('ll'));
+                            // make day array empty
+                            day_array.splice(0, day_array.length);
+                            // take next day
+                            date_str = seriesGraphReadings[i].time.slice(0,10);
+                        }
+
+                        // push every 1F to specific day array
+                        day_array.push(seriesGraphReadings[i].A1);
                     }
-                    chart.ygrids.add([
-                        {value: seriesCallback.recommendedFuseSize, text: 'Soovituslik'},
-                        {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik'}
-                    ]);
+
+                    if (seriesCallback.recommendedFuseSize == seriesCallback.calculatedMinFuseSize) {
+                        chart.ygrids.add([
+                            {value: seriesCallback.recommendedFuseSize, text: 'YAY! Atta boy ' + seriesCallback.recommendedFuseSize + 'A'}
+                        ]);
+                    } else {
+                        chart.ygrids.add([
+                            {value: seriesCallback.recommendedFuseSize, text: 'Soovituslik ' + seriesCallback.recommendedFuseSize + 'A'},
+                            {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik ' + seriesCallback.calculatedMinFuseSize + 'A'}
+                        ]);
+                    }
                     chart.axis.range({max: {y: 25}, min: {y: 0}});
+                    chart.regions.add([
+                        {axis: 'y', start: 0, end: 16, class: 'regionX'}
+                    ]);
+                    console.log(time_array);
+                    console.log(data_array);
+                    chart.load({
+                        columns: [
+                            time_array,
+                            data_array
+                        ]
+                    });
+
+                    var startpoint = seriesLength - (daysDifference(firstDayInPreviousMonth()));
+                    chart.zoom([startpoint, seriesLength]);
                 break;
                 case '3F':
                     var data_array = ['3F'];
@@ -191,32 +242,45 @@ var updateChart = function(chartId, unit){
                         {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik'}
                     ]);
                     chart.axis.range({max: {y: 25}, min: {y: 0}});
+                    console.log(time_array);
+                    console.log(data_array);
+                    chart.load({
+                        columns: [
+                            time_array,
+                            data_array
+                        ]
+                    });
                 break;
             }
-            console.log(time_array);
-            console.log(data_array);
-            chart.load({
-                columns: [
-                    time_array,
-                    data_array
-                ]
-            });
         } else {
             chart.load({
                 columns: [0,0]
             });
         }
 
-        hideChartLoader();
+        hideLoader($('#loader'));
     }
 };
 
-function hideChartLoader () {
-    $('#loader').fadeOut('slow');
+function showLoader($loader) {
+    $loader.show();
+}
+function hideLoader ($loader) {
+    $loader.fadeOut('slow');
+}
+
+function firstDayInPreviousMonth() {
+    var now = new Date();
+    return firstDayPrevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+}
+
+function daysDifference (to) {
+    var now = new Date();
+    return Math.floor(( Date.parse(now) - Date.parse(to) ) / 86400000);
 }
 
 $('.js-changeUnit').on('click', function () {
-    $('#loader').show();
+    showLoader($('#loader'));
     var $this = $(this);
     var unit = $this.data('unit');
     updateChart('#chart', unit);
