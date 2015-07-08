@@ -9,7 +9,8 @@
 .c3 text {
   -webkit-user-select: none;
   -moz-user-select: none;
-  user-select: none; }
+  user-select: none; 
+}
 
 .c3-legend-item-tile, .c3-xgrid-focus, .c3-ygrid, .c3-event-rect, .c3-bars path {
   shape-rendering: crispEdges; }
