@@ -9145,8 +9145,35 @@ body {
   width: 100%;
   position: relative;
   color: #FFF;
-  text-align: center;
   background: #fff;
+}
+
+.jumbotron.imaged {
+  position: relative;
+  background: url("../img/giphy.gif") no-repeat;
+  background-size: 100vw;
+  z-index: 1;
+  padding-bottom: 260px;
+}
+
+.jumbotron.imaged:after {
+  content: -webkit-linear-gradient(0deg, #360033 10%, #0b8793 90%);
+  /* Chrome 10+, Saf5.1+ */
+  content: -moz-linear-gradient(0deg, #360033 10%, #0b8793 90%);
+  /* FF3.6+ */
+  content: -ms-linear-gradient(0deg, #360033 10%, #0b8793 90%);
+  /* IE10 */
+  content: -o-linear-gradient(0deg, #360033 10%, #0b8793 90%);
+  /* Opera 11.10+ */
+  content: linear-gradient(0deg, #360033 10%, #0b8793 90%);
+  /* W3C */
+  opacity: 0.8;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
 }
 
 .c3-axis-x .tick text tspan:first-child {
