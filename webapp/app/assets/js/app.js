@@ -18882,11 +18882,11 @@ $(function () {
 });
 
 //http://jsfiddle.net/ha3L5z3b/
-var grad2 =
-'<linearGradient id="grad2" x1="100%" y1="0%" x2="8%" y2="100%" gradientUnits="objectBoundingBox">'+
-'  <stop offset="4%" style="stop-color:rgb(241, 251, 255); stop-opacity:1"></stop>'+
+var blueGradient =
+'<linearGradient id="blueGradient" x1="100%" y1="0%" x2="100%" y2="100%" gradientUnits="objectBoundingBox">'+
+'  <stop offset="4%" style="stop-color:rgb(241, 251, 255); stop-opacity:0"></stop>'+
 '  <stop offset="46%" style="stop-color:rgb(0, 174, 230); stop-opacity:1"></stop>'+
-'  <stop offset="98%" style="stop-color:rgb(230, 249, 255); stop-opacity:1"></stop>'+
+'  <stop offset="98%" style="stop-color:rgb(230, 249, 255); stop-opacity:0"></stop>'+
 '</linearGradient>';
 
 var updateChart = function(chartId, unit){
@@ -18935,10 +18935,10 @@ var updateChart = function(chartId, unit){
                 }
             },
             color: {
-                pattern: ['url(#grad2)']
+                pattern: ['url(#blueGradient)']
             },
             oninit: function() {
-                this.svg[0][0].getElementsByTagName('defs')[0].innerHTML += grad2;
+                this.svg[0][0].getElementsByTagName('defs')[0].innerHTML += blueGradient;
             },
             zoom: {
                 enabled: true
