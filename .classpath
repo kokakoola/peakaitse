@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="classes" path="src"/>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/servlet-api-3.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gson-1.7.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/json-0.10.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>

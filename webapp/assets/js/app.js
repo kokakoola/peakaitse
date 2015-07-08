@@ -53,18 +53,18 @@ $(function () {
 });
 
 //http://jsfiddle.net/ha3L5z3b/
-    var grad2 =
-        '<linearGradient id="grad2" x1="100%" y1="0%" x2="8%" y2="100%" gradientUnits="objectBoundingBox">'+
-        '  <stop offset="4%" style="stop-color:rgb(241, 251, 255); stop-opacity:1"></stop>'+
-        '  <stop offset="46%" style="stop-color:rgb(0, 174, 230); stop-opacity:1"></stop>'+
-        '  <stop offset="98%" style="stop-color:rgb(230, 249, 255); stop-opacity:1"></stop>'+
-        '</linearGradient>';
+var grad2 =
+'<linearGradient id="grad2" x1="100%" y1="0%" x2="8%" y2="100%" gradientUnits="objectBoundingBox">'+
+'  <stop offset="4%" style="stop-color:rgb(241, 251, 255); stop-opacity:1"></stop>'+
+'  <stop offset="46%" style="stop-color:rgb(0, 174, 230); stop-opacity:1"></stop>'+
+'  <stop offset="98%" style="stop-color:rgb(230, 249, 255); stop-opacity:1"></stop>'+
+'</linearGradient>';
 
 var updateChart = function(chartId, unit){
     function getChartData(){
         $.ajax({
             type: "POST",
-            url: '../data/test.json',
+            url: '../data/longtest.json',
             dataType: 'json',
             method: 'GET'
         })
@@ -84,7 +84,7 @@ var updateChart = function(chartId, unit){
         var chart = c3.generate({
             bindto: chartId,
             padding: {
-                bottom: 100
+                bottom: 40
             },
             data: {
                 x: 'x',
@@ -96,15 +96,13 @@ var updateChart = function(chartId, unit){
                     type: 'category',
                     tick: {
                         culling: true,
+                        fit: false
                     }
                 }
             },
             grid: {
                 y: {
-                    show: true,
-                    lines: [
-                        {value: 0.5, text: 'Lable 16 for y'}
-                    ]
+                    show: true
                 }
             },
             color: {
@@ -117,7 +115,10 @@ var updateChart = function(chartId, unit){
                 enabled: true
             },
             subchart: {
-                show: true
+                show: true,
+                onbrush: function (domain) {
+                    console.log(domain);
+                }
             },
             point: {
                 show: false
@@ -134,11 +135,33 @@ var updateChart = function(chartId, unit){
             switch(unit) {
                 case 'kwh':
                     var data_array = ['kwh'];
+                    var day_array = [];
+                    var date_str = seriesGraphReadings[0].time.slice(0,10);
                     for (var i = 0; i<seriesLength; i++) {
-                        var data = seriesGraphReadings[i].kWh;
-                        var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
-                        time_array.push(moment.unix(unix_timestamp).utc().format('ll HH:mm'));
-                        data_array.push(data);
+
+                        if (seriesGraphReadings[i].time.slice(0,10) != date_str) {
+                            var data = 0;
+                            var dayArrayLength = day_array.length;
+                            // add up all days values
+                            for (var j = 0; j< dayArrayLength; j++) {
+                                data += day_array[j];
+                            }
+                            // get weighted avarage
+                            avg = data / dayArrayLength;
+                            // push to data array
+                            data_array.push(avg);
+                            // parse unix timestamp
+                            var unix_timestamp = Date.parse(seriesGraphReadings[i-1].time.slice(0,10))/1000;
+                            // format date with moment and push to time array (x axis)
+                            time_array.push(moment.unix(unix_timestamp).utc().format('ll'));
+                            // make day array empty
+                            day_array.splice(0, day_array.length);
+                            // take next day
+                            date_str = seriesGraphReadings[i].time.slice(0,10);
+                        }
+
+                        // push every kWh to specific day array
+                        day_array.push(seriesGraphReadings[i].kWh);
                     }
                 break;
                 case '1F':
@@ -149,7 +172,11 @@ var updateChart = function(chartId, unit){
                         time_array.push(moment.unix(unix_timestamp).utc().format('ll HH:mm'));
                         data_array.push(data);
                     }
-                    chart.axis.range({max: {y: 16}, min: {y: 0}});
+                    chart.ygrids.add([
+                        {value: seriesCallback.recommendedFuseSize, text: 'Soovituslik'},
+                        {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik'}
+                    ]);
+                    chart.axis.range({max: {y: 25}, min: {y: 0}});
                 break;
                 case '3F':
                     var data_array = ['3F'];
@@ -159,7 +186,11 @@ var updateChart = function(chartId, unit){
                         time_array.push(moment.unix(unix_timestamp).utc().format('ll HH:mm'));
                         data_array.push(data);
                     }
-                    chart.axis.range({max: {y: 16}, min: {y: 0}});
+                    chart.ygrids.add([
+                        {value: seriesCallback.recommendedFuseSize, text: 'Soovituslik'},
+                        {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik'}
+                    ]);
+                    chart.axis.range({max: {y: 25}, min: {y: 0}});
                 break;
             }
             console.log(time_array);
@@ -176,31 +207,23 @@ var updateChart = function(chartId, unit){
             });
         }
 
-        // var fuseLength = seriesCallback.fuseValues.length;
-        // if (fuseLength > 0) {
-        //     var y_array = ['y_values'];
-        //     for (var i = 0; i < fuseLength; i++) {
-        //         y_array.push(seriesCallback.fuseValues[i]);
-        //     };
-        //     console.log(y_array);
-        //     chart.load({
-        //         columns: [
-        //             y_array
-        //         ]
-        //     });
-        //     chart.data.axes({
-        //         y_values: 'y'
-        //     });
-        // }
-
-        // hideChartLoader();
+        hideChartLoader();
     }
 };
 
+function hideChartLoader () {
+    $('#loader').fadeOut('slow');
+}
+
 $('.js-changeUnit').on('click', function () {
+    $('#loader').show();
     var $this = $(this);
     var unit = $this.data('unit');
     updateChart('#chart', unit);
+});
+
+$('.js-unZoom').on('click', function () {
+    chart.unzoom();
 });
 
 function et__processRelativeTime(number, withoutSuffix, key, isFuture) {

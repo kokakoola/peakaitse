@@ -3,3 +3,5 @@ bower_components
 npm-debug.log
 .sass-cache
 .DS_Store
+mid-soap.xml
+war/WEB-INF/classes
