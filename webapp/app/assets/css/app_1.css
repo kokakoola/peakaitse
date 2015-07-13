@@ -9197,13 +9197,4 @@ button.close {
   fill: red;
 }
 
-.c3-axis-x .tick text tspan:first-child {
-  color: red;
-  fill: red;
-}
-
-.c3-brush .extent:hover {
-  fill: red;
-}
-
 /*# sourceMappingURL=app.css.map */

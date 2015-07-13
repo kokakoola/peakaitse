@@ -103,8 +103,8 @@
   color: #FFF;
   background-color: rgba(0, 0, 0, 0);
   border-color: #CDBFE3;
-  &:active, 
-  &:focus, 
+  &:active,
+  &:focus,
   &:hover {
   color: #563D7C;
   text-shadow: none;
@@ -131,11 +131,11 @@
     fill: red;
 }
 
-.c3-axis-x .tick text tspan:first-child {
-    color: red;
-    fill: red;
-}
-
-.c3-brush .extent:hover {
-  fill: red;
-}
+// .c3-axis-x .tick text tspan:first-child {
+//     color: red;
+//     fill: red;
+// }
+//
+// .c3-brush .extent:hover {
+//   fill: red;
+// }
