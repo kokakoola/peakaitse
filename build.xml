@@ -11,7 +11,7 @@
     </tstamp>
   </target>
 
-  <target name="javac">
+  <target name="javac" depends="init">
     <mkdir dir="build/classes"/>
     <javac debug="true" deprecation="true" destdir="build/classes" encoding="utf8" includeAntRuntime="false">
       <src path="src"/>
@@ -19,15 +19,13 @@
         <fileset dir="lib"/>
       </classpath>
     </javac>
-  </target>
-
-  <target name="webapp" depends="init,javac">
     <copy todir="build/classes/resources">
       <fileset dir="meta/resources"/>
     </copy>
+    <copy tofile="build/classes/resources/profile.properties" file="${profilename}"/>
   </target>
 
-  <target name="war" depends="webapp">
+  <target name="war" depends="javac">
     <copy file="${profilename}" tofile="build/classes/profile.properties"/>
     <war basedir="webapp/app" destfile="build/mainfuse.war" webxml="meta/web.xml">
       <classes dir="build/classes"/>
@@ -45,18 +43,16 @@
     <antcall target="war"/>
   </target>
 
-  <target name="localdeploy" depends="webapp">
+  <target name="localdeploy" depends="javac">
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/classes"/>
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/lib"/>
     <copy todir="${webapps.dir}/mainfuse"><fileset dir="temphtml"/></copy>
     <copy todir="${webapps.dir}/mainfuse"><fileset dir="webapp/app"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/lib"><fileset dir="lib" excludes="**/servlet-api*"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/classes">
-      <fileset dir="build"/>
-      <fileset dir="meta" includes="registry.txt rollfile* labels/** templates/**"/>
+      <fileset dir="build/classes"/>
     </copy>
-    <echo message="Copying ${profilename} to ${webapps.dir}/fox2/WEB-INF/classes/profile.properties"/>
-    <copy file="${profilename}" tofile="${webapps.dir}/mainfuse/WEB-INF/classes/profile.properties"/>
+    <copy file="${profilename}" tofile="${webapps.dir}/mainfuse/WEB-INF/classes/resources/profile.properties"/>
   </target>
 
   <target name="clean">
