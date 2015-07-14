@@ -44,7 +44,7 @@ public class JSonServlet extends HttpServlet {
 		end = end.minusSeconds(end.getSecond());
 		end = end.minusNanos(end.getNano());
 		LocalDateTime start = LocalDateTime.from(end);
-		start = start.minusHours(3);
+		start = start.minusYears(1);
 		ArrayList<HashMap<String, Object>> cons = new ArrayList<>();
 		Random rnd = new Random();
 		while(start.isBefore(end)) {
