@@ -48,7 +48,7 @@
 
         updateChart('#chart', '1F');
 
-        setMomentLocaleEt();
+        // setMomentLocaleEt();
     });
 
     //http://jsfiddle.net/ha3L5z3b/
@@ -59,6 +59,8 @@
     '  <stop offset="98%" style="stop-color:rgb(230, 249, 255); stop-opacity:0"></stop>'+
     '</linearGradient>';
 
+    var chart;
+    var unit = '1F';
     var updateChart = function(chartId, unit) {
         function getChartData(){
             $.ajax({
@@ -90,7 +92,7 @@
             var isFirstBrush = true;
             var isFirstZoom = true;
 
-            var chart = c3.generate({
+            chart = c3.generate({
                 bindto: chartId,
                 padding: {
                     bottom: 20
@@ -102,14 +104,21 @@
                 },
                 axis: {
                     x: {
-                        // TODO: timeseries and format with moment here
-                        // TODO: show only months if zoom bigger than ???
-                        type: 'category',
+                        type: 'timeseries',
                         tick: {
-                            culling: true,
-                            fit: false
+                            fit: false,
+                            format: function (x) {
+                                return axisFormatter(x);
+                            },
+                            centered: true,
+                            localtime: true
                         }
-                    }
+                    },
+                    // y: {
+                    //     tick: {
+                    //         values: [16, 20, 25, 32, 40, 64]
+                    //     }
+                    // }
                 },
                 grid: {
                     y: {
@@ -119,21 +128,41 @@
                 legend: {
                     show: false
                 },
-                color: {
-                    pattern: ['url(#blueGradient)']
+                point: {
+                    show: false
                 },
+                size: {
+                    height: 600
+                },
+                // color: {
+                //     pattern: ['url(#blueGradient)']
+                // },
                 oninit: function() {
                     this.svg[0][0].getElementsByTagName('defs')[0].innerHTML += blueGradient;
                 },
                 zoom: {
                     enabled: true,
                     onzoom: function (domain) {
+                        console.log('-----------');
                         console.log('is zooming');
+                        console.log('domain: ' + domain);
                         if (!isFirstLoad) {
-                            var domainDiff = domain[1] - domain[0];
+                            var domainDiff = daysDifference(domain[1], domain[0]);
                             console.log('onzoom domaindiff: ' + domainDiff);
+                            if (domainDiff > 150) {
+                                updateFormatter('big');
+                            } else if (domainDiff <= 150 && domainDiff > 35) {
+                                updateFormatter('middle');
+                            } else {
+                                updateFormatter('small');
+                            }
+
                             // if domain difference is smaller than 35 eq 35 days then show full data chart
-                            if (domainDiff < 35) {
+                            if (domainDiff <= 35) {
+                                console.log('under 35');
+                                console.log('isZoomed: ' + isZoomed);
+                                console.log('isFirstZoom: ' + isFirstZoom);
+
                                 if (!isZoomed && !isFirstZoom) {
                                     var time_array = ['x'];
                                     var data_array = [unit];
@@ -143,10 +172,13 @@
                                         generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
                                     }
                                 }
+
                                 isZoomed = true;
                                 isZoomedBigger = false;
                                 isFirstZoom = false;
                             } else {
+                                console.log('over 35');
+
                                 if (!isZoomedBigger && !isFirstZoom) {
                                     var time_array = ['x'];
                                     var data_array = [unit];
@@ -156,6 +188,7 @@
                                         generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
                                     }
                                 }
+
                                 isZoomedBigger = true;
                                 isZoomed = false;
                                 isFirstZoom = false;
@@ -168,47 +201,53 @@
                 subchart: {
                     show: true,
                     onbrush: function (domain) {
+                        console.log('-----------');
                         console.log('onbrush');
-                        var domainDiff = domain[1] - domain[0];
-                        // if domain difference is smaller than 35 eq 35 days then show full data chart
+                        var domainDiff = daysDifference(domain[1], domain[0]);
                         console.log('onbrush domaindiff: ' + domainDiff);
-                        if (domainDiff < 35) {
+
+                        if (domainDiff > 150) {
+                            updateFormatter('big');
+                        } else if (domainDiff <= 150 && domainDiff > 35) {
+                            updateFormatter('middle');
+                        } else {
+                            updateFormatter('small');
+                        }
+
+                        // if domain difference is smaller than 35 eq 35 days then show full data chart
+                        if (domainDiff <= 35) {
                             console.log(isBrushed);
+
                             if (!isBrushed && !isFirstBrush) {
                                 var time_array = ['x'];
                                 var data_array = [unit];
                                 if (unit == '1F' || unit == '3F') {
-                                    chart.flush();
                                     generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
                                 } else if (unit == 'kwh') {
                                     generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
                                 }
                             }
+
                             isBrushed = true;
                             isBrushedBigger = false;
                             isFirstBrush = false;
                         } else {
+
                             if (!isBrushedBigger && !isFirstBrush) {
                                 var time_array = ['x'];
                                 var data_array = [unit];
                                 if (unit == '1F' || unit == '3F') {
-                                    chart.flush();
                                     generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
                                 } else if (unit == 'kwh') {
                                     generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
                                 }
                             }
+
                             isBrushedBigger = true;
                             isBrushed = false;
                             isFirstBrush = false;
                         }
                     }
-                },
-                point: {
-                    show: false
-                },
-                size: {
-                    height: 600
                 }
             });
 
@@ -245,11 +284,24 @@
         }
     };
 
+    var axisFormatter;
+    function updateFormatter(zoomLevel) {
+        if (zoomLevel == 'big') {
+            axisFormatter = d3.time.format('%B');
+        } else if (zoomLevel == 'middle') {
+            axisFormatter = d3.time.format('%d.%m');
+        } else if (zoomLevel == 'small') {
+            axisFormatter = d3.time.format('%H:%M %d.%m');
+        }
+    }
+
     function generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array) {
+        console.log('generateAllKWHDataChart');
+        updateFormatter('small');
         for (var i = 0; i<seriesLength; i++) {
             var data = seriesGraphReadings[i].kWh;
-            var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
-            time_array.push(moment.unix(unix_timestamp).utc().format('HH:mm DD.MM'));
+            // var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
+            time_array.push(moment.utc(seriesGraphReadings[i].time));
             data_array.push(data);
         }
 
@@ -264,6 +316,8 @@
     };
 
     function generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array) {
+        console.log('generateSumKWHDataChart');
+        updateFormatter('middle');
         var day_array = [];
         var date_str = seriesGraphReadings[0].time.slice(0,10);
         for (var i = 0; i<seriesLength; i++) {
@@ -279,9 +333,9 @@
                 // push to data array
                 data_array.push(data);
                 // parse unix timestamp
-                var unix_timestamp = Date.parse(seriesGraphReadings[i-1].time.slice(0,10))/1000;
+                // var unix_timestamp = Date.parse(seriesGraphReadings[i-1].time.slice(0,10))/1000;
                 // format date with moment and push to time array (x axis)
-                time_array.push(moment.unix(unix_timestamp).utc().format('ll'));
+                time_array.push(seriesGraphReadings[i-1].time.slice(0,10));
                 // make day array empty
                 day_array.splice(0, day_array.length);
                 // take next day
@@ -304,6 +358,8 @@
     };
 
     function generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, fuse) {
+        console.log('generateAllFuseDataChart');
+        updateFormatter('small');
         for (var i = 0; i<seriesLength; i++) {
             var data;
             if (fuse == 'A1') {
@@ -311,8 +367,8 @@
             } else if (fuse == 'A3') {
                 data = seriesGraphReadings[i].A3;
             }
-            var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
-            time_array.push(moment.unix(unix_timestamp).utc().format('HH:mm DD.MM'));
+            // var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
+            time_array.push(moment.utc(seriesGraphReadings[i].time));
             data_array.push(data);
         }
 
@@ -326,6 +382,8 @@
         });
     }
     function generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, fuse) {
+        console.log('generateAvgFuseDataChart');
+        updateFormatter('middle');
         var day_array = [];
         var date_str = seriesGraphReadings[0].time.slice(0,10);
         for (var i = 0; i<seriesLength; i++) {
@@ -343,9 +401,9 @@
                 // push to data array
                 data_array.push(avg);
                 // parse unix timestamp
-                var unix_timestamp = Date.parse(seriesGraphReadings[i-1].time.slice(0,10))/1000;
+                // var unix_timestamp = Date.parse(seriesGraphReadings[i-1].time.slice(0,10))/1000;
                 // format date with moment and push to time array (x axis)
-                time_array.push(moment.unix(unix_timestamp).utc().format('ll'));
+                time_array.push(seriesGraphReadings[i-1].time.slice(0,10));
                 // make day array empty
                 day_array.splice(0, day_array.length);
                 // take next day
@@ -399,9 +457,9 @@
             maxRange = maxFuseNumberFromDataArray;
         }
         // set y axis range
-        chart.axis.range({max: {y: maxRange}, min: {y: 0}});
+        chart.axis.range({max: {y: maxRange}, min: {y: 2}});
 
-        setZoomDomain(chart, seriesLength);
+        setZoomDomain(chart, firstDayInPreviousMonth());
     }
 
     function setRegionsColors(chart) {
@@ -410,9 +468,31 @@
         ]);
     }
 
-    function setZoomDomain(chart, seriesLength) {
-        var startpoint = seriesLength - (daysDifference(firstDayInPreviousMonth()));
-        chart.zoom([startpoint, seriesLength]);
+    function setZoomDomain(chart, daysFrom) {
+        var endDate = new Date();
+        var daysDiff = daysDifference(endDate, daysFrom);
+        var startDate = new Date();
+        new Date(startDate.setDate(endDate.getDate()-daysDiff));
+        chart.zoom([startDate, endDate]);
+    }
+
+    function firstDayInPreviousMonth() {
+        var now = new Date();
+        return new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    }
+
+    function lastWeek() {
+        var d = new Date();
+        return new Date(d.setDate(d.getDate() - 7));
+    }
+
+    function lastDay() {
+        var d = new Date();
+        return new Date(d.setDate(d.getDate() - 1));
+    }
+
+    function daysDifference(from, to) {
+        return Math.floor(( Date.parse(from) - Date.parse(to) ) / 86400000);
     }
 
     function getMaxOfArray(array) {
@@ -422,18 +502,9 @@
     function showLoader($loader) {
         $loader.show();
     }
+
     function hideLoader($loader) {
         $loader.fadeOut('slow');
-    }
-
-    function firstDayInPreviousMonth() {
-        var now = new Date();
-        return new Date(now.getFullYear(), now.getMonth() - 1, 1);
-    }
-
-    function daysDifference(to) {
-        var now = new Date();
-        return Math.floor(( Date.parse(now) - Date.parse(to) ) / 86400000);
     }
 
     $('.js-changeUnit').on('click', function () {
@@ -443,6 +514,21 @@
         $this.addClass('active');
         var unit = $this.data('unit');
         updateChart('#chart', unit);
+    });
+
+    d3.select('.js-week').on('click', function () {
+        updateFormatter('small');
+        setZoomDomain(chart, lastWeek());
+    });
+
+    d3.select('.js-day').on('click', function () {
+        updateFormatter('small');
+        setZoomDomain(chart, lastDay());
+    });
+
+    d3.select('.js-unZoom').on('click', function () {
+        updateFormatter('big');
+        chart.unzoom();
     });
 
     function et__processRelativeTime(number, withoutSuffix, key, isFuture) {
