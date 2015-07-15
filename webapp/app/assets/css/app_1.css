@@ -9141,7 +9141,6 @@ button.close {
   left: 0;
   width: 100%;
   position: relative;
-  color: #FFF;
   background: #fff;
 }
 
@@ -9195,15 +9194,6 @@ button.close {
 }
 
 .regionY {
-  fill: red;
-}
-
-.c3-axis-x .tick text tspan:first-child {
-  color: red;
-  fill: red;
-}
-
-.c3-brush .extent:hover {
   fill: red;
 }
 

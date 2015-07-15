@@ -1,7 +1,6 @@
 ﻿<html>
 <body>
-See jura tuleb asendada Mare poolt tehtud
-GRAAFIKUVAATEGA<br>
+Demo graafikuandmete pärimiseks<br>
 <form method="POST" action="data">
 <input type="submit" value="JSon-päring"></input>
 </form>
