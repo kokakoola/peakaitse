@@ -17,10 +17,6 @@
     }
 }
 
-.navbar {
-  margin-bottom: 0;
-}
-
 .jumbotron {
   z-index: 50;
   left: 0;
@@ -47,13 +43,13 @@
       right: 0;
       top: 0;
       bottom: 0;
-    z-index: -1;
-    }
-    p {
+      z-index: -1;
+  }
+  p {
       font-size: inherit;
       -webkit-font-smoothing: antialiased;
       letter-spacing: 0.03rem;
-    }
+  }
 
 //   background:
 //   linear-gradient(
@@ -96,7 +92,7 @@
   // background: -moz-linear-gradient(top,#201a60,#d3505e);
   // background: -ms-linear-gradient(top,#201a60,#d3505e);
   // background: -o-linear-gradient(top,#201a60,#d3505e);
-  }
+}
 }
 
 .btn-outline-inverse {
@@ -106,10 +102,10 @@
   &:active, 
   &:focus, 
   &:hover {
-  color: #563D7C;
-  text-shadow: none;
-  background-color: #FFF;
-  border-color: #FFF;
+    color: #563D7C;
+    text-shadow: none;
+    background-color: #FFF;
+    border-color: #FFF;
 }
 }
 
@@ -126,6 +122,7 @@
 //   fill: red;
 //   stroke: #fff;
 // }
+
 
 .regionY {
     fill: red;
