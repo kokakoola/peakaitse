@@ -27,7 +27,9 @@
 
   <target name="war" depends="javac">
     <copy file="${profilename}" tofile="build/classes/profile.properties"/>
-    <war basedir="webapp/app" destfile="build/mainfuse.war" webxml="meta/web.xml">
+    <war destfile="build/mainfuse.war" webxml="meta/web.xml">
+      <fileset dir="webapp/app"/>
+      <fileset dir="temphtml"/>
       <classes dir="build/classes"/>
       <lib dir="lib" excludes="**/servlet-*"/>
     </war>
