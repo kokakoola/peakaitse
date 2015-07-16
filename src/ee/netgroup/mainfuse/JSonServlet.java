@@ -11,17 +11,35 @@ import javax.servlet.http.*;
 @WebServlet(urlPatterns="/data")
 public class JSonServlet extends HttpServlet {
 
+	private ServletUtil su;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		try {
+			su = new ServletUtil();
+		} catch (IOException e) {
+			throw new ServletException(e);
+		}
+	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<HashMap<String, Object>> cons = assembleGraphData();
-		ArrayList<HashMap<String, String>> adrlist = assembleAdrList();
-
 		HashMap<String, Object> rspObj = new HashMap<>();
-		rspObj.put("address", "Tulika põik 7-11");
-		rspObj.put("addressList", adrlist);
-		rspObj.put("graphReadings", cons);
-		rspObj.put("recommendedFuseSize", 16);
-		rspObj.put("calculatedMinFuseSize", 20);
+		if (su.hasValidSession(req)) {
+			ArrayList<HashMap<String, Object>> cons = assembleGraphData();
+			ArrayList<HashMap<String, String>> adrlist = assembleAdrList();
+	
+			rspObj.put("address", "Tulika põik 7-11");
+			rspObj.put("addressList", adrlist);
+			rspObj.put("graphReadings", cons);
+			rspObj.put("recommendedFuseSize", 16);
+			rspObj.put("calculatedMinFuseSize", 20);
+			rspObj.put("idCode", su.getIdCode(req));
+			rspObj.put("name", su.getName(req));
+			rspObj.put("surname", su.getSurname(req));
+		}
+		else rspObj.put("errorCode", "NoSession");
 		resp.getWriter().write(new JSonSerializer().toJson(rspObj));
 	}
 

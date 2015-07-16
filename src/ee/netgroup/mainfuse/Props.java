@@ -18,4 +18,8 @@ public class Props {
 	public String get(String propertyName) {
 		return p.getProperty(propertyName);
 	}
+
+	public Properties getProperties() {
+		return p;
+	}
 }
