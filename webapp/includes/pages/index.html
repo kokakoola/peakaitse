@@ -1,3 +1,14 @@
+<section class="jumbotron charted">
+    <div class="container">
+        <button class="btn btn-primary js-changeUnit" data-unit="kwh">Tarbimine kWh</button>
+        <button class="btn btn-primary js-changeUnit active" data-unit="1F">1-faasiline</button>
+        <button class="btn btn-primary js-changeUnit" data-unit="3F">3-faasiline</button>
+        <button class="btn btn-default js-unZoom"  data-toggle="tooltip" title="Hello World">Unzoom</button>
+        <!-- <button class="btn btn-default js-week">Viimased 7 päeva</button>
+        <button class="btn btn-default js-day">Viimane päev</button> -->
+        <div id="chart"></div>
+    </div>
+</section>
 <section>
     <div class="container">
         <div class="row">
@@ -9,14 +20,6 @@
         </div>
     </div>
 </section>
-<section class="jumbotron">
-    <div class="container">
-        <button class="btn btn-primary js-changeUnit" data-unit="kwh">Tarbimine kWh</button>
-        <button class="btn btn-primary js-changeUnit active" data-unit="1F">1-faasiline</button>
-        <button class="btn btn-primary js-changeUnit" data-unit="3F">3-faasiline</button>
-        <button class="btn btn-default js-unZoom"  data-toggle="tooltip" title="Hello World">Unzoom</button>
-        <!-- <button class="btn btn-default js-week">Viimased 7 päeva</button>
-        <button class="btn btn-default js-day">Viimane päev</button> -->
-        <div id="chart"></div>
-    </div>
-</section>
+<div id="loader" class="page-loader">
+    <i class="fa fa-spinner fa-spin"></i>
+</div>

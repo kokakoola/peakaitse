@@ -4363,7 +4363,7 @@ tbody.collapse.in {
 
 .navbar-brand {
   float: left;
-  padding: 80px 15px;
+  padding: 40px 15px;
   font-size: 18px;
   line-height: 20px;
   height: 100px;
@@ -4407,7 +4407,7 @@ tbody.collapse.in {
 }
 
 .navbar-nav {
-  margin: 40px -15px;
+  margin: 20px -15px;
 }
 
 .navbar-nav > li > a {
@@ -9129,11 +9129,6 @@ button.close {
   font-size: 100px;
   margin-left: -50px;
   margin-top: -50px;
-}
-
-.navbar {
-  margin-bottom: 0;
-  height: 120px;
 }
 
 .jumbotron {

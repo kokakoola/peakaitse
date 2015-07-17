@@ -64,9 +64,10 @@
     var updateChart = function(chartId, unit) {
         function getChartData(){
             $.ajax({
-                url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data',
+                // url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data',
+                url: '../data/longtest.json',
                 dataType: 'json',
-                type: 'POST',
+                // type: 'POST',
             })
             .done(function(data){
                 console.log(data);
@@ -131,7 +132,7 @@
                     show: false
                 },
                 size: {
-                    height: 600
+                    height: 500
                 },
                 // color: {
                 //     pattern: ['url(#blueGradient)']

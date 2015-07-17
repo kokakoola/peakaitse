@@ -9,12 +9,13 @@
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
-        <link href='http://fonts.googleapis.com/css?family=Nobile:400,700' rel='stylesheet' type='text/css'>
-        <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800" rel="stylesheet" type="text/css"> -->
+<!--         <link href='http://fonts.googleapis.com/css?family=Nobile:400,700' rel='stylesheet' type='text/css'> -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800" rel="stylesheet" type="text/css">
 <!--         <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
-
-        <link rel="stylesheet" href="assets/css/app.min_1.css">
-        <link rel="stylesheet" href="assets/css/app.min_2.css">
+        <link rel="stylesheet" href="http://cdn.jsdelivr.net/animatecss/2.1.0/animate.min.css">
+<!--         <link rel="stylesheet" href="assets/css/app.min_1.css">
+        <link rel="stylesheet" href="assets/css/app.min_2.css"> -->
+        <link rel="stylesheet" href="assets/css/app.css">
         <link rel="stylesheet" href="assets/css/custom.css">
 
         <script src="assets/js/vendor/modernizr.js"></script>
@@ -51,6 +52,17 @@
             </div>
         </nav>
 
+        <section class="jumbotron charted">
+            <div class="container">
+                <button class="btn btn-primary js-changeUnit" data-unit="kwh">Tarbimine kWh</button>
+                <button class="btn btn-primary js-changeUnit active" data-unit="1F">1-faasiline</button>
+                <button class="btn btn-primary js-changeUnit" data-unit="3F">3-faasiline</button>
+                <button class="btn btn-default js-unZoom"  data-toggle="tooltip" title="Hello World">Unzoom</button>
+                <!-- <button class="btn btn-default js-week">Viimased 7 päeva</button>
+                <button class="btn btn-default js-day">Viimane päev</button> -->
+                <div id="chart"></div>
+            </div>
+        </section>
         <section>
             <div class="container">
                 <div class="row">
@@ -62,37 +74,25 @@
                 </div>
             </div>
         </section>
-        <section class="jumbotron">
-            <div class="container">
-                <button class="btn btn-primary js-changeUnit" data-unit="kwh">Tarbimine kWh</button>
-                <button class="btn btn-primary js-changeUnit active" data-unit="1F">1-faasiline</button>
-                <button class="btn btn-primary js-changeUnit" data-unit="3F">3-faasiline</button>
-                <button class="btn btn-default js-unZoom"  data-toggle="tooltip" title="Hello World">Unzoom</button>
-                <!-- <button class="btn btn-default js-week">Viimased 7 päeva</button>
-                <button class="btn btn-default js-day">Viimane päev</button> -->
-                <div id="chart"></div>
-            </div>
-        </section>
+        <div id="loader" class="page-loader">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
 
         <footer>
             <div class="container">
                 <div class="row partner">
-                    <div class="col-sm-4 text-center">
-                        <a href="./"><img src="assets/img/logo_est.png" alt="Estfeed"></a>
+                    <div class="col-sm-4">
+                        <a href="./" class="estfeed"></a>
                     </div>
-                    <div class="col-sm-4 text-center">
-                        <a href="./"><img src="assets/img/Elektrilevi_logo.jpg" alt="Elektrilevi"></a>
+                    <div class="col-sm-4">
+                        <a href="./" class="elektrilevi"></a>
                     </div>
-                    <div class="col-sm-4 text-center">
-                        <a href="./"><img src="assets/img/norway_grants.jpg" alt="Norway Grants"></a>
+                    <div class="col-sm-4">
+                        <a href="./" class="nwg"></a>
                     </div>
                 </div>
             </div>
         </footer>
-
-        <div id="loader" class="page-loader">
-            <i class="fa fa-spinner fa-spin"></i>
-        </div>
 
         <script src="assets/js/vendor/jquery.min.js"></script>
         <script src="assets/js/app.js"></script>
