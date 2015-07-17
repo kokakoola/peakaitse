@@ -7,22 +7,21 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import org.apache.log4j.Logger;
+
+/**
+ * Serves id card authentication request.
+ * Due to the J2EE server architecture, this servlet is only being invoked upon successful authentication.
+ * Unsuccessful authentication cannot be caught.
+ *
+ * @author selgemar
+ *
+ */
 @WebServlet(urlPatterns="/idAuth")
-public class IdAuthServlet extends HttpServlet {
+public class IdAuthServlet extends BaseServlet {
 
-	private ServletUtil su;
+	private static Logger log = Logger.getLogger(IdAuthServlet.class);
 
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		try {
-			su = new ServletUtil();
-		} catch (IOException e) {
-			throw new ServletException(e);
-		}
-	}
-
-	//SERIALNUMBER=37406110224, GIVENNAME=MARGUS, SURNAME=SELGE
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		X509Certificate[] certs = (X509Certificate[]) req.getAttribute("javax.servlet.request.X509Certificate");
@@ -45,6 +44,7 @@ public class IdAuthServlet extends HttpServlet {
 					surname = val;
 			}
 		}
+		log.debug("Successful id-card authentication by idCode="+idCode);
 		su.createSession(req, idCode, name, surname);
 		su.setRequestAttributes(req);
 		req.getRequestDispatcher("zzzidok.jsp").forward(req, resp);

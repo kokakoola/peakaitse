@@ -1,18 +1,25 @@
 package ee.netgroup.mainfuse;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.function.BiConsumer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class ServletUtil {
 
 	private static Props props;
 
 	public ServletUtil() throws IOException {
-		if (props == null)
+		if (props == null) {
 			props = new Props();
+			PropertyConfigurator.configureAndWatch(props.get("log4j.filepath"));
+			Logger.getLogger(ServletUtil.class).info("Mainfuse application up & running");
+		}
 	}
 
 	public void setRequestAttributes(final HttpServletRequest req) {
@@ -56,5 +63,20 @@ public class ServletUtil {
 
 	public String getSurname(HttpServletRequest req) {
 		return (String) req.getSession(false).getAttribute("surname");
+	}
+
+	public String getProperty(String propertyName) {
+		return props.get(propertyName);
+	}
+
+	public String readResource(String filename) throws IOException {
+		if (filename.charAt(0) != '/')
+			filename = "/" + filename;
+		InputStream s = MobileId.class.getResourceAsStream(filename);
+		byte[] b = new byte[4192];
+		int sz = s.read(b);
+		s.close();
+		return new String(b, 0, sz);
+
 	}
 }

@@ -1,6 +1,8 @@
 package ee.netgroup.mainfuse;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 
 import javax.net.ssl.SSLContext;
@@ -8,6 +10,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
@@ -16,21 +19,20 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
+import static ee.netgroup.mainfuse.MobileIdException.*;
 
 public class MobileId {
 
-	private static Logger log = LoggerFactory.getLogger(MobileId.class);
+	private static Logger log = Logger.getLogger(MobileId.class);
 	private static String authReqTpt;//MobileAuthenticate request template
+	private static String statusReqTpt;//GetMobileAuthenticateStatus request template
 
 	public MobileId() {
 		if (authReqTpt == null) try {
-			InputStream s = MobileId.class.getResourceAsStream("/resources/MobileAuthenticate.request");
-			byte[] b = new byte[4192];
-			int sz = s.read(b);
-			s.close();
-			authReqTpt = new String(b, 0, sz);
+			authReqTpt = new ServletUtil().readResource("/resources/MobileAuthenticate.request");
+			statusReqTpt = new ServletUtil().readResource("/resources/GetMobileAuthStatus.request");
 		}
 		catch(Exception x) {
 			throw new RuntimeException(x);
@@ -44,8 +46,33 @@ public class MobileId {
 	 * @param serviceUrl mobile id service url
 	 * @return session code (used to request the status)
 	 */
-	public String startAuthentication(String phoneNo, String greetingText, String serviceName, String serviceUrl) throws Exception {
+	public MobileIdAuthReference startAuthentication(String phoneNo, String greetingText, String serviceName, String serviceUrl) throws Exception {
 		String xml = MessageFormat.format(authReqTpt, phoneNo, greetingText, serviceName);
+		String rs = postSoapRequest(serviceUrl, xml);
+		if (!"OK".equalsIgnoreCase(getResponseField(rs, "Status"))) {
+			log.debug("MobileAuthenticate failure response: " + rs);
+			throw new MobileIdException(ERR_TECHNICAL_STATUS_CODE, "Service MobileAuthenticate failed with code " + getResponseField(rs, "faultcode") + " and message: " + getResponseField(rs, "message"));
+		}
+		MobileIdAuthReference mair = new MobileIdAuthReference();
+		mair.sessionCode = getResponseField(rs, "Sesscode");
+		mair.challengeId = getResponseField(rs, "ChallengeID");
+		mair.idCode = getResponseField(rs, "UserIDCode");
+		mair.name = getResponseField(rs, "UserGivenname");
+		mair.surname = getResponseField(rs, "UserSurname");
+		if (mair.sessionCode == null || mair.challengeId == null) {
+			log.debug("MobileAuthenticate returned no sessionCode/challengeId");
+			throw new MobileIdException(ERR_TECHNICAL_MISSING_CS, "MobileAuthenticate returned no sessionCode/challengeId");
+		}
+		return mair;
+	}
+
+	public String getStatus(String sessionCode, String serviceUrl) throws Exception {
+		String xml = MessageFormat.format(statusReqTpt, sessionCode);
+		String rs = postSoapRequest(serviceUrl, xml);
+		return getResponseField(rs, "Status");
+	}
+
+	private String postSoapRequest(String serviceUrl, String xml) throws Exception, UnsupportedEncodingException, IOException, ClientProtocolException {
 		HttpClient h = createTrustingHttpClient();
 		HttpPost p = new HttpPost(serviceUrl);
 		p.setHeader("Content-Type", "text/xml;charset=UTF-8");
@@ -55,11 +82,7 @@ public class MobileId {
 		byte[] b = new byte[4096];
 		int sz = is.read(b);
 		String rs = new String(b, 0, sz, "utf8");
-		if (!"OK".equalsIgnoreCase(getResponseField(rs, "Status"))) {
-			log.debug("MobileAuthenticate failure response: " + rs);
-			throw new MobileIdException("MobileAuthenticateFailed", "Service MobileAuthenticate failed with code " + getResponseField(rs, "faultcode") + " and message: " + getResponseField(rs, "message"));
-		}
-		return getResponseField(rs, "Sesscode");
+		return rs;
 	}
 
 	public String getStatus() {

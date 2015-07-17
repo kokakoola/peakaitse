@@ -8,20 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+/**
+ * Serves graph data request and outputs Json
+ * @author selgemar
+ *
+ */
 @WebServlet(urlPatterns="/data")
-public class JSonServlet extends HttpServlet {
-
-	private ServletUtil su;
-
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		try {
-			su = new ServletUtil();
-		} catch (IOException e) {
-			throw new ServletException(e);
-		}
-	}
+public class DashboardServlet extends BaseServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
