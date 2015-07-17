@@ -16,6 +16,7 @@ public class MidAuthServlet extends BaseServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		log.debug("Incoming midAuth-request");
 		String phoneNo = req.getParameter("phoneNo");
 		if (!phoneNo.startsWith("372") && phoneNo.length() <= 8)
 			phoneNo = "372" + phoneNo;
@@ -30,6 +31,7 @@ public class MidAuthServlet extends BaseServlet {
 			su.setRequestAttributes(req);
 			req.setAttribute("challengeId", ref.challengeId);
 			req.getRequestDispatcher("zzzmidpin.jsp").forward(req, resp);
+			log.debug("Started authentication for "+phoneNo);
 		} catch(MobileIdException mie) {
 			su.showError(req, resp, mie.getCode());
 		} catch (Exception e) {

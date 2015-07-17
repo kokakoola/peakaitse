@@ -18,6 +18,7 @@ public class DashboardServlet extends BaseServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		log.debug("Incoming data-request");
 		HashMap<String, Object> rspObj = new HashMap<>();
 		if (su.hasValidSession(req)) {
 			ArrayList<HashMap<String, Object>> cons = assembleGraphData();
@@ -33,7 +34,10 @@ public class DashboardServlet extends BaseServlet {
 			rspObj.put("surname", su.getSurname(req));
 		}
 		else rspObj.put("errorCode", "NoSession");
-		resp.getWriter().write(new JSonSerializer().toJson(rspObj));
+		String rspStr = new JSonSerializer().toJson(rspObj);
+		resp.getWriter().write(rspStr);
+		if (log.isDebugEnabled())
+			log.debug("Response to data-request: " + (rspStr.length() > 32 ? rspStr.substring(0, 32)+"..." : rspStr));
 	}
 
 	private ArrayList<HashMap<String, String>> assembleAdrList() {

@@ -8,8 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
 /**
  * Serves mobile-id poll-requests (checking the status of PIN entry from phone)
  * @author selgemar
@@ -17,8 +15,6 @@ import org.apache.log4j.Logger;
  */
 @WebServlet(urlPatterns="/midStatus")
 public class MidAuthStatusServlet extends BaseServlet {
-
-	private static Logger log = Logger.getLogger(MidAuthStatusServlet.class);
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,7 +24,7 @@ public class MidAuthStatusServlet extends BaseServlet {
 			if (ref != null) {
 				statusCode = new MobileId().getStatus(ref.sessionCode, su.getProperty("mobileId.serviceUrl"));
 				if ("USER_AUTHENTICATED".equals(statusCode)) {
-					log.debug("Successful mobile-id authentication by idCode="+ref.idCode);
+					log.info("Successful mobile-id authentication by idCode="+ref.idCode);
 					su.createSession(req, ref.idCode, ref.name, ref.surname);
 				}
 			}
