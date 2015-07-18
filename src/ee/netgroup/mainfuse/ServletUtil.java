@@ -79,4 +79,8 @@ public class ServletUtil {
 		return new String(b, 0, sz);
 
 	}
+
+	public Props getAllProps() {
+		return props;
+	}
 }

@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:arir="http://producers.arireg.xtee.riik.ee/producer/arireg">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <arir:paringesindus_v3 soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <keha xsi:type="arir:paringesindus_v3_paring">
+            <ariregister_kasutajanimi xsi:type="xsd:string">{0}</ariregister_kasutajanimi>
+            <ariregister_parool xsi:type="xsd:string">{1}</ariregister_parool>
+            <fyysilise_isiku_kood xsi:type="xsd:string">{2}</fyysilise_isiku_kood>
+         </keha>
+      </arir:paringesindus_v3>
+   </soapenv:Body>
+</soapenv:Envelope>

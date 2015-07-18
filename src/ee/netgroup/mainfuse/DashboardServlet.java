@@ -20,6 +20,11 @@ public class DashboardServlet extends BaseServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		log.debug("Incoming data-request");
 		HashMap<String, Object> rspObj = new HashMap<>();
+		try {
+			new BusinessRegistry().getRepresentations(su.getIdCode(req), su.getAllProps());
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
 		if (su.hasValidSession(req)) {
 			ArrayList<HashMap<String, Object>> cons = assembleGraphData();
 			ArrayList<HashMap<String, String>> adrlist = assembleAdrList();
