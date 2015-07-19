@@ -134,6 +134,9 @@
                 size: {
                     height: 500
                 },
+                color: {
+                    pattern: ['#fff']
+                },
                 // color: {
                 //     pattern: ['url(#blueGradient)']
                 // },

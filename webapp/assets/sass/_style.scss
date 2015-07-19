@@ -29,6 +29,10 @@
     }
 }
 
+.nav a {
+    color: inherit;
+}
+
 // background-blend-mode: multiply;
 
 .jumbotron {
@@ -36,9 +40,9 @@
     -webkit-font-smoothing: antialiased;
     margin-bottom: 0;
     font-weight: 300;
-    padding-top: 80px;
     z-index: 1;
     &.imaged {
+        padding-top: 80px;
         animation-delay: 0.2s;
         height: calc(100vh - 240px);
         background: url('../img/lembe-aasorg.jpg') no-repeat;
@@ -77,6 +81,7 @@
     }
     p {
         font-weight: 400;
+        font-size: 18px;
     }
 }
 
@@ -88,7 +93,8 @@
     transition: background 1s;
     &:active,
     &:focus,
-    &:hover {
+    &:hover,
+    &.active {
         color: #F09819;
         text-shadow: none;
         background-color: #FFF;
@@ -96,9 +102,65 @@
     }
 }
 
+.btn-outline {
+    color: $text-color;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid $gray-light-medium;
+    -webkit-transition: background 1s; 
+    transition: background 1s;
+    &:active,
+    &:focus,
+    &:hover,
+    &.active {
+        color: #FF512F;
+        text-shadow: none;
+        background-color: #FFF;
+        border-color: #FF512F;
+    }
+}
+
+.btn-lg {
+    border-radius: 25px;
+    padding: 10px 18px;
+}
+
 .comeTogether .animated {
     animation-delay: 1.2s;
 }
+
+.actionbar {
+    margin-bottom: 20px;
+    .btn {
+        margin-right: 10px;
+    }
+}
+
+.btn {
+    .glyphicon {
+        padding-right: 5px;
+    }
+}
+
+.glyphicon.glyphicon-one-fine-full-dot {
+    margin-top: -1.8em;
+    margin-bottom: -0.4em;
+    overflow: hidden;
+    &:before {
+        content:"\25cf";
+        font-size: 3em;
+    }
+}
+
+.glyphicon.glyphicon-one-fine-empty-dot {
+    margin-top: -1.8em;
+    margin-bottom: -0.4em;
+    overflow: hidden;
+    &:before {
+        content:"\25cb";
+        font-size: 2.5em;
+    }
+}
+
 
 footer {
     position: relative;
@@ -151,8 +213,8 @@ footer {
 }
 
 .c3-axis-y-label {
-  color: red;
-  fill: red;
+  color: #fff;
+  fill: #fff;
   stroke: #fff;
 }
 
@@ -162,8 +224,15 @@ footer {
 }
 
 .c3-axis-x .tick text tspan:first-child {
-    color: red;
-    fill: red;
+    color: white;
+    fill: white;
+    opacity: 0.7;
+}
+
+.c3-axis-y .tick text {
+    color: white;
+    fill: white;
+    opacity: 0.7;
 }
 
 .c3-brush .extent:hover {

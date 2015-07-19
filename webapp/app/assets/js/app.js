@@ -18963,6 +18963,9 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
                 size: {
                     height: 500
                 },
+                color: {
+                    pattern: ['#fff']
+                },
                 // color: {
                 //     pattern: ['url(#blueGradient)']
                 // },

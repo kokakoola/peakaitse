@@ -1,5 +1,6 @@
 @charset "UTF-8";
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url(c3.css);
 @import url(c3-app.css);
 html {
   font-family: sans-serif;
@@ -9690,15 +9691,19 @@ button.close {
   opacity: 1;
 }
 
+.nav a {
+  color: inherit;
+}
+
 .jumbotron {
   position: relative;
   -webkit-font-smoothing: antialiased;
   margin-bottom: 0;
   font-weight: 300;
-  padding-top: 80px;
   z-index: 1;
 }
 .jumbotron.imaged {
+  padding-top: 80px;
   animation-delay: 0.2s;
   height: calc(100vh - 240px);
   background: url("../img/lembe-aasorg.jpg") no-repeat;
@@ -9735,6 +9740,7 @@ button.close {
 }
 .jumbotron p {
   font-weight: 400;
+  font-size: 18px;
 }
 
 .btn-outline-inverse {
@@ -9744,15 +9750,65 @@ button.close {
   -webkit-transition: background 1s;
   transition: background 1s;
 }
-.btn-outline-inverse:active, .btn-outline-inverse:focus, .btn-outline-inverse:hover {
+.btn-outline-inverse:active, .btn-outline-inverse:focus, .btn-outline-inverse:hover, .btn-outline-inverse.active {
   color: #F09819;
   text-shadow: none;
   background-color: #FFF;
   border-color: #F09819;
 }
 
+.btn-outline {
+  color: #333333;
+  background-color: white;
+  border: 1px solid #a8a8a8;
+  -webkit-transition: background 1s;
+  transition: background 1s;
+}
+.btn-outline:active, .btn-outline:focus, .btn-outline:hover, .btn-outline.active {
+  color: #FF512F;
+  text-shadow: none;
+  background-color: #FFF;
+  border-color: #FF512F;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+  border-radius: 25px;
+  padding: 10px 18px;
+}
+
 .comeTogether .animated {
   animation-delay: 1.2s;
+}
+
+.actionbar {
+  margin-bottom: 20px;
+}
+.actionbar .btn {
+  margin-right: 10px;
+}
+
+.btn .glyphicon {
+  padding-right: 5px;
+}
+
+.glyphicon.glyphicon-one-fine-full-dot {
+  margin-top: -1.8em;
+  margin-bottom: -0.4em;
+  overflow: hidden;
+}
+.glyphicon.glyphicon-one-fine-full-dot:before {
+  content: "\25cf";
+  font-size: 3em;
+}
+
+.glyphicon.glyphicon-one-fine-empty-dot {
+  margin-top: -1.8em;
+  margin-bottom: -0.4em;
+  overflow: hidden;
+}
+.glyphicon.glyphicon-one-fine-empty-dot:before {
+  content: "\25cb";
+  font-size: 2.5em;
 }
 
 footer {
@@ -9805,8 +9861,8 @@ footer a.nwg:hover {
 }
 
 .c3-axis-y-label {
-  color: red;
-  fill: red;
+  color: #fff;
+  fill: #fff;
   stroke: #fff;
 }
 
@@ -9815,8 +9871,15 @@ footer a.nwg:hover {
 }
 
 .c3-axis-x .tick text tspan:first-child {
-  color: red;
-  fill: red;
+  color: white;
+  fill: white;
+  opacity: 0.7;
+}
+
+.c3-axis-y .tick text {
+  color: white;
+  fill: white;
+  opacity: 0.7;
 }
 
 .c3-brush .extent:hover {

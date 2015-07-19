@@ -1,6 +1,6 @@
 /*-- Chart --*/
 .c3 svg {
-  font: 14px serif; }
+  font: 14px "Open Sans", sans-serif; }
 
 /*-- Axis --*/
 /*-- Grid --*/
@@ -8,7 +8,7 @@
   stroke: #aaa; }
 
 .c3-grid text {
-  fill: #aaa; }
+  fill: #fff; }
 
 .c3-xgrid, .c3-ygrid {
   stroke-dasharray: 2 2; }
@@ -20,7 +20,7 @@
 
 /*-- Line --*/
 .c3-line {
-  stroke-width: 4px; }
+  stroke-width: 0; }
 
 /*-- Point --*/
 .c3-circle._expanded_ {
@@ -50,7 +50,7 @@
 
 /*-- Region --*/
 .c3-region {
-  fill: steelblue;
+  fill: white;
   fill-opacity: 0.1; }
 
 /*-- Brush --*/
