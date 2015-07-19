@@ -7,11 +7,17 @@
 .c3-grid line {
   stroke: #aaa; }
 
+/*-- Gridi pealne tekst --*/
 .c3-grid text {
-  fill: #fff; }
+  fill: #fff;
+  font-weight: 300; 
+  font-size: 24px;
+}
 
 .c3-xgrid, .c3-ygrid {
-  stroke-dasharray: 2 2; }
+  stroke-dasharray: 2 2;
+  opacity: 0.7;
+}
 
 /*-- Text on Chart --*/
 .c3-text.c3-empty {

@@ -29,6 +29,14 @@
     }
 }
 
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+    border: none;
+}
+
 .nav a {
     color: inherit;
 }
@@ -68,6 +76,8 @@
         }
     }
     &.charted {
+        overflow: auto;
+        padding-bottom: 100px;
         &:after {
             content: linear-gradient(-45deg, #FF512F 10%, #F09819 90%);
             position: absolute;
@@ -76,7 +86,7 @@
             top: 0;
             bottom: 0;
             z-index: -1;
-            height: 100vh;
+            height: 100%;
         }
     }
     p {
@@ -95,7 +105,7 @@
     &:focus,
     &:hover,
     &.active {
-        color: #F09819;
+        color: #FF512F;
         text-shadow: none;
         background-color: #FFF;
         border-color: #F09819;
@@ -129,7 +139,7 @@
 }
 
 .actionbar {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     .btn {
         margin-right: 10px;
     }
@@ -235,8 +245,11 @@ footer {
     opacity: 0.7;
 }
 
-.c3-brush .extent:hover {
-  fill: red;
+.c3-brush .extent {
+    fill-opacity: 0.3;
+    fill: #fff;
+    :hover {
+      fill-opacity: 0.6;
+    }
 }
-
 

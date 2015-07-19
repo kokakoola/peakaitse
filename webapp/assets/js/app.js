@@ -95,7 +95,7 @@
             chart = c3.generate({
                 bindto: chartId,
                 padding: {
-                    bottom: 20
+                    bottom: 0
                 },
                 data: {
                     x: 'x',
@@ -439,8 +439,8 @@
             ]);
         } else {
             chart.ygrids.add([
-                {value: seriesCallback.recommendedFuseSize, text: 'Soovituslik ' + seriesCallback.recommendedFuseSize + 'A'},
-                {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik ' + seriesCallback.calculatedMinFuseSize + 'A'}
+                {value: seriesCallback.recommendedFuseSize, text: 'Soovitame peakaitsme suuruseks: ' + seriesCallback.recommendedFuseSize + 'A'},
+                {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik peakaitsme suurus: ' + seriesCallback.calculatedMinFuseSize + 'A'}
             ]);
         }
 
