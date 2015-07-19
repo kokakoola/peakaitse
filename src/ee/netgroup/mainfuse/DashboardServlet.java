@@ -21,40 +21,55 @@ public class DashboardServlet extends BaseServlet {
 		log.debug("Incoming data-request");
 		HashMap<String, Object> rspObj = new HashMap<>();
 		try {
-			new BusinessRegistry().getRepresentations(su.getIdCode(req), su.getAllProps());
-		} catch (Exception e) {
-			throw new ServletException(e);
+			if (su.hasValidSession(req)) {
+				ArrayList<HashMap<String, Object>> cons = assembleGraphData();
+				ArrayList<HashMap<String, String>> adrlist = assembleAdrList(su.getIdCode(req), su.getName(req), su.getSurname(req));
+		
+				rspObj.put("address", "Tulika põik 7-11");
+				rspObj.put("addressList", adrlist);
+				rspObj.put("graphReadings", cons);
+				rspObj.put("recommendedFuseSize", 16);
+				rspObj.put("calculatedMinFuseSize", 20);
+				rspObj.put("idCode", su.getIdCode(req));
+				rspObj.put("name", su.getName(req));
+				rspObj.put("surname", su.getSurname(req));
+			}
+			else rspObj.put("errorCode", "NoSession");
 		}
-		if (su.hasValidSession(req)) {
-			ArrayList<HashMap<String, Object>> cons = assembleGraphData();
-			ArrayList<HashMap<String, String>> adrlist = assembleAdrList();
-	
-			rspObj.put("address", "Tulika põik 7-11");
-			rspObj.put("addressList", adrlist);
-			rspObj.put("graphReadings", cons);
-			rspObj.put("recommendedFuseSize", 16);
-			rspObj.put("calculatedMinFuseSize", 20);
-			rspObj.put("idCode", su.getIdCode(req));
-			rspObj.put("name", su.getName(req));
-			rspObj.put("surname", su.getSurname(req));
+		catch(Exception x) {
+			log.error("", x);
+			rspObj.put("errorCode", MobileIdException.ERR_SERVER);
 		}
-		else rspObj.put("errorCode", "NoSession");
+
 		String rspStr = new JSonSerializer().toJson(rspObj);
 		resp.getWriter().write(rspStr);
 		if (log.isDebugEnabled())
 			log.debug("Response to data-request: " + (rspStr.length() > 32 ? rspStr.substring(0, 32)+"..." : rspStr));
 	}
 
-	private ArrayList<HashMap<String, String>> assembleAdrList() {
-		final String[] ADR = {"Tulika põik 7-11", "7899023", "Läänemere tee 76-121", "9883992"};
+	private ArrayList<HashMap<String, String>> assembleAdrList(String idCode, String name, String surname) throws Exception {
 		ArrayList<HashMap<String, String>> ret = new ArrayList<>();
-		for(int i = 0; i < ADR.length; i += 2) {
-			HashMap<String, String> a = new HashMap<>();
-			a.put("address", ADR[i]);
-			a.put("eic", ADR[i + 1]);
-			ret.add(a);
-		}
+
+		// Personal EIC
+		addAddressEntry(ret, idCode, name + " " + surname, "Suvaline tn 3-2", null, "ERA", "eraisik");
+
+		// Company represenations
+		for(OrganizationData repr : new BusinessRegistry().getRepresentations(idCode, su.getAllProps()))
+			addAddressEntry(ret, repr.code, repr.name, "Firma tee 15", null, repr.orgTypeCode, repr.orgType);
+
 		return ret;
+	}
+
+	private void addAddressEntry(ArrayList<HashMap<String, String>> ret, String code, String name, String address, String eic, String personTypeCode, String personType) {
+		HashMap<String, String> entry = new HashMap<>();
+		entry.put("code", code);
+		entry.put("name", name);
+		entry.put("address", address);
+		entry.put("eic", new Random().nextInt(1000000000) + "");
+		entry.put("personTypeCode", personTypeCode);
+		entry.put("personType", personType);
+		
+		ret.add(entry);
 	}
 
 	private ArrayList<HashMap<String, Object>> assembleGraphData() {
