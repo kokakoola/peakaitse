@@ -18893,9 +18893,10 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
     var updateChart = function(chartId, unit) {
         function getChartData(){
             $.ajax({
-                url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data',
+                url: '../data/longtest.json',
+                // url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data', // uses POST method
                 dataType: 'json',
-                type: 'POST',
+                type: 'GET',
             })
             .done(function(data){
                 console.log(data);
