@@ -1,36 +1,23 @@
 /*-- Chart --*/
 .c3 svg {
-  font: 10px sans-serif; }
-
-.c3 path, .c3 line {
-  fill: none;
-  stroke: #000; }
-
-.c3 text {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none; }
-
-.c3-legend-item-tile, .c3-xgrid-focus, .c3-ygrid, .c3-event-rect, .c3-bars path {
-  shape-rendering: crispEdges; }
-
-.c3-chart-arc path {
-  stroke: #fff; }
-
-.c3-chart-arc text {
-  fill: #fff;
-  font-size: 13px; }
+  font: 14px "Open Sans", sans-serif; }
 
 /*-- Axis --*/
 /*-- Grid --*/
 .c3-grid line {
   stroke: #aaa; }
 
+/*-- Gridi pealne tekst --*/
 .c3-grid text {
-  fill: #aaa; }
+  fill: #fff;
+  font-weight: 300; 
+  font-size: 24px;
+}
 
 .c3-xgrid, .c3-ygrid {
-  stroke-dasharray: 3 3; }
+  stroke-dasharray: 2 2;
+  opacity: 0.7;
+}
 
 /*-- Text on Chart --*/
 .c3-text.c3-empty {
@@ -39,7 +26,7 @@
 
 /*-- Line --*/
 .c3-line {
-  stroke-width: 1px; }
+  stroke-width: 0; }
 
 /*-- Point --*/
 .c3-circle._expanded_ {
@@ -69,7 +56,7 @@
 
 /*-- Region --*/
 .c3-region {
-  fill: steelblue;
+  fill: white;
   fill-opacity: 0.1; }
 
 /*-- Brush --*/

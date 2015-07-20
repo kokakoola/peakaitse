@@ -18924,7 +18924,7 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
             chart = c3.generate({
                 bindto: chartId,
                 padding: {
-                    bottom: 20
+                    bottom: 0
                 },
                 data: {
                     x: 'x',
@@ -18961,7 +18961,10 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
                     show: false
                 },
                 size: {
-                    height: 600
+                    height: 500
+                },
+                color: {
+                    pattern: ['#fff']
                 },
                 // color: {
                 //     pattern: ['url(#blueGradient)']
@@ -19265,8 +19268,8 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
             ]);
         } else {
             chart.ygrids.add([
-                {value: seriesCallback.recommendedFuseSize, text: 'Soovituslik ' + seriesCallback.recommendedFuseSize + 'A'},
-                {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik ' + seriesCallback.calculatedMinFuseSize + 'A'}
+                {value: seriesCallback.recommendedFuseSize, text: 'Soovitame peakaitsme suuruseks: ' + seriesCallback.recommendedFuseSize + 'A'},
+                {value: seriesCallback.calculatedMinFuseSize, text: 'Vajalik peakaitsme suurus: ' + seriesCallback.calculatedMinFuseSize + 'A'}
             ]);
         }
 

@@ -9,10 +9,13 @@
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800" rel="stylesheet" type="text/css">
-
-        <link rel="stylesheet" href="assets/css/app.min_1.css">
-        <link rel="stylesheet" href="assets/css/app.min_2.css">
+<!--         <link href='http://fonts.googleapis.com/css?family=Nobile:400,700' rel='stylesheet' type='text/css'> -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800" rel="stylesheet" type="text/css">
+<!--         <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
+        <link rel="stylesheet" href="http://cdn.jsdelivr.net/animatecss/2.1.0/animate.min.css">
+<!--         <link rel="stylesheet" href="assets/css/app.min_1.css">
+        <link rel="stylesheet" href="assets/css/app.min_2.css"> -->
+        <link rel="stylesheet" href="assets/css/app.css">
         <link rel="stylesheet" href="assets/css/custom.css">
 
         <script src="assets/js/vendor/modernizr.js"></script>
@@ -32,9 +35,7 @@
 
         {{>content}}
 
-        <div id="loader" class="page-loader">
-            <i class="fa fa-spinner fa-spin"></i>
-        </div>
+        {{>core/_footer}}
 
         <script src="assets/js/vendor/jquery.min.js"></script>
         <script src="assets/js/app.js"></script>

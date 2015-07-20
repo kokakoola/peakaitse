@@ -9,10 +9,13 @@
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800" rel="stylesheet" type="text/css">
-
-        <link rel="stylesheet" href="assets/css/app.min_1.css">
-        <link rel="stylesheet" href="assets/css/app.min_2.css">
+<!--         <link href='http://fonts.googleapis.com/css?family=Nobile:400,700' rel='stylesheet' type='text/css'> -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800" rel="stylesheet" type="text/css">
+<!--         <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
+        <link rel="stylesheet" href="http://cdn.jsdelivr.net/animatecss/2.1.0/animate.min.css">
+<!--         <link rel="stylesheet" href="assets/css/app.min_1.css">
+        <link rel="stylesheet" href="assets/css/app.min_2.css"> -->
+        <link rel="stylesheet" href="assets/css/app.css">
         <link rel="stylesheet" href="assets/css/custom.css">
 
         <script src="assets/js/vendor/modernizr.js"></script>
@@ -37,36 +40,73 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="./">Paras peakaitse</a>
+                    <a class="navbar-brand" href="./">Paras Peakaitse</a>
                 </div>
-                <!-- <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kullerkupu tee 8-421b, Kolga-Aabla vald, Pärnumaa <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                          </ul>
+                        </li> -->
+                        
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mart Aleksander Reinaas <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Välju</a></li>
+                          </ul>
+                        </li>
                     </ul>
-                </div> -->
+                </div>
             </div>
         </nav>
 
-        <section class="jumbotron imaged">
+        <section class="jumbotron imaged animated bounceInRight">
             <div class="container">
                 <div class="row">
-                    <h1 data-toggle="tooltip" title="Hello World">Vajaliku võimsusega peakaitse</h1>
-                    <div class="col-sm-10 col-sm-offset-2">
-                        <p>Sinu kodu elektrisüsteemi peakaitse on nagu uks elektritarbimise maailma, mille „laius“ määrab kui suure võimsusega koduseadmeid saad üheaegselt kasutada. Külmiku ja arvuti kasutamiseks piisab väiksemast „uksest“ kui näiteks soojaveeboileri ja põrandakütte üheaegseks kasutamiseks.
-                        <br>
-                        Oluline on, et maksimaalne (suurim) elektritarbimine ja peakaitsme läbilaskevõime oleksid tasakaalus, sest vastavalt üksikute majapidamiste peakaitsmete läbilaskevõimete summale planeerib võrguettevõte alajaamade ja liinide tugevused. Kui piirkonnas on palju tegelikust tarbimisvajadusest suuremaid peakaitsmeid, ehitab võrguettevõte piirkonda liiga tugevama võrgu. Koduomanikele võib see tähendada võrguteenuse arvel suuremat ampritasu. Vali õige suurusega peakaitse – võidad Sina, võidavad kaastarbijad, võidab keskkond!</p>
-                        <p class="lead text-right"><strong>Kas Sinu kodu/ettevõtte elektrisüsteemi peakaitse on tarbimisega tasakaalus?</strong></p>
-                        <a href="index.html" class="btn btn-outline-inverse btn-lg">Vaatan järgi</a>
+                    <div class="col-sm-10">
+                        <p>Sinu kodu peakaitse on nagu uks elektrivõrku. Peakaitse suurus määrab, kui võimsaid koduseadmeid saad üheaegselt kasutada. Külmik ja arvuti korraga vajavad väiksemat “ust” kui soojaveeboiler ja põrandaküte jne.
+                        </p>
+                        <p>
+                        On oluline, et elektritarbimise suurus ja peakaitse suurus oleksid omavahel tasakaalus. Majapidamiste peakaitsete suuruste järgi planeerib võrguettevõte alajaamade ja liinide tugevused. Kui vajalikust suuremaid peakaitsmid on palju, ehitatakse vajalikust tugevam, seega ka kallim võrk. Koduomanikule võib see tähendada võrguteenuse arvel suuremat ampritasu. Vali õige suurusega peakaitse – võidad sina, võidavad su naabrid, võidab keskkond!</p>
                     </div>
+                </div>
+                <div class="row comeTogether">
+                    <div class="col-sm-9 col-sm-offset-1 text-right animated bounceInLeft">
+                        <blockquote class="blockquote-reverse">Kas Sinu kodu/ettevõtte elektrisüsteemi peakaitse on tarbimisega tasakaalus?</blockquote>
+                    </div>
+                    <div class="col-sm-1 animated bounceInRight">
+                        <br>
+                        <br>
+                        <a href="index.html" class="btn btn-outline-inverse btn-lg">Vaata järgi <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+                    </div>
+                    
                 </div>
             </div>
         </section>
 
-        <div id="loader" class="page-loader">
-            <i class="fa fa-spinner fa-spin"></i>
-        </div>
+        <footer>
+            <div class="container">
+                <div class="row partner">
+                    <div class="col-sm-4">
+                        <a href="./" class="estfeed"></a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="./" class="elektrilevi"></a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="./" class="nwg"></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
         <script src="assets/js/vendor/jquery.min.js"></script>
         <script src="assets/js/app.js"></script>

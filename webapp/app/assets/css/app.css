@@ -1,6 +1,7 @@
 @charset "UTF-8";
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 @import url(c3.css);
+@import url(c3-app.css);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -1389,7 +1390,7 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857;
   color: #333333;
@@ -1489,7 +1490,7 @@ hr {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.1;
   color: inherit;
 }
@@ -4643,8 +4644,8 @@ tbody.collapse.in {
 
 .navbar {
   position: relative;
-  min-height: 50px;
-  margin-bottom: 20px;
+  min-height: 80px;
+  margin-bottom: 0;
   border: 1px solid transparent;
 }
 .navbar:before, .navbar:after {
@@ -4777,10 +4778,10 @@ tbody.collapse.in {
 
 .navbar-brand {
   float: left;
-  padding: 15px 15px;
+  padding: 30px 15px;
   font-size: 18px;
   line-height: 20px;
-  height: 50px;
+  height: 80px;
 }
 .navbar-brand:hover, .navbar-brand:focus {
   text-decoration: none;
@@ -4799,8 +4800,8 @@ tbody.collapse.in {
   float: right;
   margin-right: 15px;
   padding: 9px 10px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 23px;
+  margin-bottom: 23px;
   background-color: transparent;
   background-image: none;
   border: 1px solid transparent;
@@ -4825,7 +4826,7 @@ tbody.collapse.in {
 }
 
 .navbar-nav {
-  margin: 7.5px -15px;
+  margin: 15px -15px;
 }
 .navbar-nav > li > a {
   padding-top: 10px;
@@ -4862,8 +4863,8 @@ tbody.collapse.in {
     float: left;
   }
   .navbar-nav > li > a {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 }
 
@@ -4875,8 +4876,8 @@ tbody.collapse.in {
   border-bottom: 1px solid transparent;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 23px;
+  margin-bottom: 23px;
 }
 @media (min-width: 768px) {
   .navbar-form .form-group {
@@ -4964,21 +4965,21 @@ tbody.collapse.in {
 }
 
 .navbar-btn {
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 23px;
+  margin-bottom: 23px;
 }
 .navbar-btn.btn-sm, .btn-group-sm > .navbar-btn.btn {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 .navbar-btn.btn-xs, .btn-group-xs > .navbar-btn.btn {
-  margin-top: 14px;
-  margin-bottom: 14px;
+  margin-top: 29px;
+  margin-bottom: 29px;
 }
 
 .navbar-text {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 @media (min-width: 768px) {
   .navbar-text {
@@ -5452,7 +5453,7 @@ a.badge:hover, a.badge:focus {
 }
 .jumbotron p {
   margin-bottom: 15px;
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 200;
 }
 .jumbotron > hr {
@@ -6534,7 +6535,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -6656,7 +6657,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -9667,7 +9668,8 @@ button.close {
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background-color: rgba(229, 229, 229, 0.95);
+  background: linear-gradient(-90deg, #FF512F 10%, #F09819 90%);
+  opacity: 0.7;
 }
 .page-loader i {
   position: absolute;
@@ -9679,36 +9681,54 @@ button.close {
   margin-top: -50px;
 }
 
-.navbar {
-  margin-bottom: 0;
+.navbar-brand {
+  color: inherit;
+  opacity: 0.7;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+.navbar-brand:hover {
+  opacity: 1;
+}
+
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+  border: none;
+}
+
+.nav a {
+  color: inherit;
 }
 
 .jumbotron {
-  z-index: 50;
-  left: 0;
-  width: 100%;
   position: relative;
-  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 0;
+  font-weight: 300;
+  z-index: 1;
 }
 .jumbotron.imaged {
-  position: relative;
-  background: url("../img/giphy.gif") no-repeat;
-  background-size: 100vw;
-  z-index: 1;
-  padding-bottom: 260px;
+  padding-top: 80px;
+  animation-delay: 0.2s;
+  height: calc(100vh - 240px);
+  background: url("../img/lembe-aasorg.jpg") no-repeat;
+  background-size: cover;
+}
+.jumbotron.imaged blockquote,
+.jumbotron.imaged p {
+  color: #FFF;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}
+.jumbotron.imaged blockquote {
+  font-size: 26px;
+  font-weight: 300;
 }
 .jumbotron.imaged:after {
-  content: -webkit-linear-gradient(0deg, #360033 10%, #0b8793 90%);
-  /* Chrome 10+, Saf5.1+ */
-  content: -moz-linear-gradient(0deg, #360033 10%, #0b8793 90%);
-  /* FF3.6+ */
-  content: -ms-linear-gradient(0deg, #360033 10%, #0b8793 90%);
-  /* IE10 */
-  content: -o-linear-gradient(0deg, #360033 10%, #0b8793 90%);
-  /* Opera 11.10+ */
-  content: linear-gradient(0deg, #360033 10%, #0b8793 90%);
-  /* W3C */
-  opacity: 0.8;
+  content: linear-gradient(-45deg, #FF512F 10%, #F09819 90%);
+  opacity: 0.6;
   position: absolute;
   left: 0;
   right: 0;
@@ -9716,26 +9736,170 @@ button.close {
   bottom: 0;
   z-index: -1;
 }
-.jumbotron.imaged p {
-  font-size: inherit;
-  -webkit-font-smoothing: antialiased;
-  letter-spacing: 0.03rem;
+.jumbotron.charted {
+  overflow: auto;
+  padding-bottom: 100px;
+}
+.jumbotron.charted:after {
+  content: linear-gradient(-45deg, #FF512F 10%, #F09819 90%);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  height: 100%;
+}
+.jumbotron p {
+  font-weight: 400;
+  font-size: 18px;
 }
 
 .btn-outline-inverse {
   color: #FFF;
   background-color: transparent;
-  border-color: #CDBFE3;
+  border: 1px solid #fff;
+  -webkit-transition: background 1s;
+  transition: background 1s;
 }
-.btn-outline-inverse:active, .btn-outline-inverse:focus, .btn-outline-inverse:hover {
-  color: #563D7C;
+.btn-outline-inverse:active, .btn-outline-inverse:focus, .btn-outline-inverse:hover, .btn-outline-inverse.active {
+  color: #FF512F;
   text-shadow: none;
   background-color: #FFF;
-  border-color: #FFF;
+  border-color: #F09819;
+}
+
+.btn-outline {
+  color: #333333;
+  background-color: white;
+  border: 1px solid #a8a8a8;
+  -webkit-transition: background 1s;
+  transition: background 1s;
+}
+.btn-outline:active, .btn-outline:focus, .btn-outline:hover, .btn-outline.active {
+  color: #FF512F;
+  text-shadow: none;
+  background-color: #FFF;
+  border-color: #FF512F;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+  border-radius: 25px;
+  padding: 10px 18px;
+}
+
+.comeTogether .animated {
+  animation-delay: 1.2s;
+}
+
+.actionbar {
+  margin-bottom: 40px;
+}
+.actionbar .btn {
+  margin-right: 10px;
+}
+
+.btn .glyphicon {
+  padding-right: 5px;
+}
+
+.glyphicon.glyphicon-one-fine-full-dot {
+  margin-top: -1.8em;
+  margin-bottom: -0.4em;
+  overflow: hidden;
+}
+.glyphicon.glyphicon-one-fine-full-dot:before {
+  content: "\25cf";
+  font-size: 3em;
+}
+
+.glyphicon.glyphicon-one-fine-empty-dot {
+  margin-top: -1.8em;
+  margin-bottom: -0.4em;
+  overflow: hidden;
+}
+.glyphicon.glyphicon-one-fine-empty-dot:before {
+  content: "\25cb";
+  font-size: 2.5em;
+}
+
+footer {
+  position: relative;
+  min-height: 100px;
+  padding: 20px 0;
+}
+footer a {
+  text-align: center;
+  padding: 10px 0;
+  display: block;
+  height: 100px;
+  width: auto;
+  -webkit-transition: background 1s;
+  transition: background 1s;
+  opacity: 0.7;
+}
+footer a:hover {
+  opacity: 1;
+}
+footer a.estfeed {
+  background: url("../img/estfeed-mv.jpg") 0% no-repeat;
+  background-size: contain;
+}
+footer a.estfeed:hover {
+  background: url("../img/estfeed.jpg") 10% no-repeat;
+  background-size: contain;
+}
+footer a.elektrilevi {
+  background: url("../img/elektrilevi-mv.jpg") 50% no-repeat;
+  background-size: contain;
+}
+footer a.elektrilevi:hover {
+  background: url("../img/elektrilevi.jpg") 60% no-repeat;
+  background-size: contain;
+}
+footer a.nwg {
+  background: url("../img/nwg-mv.jpg") 100% no-repeat;
+  background-size: contain;
+}
+footer a.nwg:hover {
+  background: url("../img/nwg.jpg") 110% no-repeat;
+  background-size: contain;
+}
+
+.c3 path, .c3 line {
+  fill: none;
+  stroke: #fff;
+  opacity: 0.7;
+}
+
+.c3-axis-y-label {
+  color: #fff;
+  fill: #fff;
+  stroke: #fff;
 }
 
 .regionY {
   fill: red;
+}
+
+.c3-axis-x .tick text tspan:first-child {
+  color: white;
+  fill: white;
+  opacity: 0.7;
+}
+
+.c3-axis-y .tick text {
+  color: white;
+  fill: white;
+  opacity: 0.7;
+}
+
+.c3-brush .extent {
+  fill-opacity: 0.3;
+  fill: #fff;
+}
+.c3-brush .extent :hover {
+  fill-opacity: 0.6;
 }
 
 /*# sourceMappingURL=app.css.map */
