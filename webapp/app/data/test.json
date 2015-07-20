@@ -145,7 +145,7 @@
       "kWh": 0.69599997997284
     }
   ],
-  "address": "Tulika põik 7-11",
+  "address": "Suvaline tn 3-2",
   "fuseValues": [
     16,
     20,
@@ -157,13 +157,24 @@
   "recommendedFuseSize": 16,
   "addressList": [
     {
-      "address": "Tulika põik 7-11",
-      "eic": "7899023"
+        "code": "11951282",
+        "address": "Firma tee 15",
+        "name": "Kadri Einre Hambaravi Osaühing",
+        "personTypeCode": "OÜ",
+        "personType": "Osaühing",
+        "eic": "7899023"
     },
     {
-      "address": "Läänemere tee 76-121",
-      "eic": "9883992"
+        "code": "37406110224",
+        "address": "Suvaline tn 3-2",
+        "name": "MARGUS SELGE",
+        "personTypeCode": "ERA",
+        "personType": "eraisik",
+        "eic": "9883992"
     }
   ],
+  "idCode": "37406110224",
+  "surname": "SELGE",
+  "name": "MARGUS",
   "calculatedMinFuseSize": 20
 }

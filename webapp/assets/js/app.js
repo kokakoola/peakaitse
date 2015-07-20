@@ -45,170 +45,103 @@
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-
-        updateChart('#chart', '1F');
+        getChartData();
 
         // setMomentLocaleEt();
     });
 
-    //http://jsfiddle.net/ha3L5z3b/
-    var blueGradient =
-    '<linearGradient id="blueGradient" x1="100%" y1="0%" x2="100%" y2="100%" gradientUnits="objectBoundingBox">'+
-    '  <stop offset="4%" style="stop-color:rgb(241, 251, 255); stop-opacity:0"></stop>'+
-    '  <stop offset="46%" style="stop-color:rgb(0, 174, 230); stop-opacity:1"></stop>'+
-    '  <stop offset="98%" style="stop-color:rgb(230, 249, 255); stop-opacity:0"></stop>'+
-    '</linearGradient>';
-
+    var storeData;
     var chart;
-    var unit = '1F';
-    var updateChart = function(chartId, unit) {
-        function getChartData(){
-            $.ajax({
-                url: '../data/longtest.json',
-                // url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data', // uses POST method
-                dataType: 'json',
-                type: 'GET',
-            })
-            .done(function(data){
-                console.log(data);
-                onDataReceived(data);
-            })
-            .fail(function(jqXHR, status){
-                console.log('Ajax Error Triggered : ' + status);
-                console.log('Error: ' + jqXHR);
+    var unit = 'kwh';
+    function getChartData(){
+        $.ajax({
+            url: '../data/longtest.json',
+            // url: 'data/longtest.json', // ux.netgroupdigital.com/peakaitse url uses GET
+            // url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data', // uses POST method
+            dataType: 'json',
+            type: 'GET',
+        })
+        .done(function(data){
+            console.log(data);
+            initChart(data, '#chart', 'kwh');
+            storeData = data;
+
+            $('.header-toggle span:first-child').text(data.name + ' ' + data.surname);
+            $('.address-list-toggle span:first-child').text(data.address + ', eic: ' + data.eic);
+            $.each(data.addressList, function (i, item) {
+                $('.js-addressList').append('<li><a href="#">' + item.address + ', eic: ' + item.eic + '</a></li>');
             });
-        }
 
-        getChartData();
+            $.each(data.fuseValues, function (i, item) {
+                $('.js-fuseList').append('<option value="'+ item +'">' + item + '</option>');
+            });
+        })
+        .fail(function(jqXHR, status){
+            console.log('Ajax Error Triggered : ' + status);
+            console.log('Error: ' + jqXHR);
+        });
+    }
 
-        function onDataReceived(seriesCallback) {
-            var seriesGraphReadings = seriesCallback.graphReadings;
-            var seriesLength = seriesGraphReadings.length;
-            var isZoomed = false;
-            var isZoomedBigger = false;
-            var isBrushed = false;
-            var isBrushedBigger = false;
-            var isFirstLoad = true;
-            var isFirstBrush = true;
-            var isFirstZoom = true;
+    function initChart(seriesCallback, chartId, unit) {
+        var seriesGraphReadings = seriesCallback.graphReadings;
+        var seriesLength = seriesGraphReadings.length;
+        var isZoomed = false;
+        var isZoomedBigger = false;
+        var isBrushed = false;
+        var isBrushedBigger = false;
+        var isFirstLoad = true;
+        var isFirstBrush = true;
+        var isFirstZoom = true;
 
-            chart = c3.generate({
-                bindto: chartId,
-                padding: {
-                    bottom: 0
-                },
-                data: {
-                    x: 'x',
-                    columns: [],
-                    type: 'area-spline'
-                },
-                axis: {
-                    x: {
-                        type: 'timeseries',
-                        tick: {
-                            fit: false,
-                            format: function (x) {
-                                return axisFormatter(x);
-                            },
-                            centered: true,
-                            localtime: true
-                        }
-                    },
-                    // y: {
-                    //     tick: {
-                    //         values: [16, 20, 25, 32, 40, 64]
-                    //     }
-                    // }
-                },
-                grid: {
-                    y: {
-                        show: true
+        chart = c3.generate({
+            bindto: chartId,
+            padding: {
+                bottom: 0
+            },
+            data: {
+                x: 'x',
+                columns: [],
+                type: 'area-spline'
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        fit: false,
+                        format: function (x) {
+                            return axisFormatter(x);
+                        },
+                        centered: true,
+                        localtime: true
                     }
-                },
-                legend: {
-                    show: false
-                },
-                point: {
-                    show: false
-                },
-                size: {
-                    height: 500
-                },
-                color: {
-                    pattern: ['#fff']
-                },
-                // color: {
-                //     pattern: ['url(#blueGradient)']
-                // },
-                oninit: function() {
-                    this.svg[0][0].getElementsByTagName('defs')[0].innerHTML += blueGradient;
-                },
-                zoom: {
-                    enabled: true,
-                    onzoom: function (domain) {
-                        console.log('-----------');
-                        console.log('is zooming');
-                        console.log('domain: ' + domain);
-                        if (!isFirstLoad) {
-                            var domainDiff = daysDifference(domain[1], domain[0]);
-                            console.log('onzoom domaindiff: ' + domainDiff);
-                            if (domainDiff > 150) {
-                                updateFormatter('big');
-                            } else if (domainDiff <= 150 && domainDiff > 35) {
-                                updateFormatter('middle');
-                            } else {
-                                updateFormatter('small');
-                            }
-
-                            // if domain difference is smaller than 35 eq 35 days then show full data chart
-                            if (domainDiff <= 35) {
-                                console.log('under 35');
-                                console.log('isZoomed: ' + isZoomed);
-                                console.log('isFirstZoom: ' + isFirstZoom);
-
-                                if (!isZoomed && !isFirstZoom) {
-                                    var time_array = ['x'];
-                                    var data_array = [unit];
-                                    if (unit == '1F' || unit == '3F') {
-                                        generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                                    } else if (unit == 'kwh') {
-                                        generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
-                                    }
-                                }
-
-                                isZoomed = true;
-                                isZoomedBigger = false;
-                                isFirstZoom = false;
-                            } else {
-                                console.log('over 35');
-
-                                if (!isZoomedBigger && !isFirstZoom) {
-                                    var time_array = ['x'];
-                                    var data_array = [unit];
-                                    if (unit == '1F' || unit == '3F') {
-                                        generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                                    } else if (unit == 'kwh') {
-                                        generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
-                                    }
-                                }
-
-                                isZoomedBigger = true;
-                                isZoomed = false;
-                                isFirstZoom = false;
-                            }
-                        }
-
-                        isFirstLoad = false;
-                    }
-                },
-                subchart: {
-                    show: true,
-                    onbrush: function (domain) {
-                        console.log('-----------');
-                        console.log('onbrush');
+                }
+            },
+            grid: {
+                y: {
+                    show: true
+                }
+            },
+            legend: {
+                show: false
+            },
+            point: {
+                show: false
+            },
+            size: {
+                height: 500
+            },
+            color: {
+                pattern: ['#fff']
+            },
+            zoom: {
+                enabled: true,
+                onzoom: function (domain) {
+                    console.log('-----------');
+                    console.log('is zooming');
+                    console.log('domain: ' + domain);
+                    if (!isFirstLoad) {
                         var domainDiff = daysDifference(domain[1], domain[0]);
-                        console.log('onbrush domaindiff: ' + domainDiff);
-
+                        console.log('onzoom domaindiff: ' + domainDiff);
                         if (domainDiff > 150) {
                             updateFormatter('big');
                         } else if (domainDiff <= 150 && domainDiff > 35) {
@@ -219,9 +152,11 @@
 
                         // if domain difference is smaller than 35 eq 35 days then show full data chart
                         if (domainDiff <= 35) {
-                            console.log(isBrushed);
+                            console.log('under 35');
+                            console.log('isZoomed: ' + isZoomed);
+                            console.log('isFirstZoom: ' + isFirstZoom);
 
-                            if (!isBrushed && !isFirstBrush) {
+                            if (!isZoomed && !isFirstZoom) {
                                 var time_array = ['x'];
                                 var data_array = [unit];
                                 if (unit == '1F' || unit == '3F') {
@@ -231,12 +166,13 @@
                                 }
                             }
 
-                            isBrushed = true;
-                            isBrushedBigger = false;
-                            isFirstBrush = false;
+                            isZoomed = true;
+                            isZoomedBigger = false;
+                            isFirstZoom = false;
                         } else {
+                            console.log('over 35');
 
-                            if (!isBrushedBigger && !isFirstBrush) {
+                            if (!isZoomedBigger && !isFirstZoom) {
                                 var time_array = ['x'];
                                 var data_array = [unit];
                                 if (unit == '1F' || unit == '3F') {
@@ -246,46 +182,138 @@
                                 }
                             }
 
-                            isBrushedBigger = true;
-                            isBrushed = false;
-                            isFirstBrush = false;
+                            isZoomedBigger = true;
+                            isZoomed = false;
+                            isFirstZoom = false;
                         }
                     }
+
+                    isFirstLoad = false;
                 }
-            });
+            },
+            subchart: {
+                show: true,
+                onbrush: function (domain) {
+                    console.log('-----------');
+                    console.log('onbrush');
+                    var domainDiff = daysDifference(domain[1], domain[0]);
+                    console.log('onbrush domaindiff: ' + domainDiff);
 
-            if (seriesLength > 0) {
-                switch(unit) {
-                    case 'kwh':
-                        var time_array = ['x'];
-                        var data_array = [unit];
+                    if (domainDiff > 150) {
+                        updateFormatter('big');
+                    } else if (domainDiff <= 150 && domainDiff > 35) {
+                        updateFormatter('middle');
+                    } else {
+                        updateFormatter('small');
+                    }
 
-                        generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
-                    break;
-                    case '1F':
-                        var time_array = ['x'];
-                        var data_array = [unit];
+                    // if domain difference is smaller than 35 eq 35 days then show full data chart
+                    if (domainDiff <= 35) {
+                        console.log(isBrushed);
 
-                        generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                        generateChartOptions(chart, seriesLength, seriesCallback, time_array, data_array);
-                    break;
-                    case '3F':
-                        var time_array = ['x'];
-                        var data_array = [unit];
+                        if (!isBrushed && !isFirstBrush) {
+                            var time_array = ['x'];
+                            var data_array = [unit];
+                            if (unit == '1F' || unit == '3F') {
+                                generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
+                            } else if (unit == 'kwh') {
+                                generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
+                            }
+                        }
 
-                        generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A3');
-                        generateChartOptions(chart, seriesLength, seriesCallback, time_array, data_array);
-                    break;
+                        isBrushed = true;
+                        isBrushedBigger = false;
+                        isFirstBrush = false;
+                    } else {
+
+                        if (!isBrushedBigger && !isFirstBrush) {
+                            var time_array = ['x'];
+                            var data_array = [unit];
+                            if (unit == '1F' || unit == '3F') {
+                                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
+                            } else if (unit == 'kwh') {
+                                generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
+                            }
+                        }
+
+                        isBrushedBigger = true;
+                        isBrushed = false;
+                        isFirstBrush = false;
+                    }
                 }
-            } else {
-                chart.load({
-                    columns: [0,0]
-                });
             }
+        });
 
-            hideLoader($('#loader'));
+        if (seriesLength > 0) {
+            switch(unit) {
+                case 'kwh':
+                var time_array = ['x'];
+                var data_array = [unit];
+
+                generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
+                break;
+                case '1F':
+                var time_array = ['x'];
+                var data_array = [unit];
+
+                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
+                generateChartOptions(chart, seriesLength, seriesCallback, time_array, data_array);
+                break;
+                case '3F':
+                var time_array = ['x'];
+                var data_array = [unit];
+
+                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A3');
+                generateChartOptions(chart, seriesLength, seriesCallback, time_array, data_array);
+                break;
+            }
+        } else {
+            chart.load({
+                columns: [0,0]
+            });
         }
+
+        hideLoader($('#loader'));
     };
+
+    $('.js-showChart').on('click', function (e) {
+        e.preventDefault();
+        var unit = $('input:radio[name="amp"]:checked').val();
+        var currentUsableFuseValue = $('.js-fuseList').val();
+
+        initChart(storeData, '#chart', unit);
+
+        var $xAxisArray = [currentUsableFuseValue, storeData.recommendedFuseSize, storeData.calculatedMinFuseSize];
+        var maxValue = getMaxOfArray($xAxisArray);
+        chart.axis.range({max: {y: maxValue}, min: {y: 2}});
+
+        chart.ygrids.add([
+            {value: currentUsableFuseValue, text: 'Kasutatav peakaitsme suurus: ' + currentUsableFuseValue + 'A'}
+        ]);
+
+        changeChartButtonState($('.js-changeUnit'), unit);
+    });
+
+    $('.js-changeUnit').on('click', function () {
+        showLoader($('#loader'));
+        var $this = $(this);
+        var unit = $this.data('unit');
+        var currentUsableFuseValue = $('.js-fuseList').val();
+
+        initChart(storeData, '#chart', unit);
+
+        if (unit == '1F' || unit == '3F') {
+            var $xAxisArray = [currentUsableFuseValue, storeData.recommendedFuseSize, storeData.calculatedMinFuseSize];
+            var maxValue = getMaxOfArray($xAxisArray);
+            chart.axis.range({max: {y: maxValue}, min: {y: 2}});
+
+            chart.ygrids.add([
+                {value: currentUsableFuseValue, text: 'Kasutatav peakaitsme suurus: ' + currentUsableFuseValue + 'A'}
+            ]);
+        }
+
+        changeChartButtonState($this, unit);
+    });
 
     var axisFormatter;
     function updateFormatter(zoomLevel) {
@@ -445,7 +473,7 @@
         }
 
         // set regions colors for fuse values
-        setRegionsColors(chart);
+        setRegionsColors(chart, 0, 16, 'regionX');
 
         // remove first element from array because it's string
         data_array.shift();
@@ -465,9 +493,9 @@
         setZoomDomain(chart, firstDayInPreviousMonth());
     }
 
-    function setRegionsColors(chart) {
+    function setRegionsColors(chart, start, end, classname) {
         chart.regions.add([
-            {axis: 'y', start: 0, end: 16, class: 'regionX'}
+            {axis: 'y', start: start, end: end, class: classname}
         ]);
     }
 
@@ -510,14 +538,18 @@
         $loader.fadeOut('slow');
     }
 
-    $('.js-changeUnit').on('click', function () {
-        showLoader($('#loader'));
-        var $this = $(this);
-        $this.siblings().removeClass('active');
-        $this.addClass('active');
-        var unit = $this.data('unit');
-        updateChart('#chart', unit);
-    });
+    function changeChartButtonState($button, unit) {
+        var $activeButton;
+        $.each($button, function (i, item) {
+            if ($(item).data('unit') == unit) {
+                $activeButton = $(item);
+            }
+        });
+        $activeButton.siblings().removeClass('active');
+        $activeButton.addClass('active');
+        $activeButton.siblings().find('.glyphicon').removeClass('glyphicon-ok-sign').addClass('glyphicon-one-fine-empty-dot');
+        $activeButton.find('.glyphicon').removeClass('glyphicon-one-fine-empty-dot').addClass('glyphicon-ok-sign');
+    }
 
     d3.select('.js-week').on('click', function () {
         updateFormatter('small');

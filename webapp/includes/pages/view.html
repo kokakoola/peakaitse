@@ -1,0 +1,73 @@
+<section class="jumbotron intro">
+    <div class="container">
+        <div class="row">
+            <div class="actionbar">
+                <div class="col-xs-6">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline btn-lg dropdown-toggle address-list-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span></span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu js-addressList"></ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 well">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-6 control-label" for="textinput">Kasutatav peakaitse A</label>
+                            <div class="col-md-6">
+                                <select class="form-control js-fuseList"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-6 control-label" for="textinput">Kasutatav peakaitse faas</label>
+                            <div class="col-md-6">
+                                <div class="radio">
+                                    <label for="radios-0">
+                                        <input type="radio" name="amp" id="radios-0" value="1F" checked="checked">
+                                        1 faasiline peakaitse
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="radios-1">
+                                        <input type="radio" name="amp" id="radios-1" value="3F">
+                                        3 faasiline peakaitse
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-offset-6">
+                                <button class="btn btn-primary js-showChart">Vaata graafikut</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <p>Allolevalt graafikult näete elektritarbimise koguseid ja tarbimisele vastavaid voolutugevusi peakaitsmes. Kõige madalamat tarbimiskogust ja voolu ning tiputarbimise kilovatt-tunde ja voolu amprites. Kui Teie kasutatavad voolutugevused jäävad alla peakaitsme nimivoolu, soovitame uurida elektriala spetsialistidelt peakaitsme vähendamist graafikul näidatud soovituslikule tasemele. </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="jumbotron charted">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="actionbar">
+                    <button class="btn btn-outline-inverse btn-lg js-changeUnit active" data-unit="kwh"><i class="glyphicon glyphicon-ok-sign"></i>Tarbimine kWh</button>
+                    <button class="btn btn-outline-inverse btn-lg js-changeUnit" data-unit="1F"> <i class="glyphicon glyphicon-one-fine-empty-dot"></i>1-faasiline peakaitse</button>
+                    <button class="btn btn-outline-inverse btn-lg js-changeUnit" data-unit="3F"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>3-faasiline peakaitse</button>
+                    <button class="btn btn-outline-inverse btn-lg js-unZoom" >Taasta algne vaade</button>
+                    <!-- <button class="btn btn-default js-week">Viimased 7 päeva</button>
+                    <button class="btn btn-default js-day">Viimane päev</button> -->
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div id="chart"></div>
+        </div>
+    </div>
+</section>

@@ -9738,7 +9738,6 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 .jumbotron.charted {
   overflow: auto;
-  padding-bottom: 100px;
 }
 .jumbotron.charted:after {
   content: linear-gradient(-45deg, #FF512F 10%, #F09819 90%);
@@ -9767,6 +9766,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   text-shadow: none;
   background-color: #FFF;
   border-color: #F09819;
+  outline: none !important;
 }
 
 .btn-outline {
@@ -9821,6 +9821,16 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 .glyphicon.glyphicon-one-fine-empty-dot:before {
   content: "\25cb";
   font-size: 2.5em;
+}
+
+.glyphicon.glyphicon-ok-sign {
+  margin-top: -1.8em;
+  margin-bottom: -4px;
+  overflow: hidden;
+  width: 31px;
+}
+.glyphicon.glyphicon-ok-sign:before {
+  font-size: 1.1em;
 }
 
 footer {
