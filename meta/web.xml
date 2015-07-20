@@ -6,7 +6,7 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>zzzindex.jsp</welcome-file>
 	</welcome-file-list>
   
 	<session-config>

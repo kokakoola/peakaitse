@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Props {
-
 	private Properties p;
 
 	public Props() throws IOException {
@@ -17,5 +16,9 @@ public class Props {
 
 	public String get(String propertyName) {
 		return p.getProperty(propertyName);
+	}
+
+	public Properties getProperties() {
+		return p;
 	}
 }
