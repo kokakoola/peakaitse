@@ -1,15 +1,17 @@
 {
-    "name": "peakaitse",
-    "version": "0.0.1",
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-concat": "*",
-        "grunt-contrib-copy": "*",
-        "grunt-contrib-sass": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*",
-        "grunt-contrib-connect": "*",
-        "grunt-sakugawa": "*",
-        "dbushell-grunt-mustatic": "*"
-    }
+  "name": "peakaitse",
+  "version": "0.0.1",
+  "devDependencies": {
+    "autoprefixer-core": "^5.2.1",
+    "dbushell-grunt-mustatic": "*",
+    "grunt": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-postcss": "^0.5.5",
+    "grunt-sakugawa": "*"
+  }
 }

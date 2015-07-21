@@ -18896,9 +18896,8 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
             storeData = data;
 
             $('.header-toggle span:first-child').text(data.name + ' ' + data.surname);
-            $('.address-list-toggle span:first-child').text(data.address + ', eic: ' + data.eic);
             $.each(data.addressList, function (i, item) {
-                $('.js-addressList').append('<li><a href="#">' + item.address + ', eic: ' + item.eic + '</a></li>');
+                $('.js-addressList').append('<option value="' + item.eic + '"' + (data.address==item.address ? 'selected' : '') + '>' + item.address + ', eic: ' + item.eic + '</option>');
             });
 
             $.each(data.fuseValues, function (i, item) {
