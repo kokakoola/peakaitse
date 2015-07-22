@@ -52,7 +52,7 @@
 
     var storeData;
     var chart;
-    var unit = 'kwh';
+    var unit = 'kWh';
     function getChartData(){
         $.ajax({
             url: '../data/longtest.json',
@@ -63,7 +63,7 @@
         })
         .done(function(data){
             console.log(data);
-            initChart(data, '#chart', 'kwh');
+            initChart(data, '#chart', 'kWh');
             storeData = data;
 
             $('.header-toggle span:first-child').text(data.name + ' ' + data.surname);
@@ -135,33 +135,22 @@
             zoom: {
                 enabled: true,
                 onzoom: function (domain) {
-                    console.log('-----------');
-                    console.log('is zooming');
-                    console.log('domain: ' + domain);
                     if (!isFirstLoad) {
                         var domainDiff = daysDifference(domain[1], domain[0]);
                         console.log('onzoom domaindiff: ' + domainDiff);
-                        if (domainDiff > 150) {
-                            updateFormatter('big');
-                        } else if (domainDiff <= 150 && domainDiff > 35) {
-                            updateFormatter('middle');
-                        } else {
-                            updateFormatter('small');
-                        }
 
-                        // if domain difference is smaller than 35 eq 35 days then show full data chart
-                        if (domainDiff <= 35) {
-                            console.log('under 35');
-                            console.log('isZoomed: ' + isZoomed);
-                            console.log('isFirstZoom: ' + isFirstZoom);
+                        changeFormatter(domainDiff);
+
+                        // if domain difference is smaller than 20 eq 20 days then show full data chart
+                        if (domainDiff <= 20) {
 
                             if (!isZoomed && !isFirstZoom) {
-                                var time_array = ['x'];
-                                var data_array = [unit];
-                                if (unit == '1F' || unit == '3F') {
-                                    generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                                } else if (unit == 'kwh') {
-                                    generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
+                                if (unit == 'A1' || unit == 'A3') {
+                                    generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, unit, domain[0], domain[1]);
+                                    // generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
+                                } else if (unit == 'kWh') {
+                                    generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain[0], domain[1]);
+                                    // generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
                                 }
                             }
 
@@ -169,15 +158,18 @@
                             isZoomedBigger = false;
                             isFirstZoom = false;
                         } else {
-                            console.log('over 35');
 
                             if (!isZoomedBigger && !isFirstZoom) {
-                                var time_array = ['x'];
-                                var data_array = [unit];
-                                if (unit == '1F' || unit == '3F') {
-                                    generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                                } else if (unit == 'kwh') {
-                                    generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
+                                if (unit == 'A1' || unit == 'A3') {
+                                    chart.unload({
+                                        ids: ['A1f', 'A3f']
+                                    });
+                                    // generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
+                                } else if (unit == 'kWh') {
+                                    chart.unload({
+                                        ids: ['kWhf']
+                                    });
+                                    // generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
                                 }
                             }
 
@@ -193,45 +185,40 @@
             subchart: {
                 show: true,
                 onbrush: function (domain) {
-                    console.log('-----------');
-                    console.log('onbrush');
                     var domainDiff = daysDifference(domain[1], domain[0]);
                     console.log('onbrush domaindiff: ' + domainDiff);
 
-                    if (domainDiff > 150) {
-                        updateFormatter('big');
-                    } else if (domainDiff <= 150 && domainDiff > 35) {
-                        updateFormatter('middle');
-                    } else {
-                        updateFormatter('small');
-                    }
+                    changeFormatter(domainDiff);
 
                     // if domain difference is smaller than 35 eq 35 days then show full data chart
-                    if (domainDiff <= 35) {
-                        console.log(isBrushed);
+                    if (domainDiff <= 20) {
 
-                        if (!isBrushed && !isFirstBrush) {
-                            var time_array = ['x'];
-                            var data_array = [unit];
-                            if (unit == '1F' || unit == '3F') {
-                                generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                            } else if (unit == 'kwh') {
-                                generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
-                            }
+                        if (!isFirstBrush) {
+                            setTimeout(function(){
+                                if (unit == 'A1' || unit == 'A3') {
+                                    generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, unit, domain[0], domain[1]);
+                                } else if (unit == 'kWh') {
+                                    generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain[0], domain[1]);
+                                }
+                            }, 500);
                         }
 
-                        isBrushed = true;
+                        // isBrushed = true;
                         isBrushedBigger = false;
                         isFirstBrush = false;
                     } else {
 
                         if (!isBrushedBigger && !isFirstBrush) {
-                            var time_array = ['x'];
-                            var data_array = [unit];
-                            if (unit == '1F' || unit == '3F') {
-                                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                            } else if (unit == 'kwh') {
-                                generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
+                            if (unit == 'A1' || unit == 'A3') {
+                                chart.unload({
+                                    ids: ['A1f', 'A3f']
+                                });
+                                // generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
+                            } else if (unit == 'kWh') {
+                                chart.unload({
+                                    ids: ['kWhf']
+                                });
+                                // generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
                             }
                         }
 
@@ -245,25 +232,16 @@
 
         if (seriesLength > 0) {
             switch(unit) {
-                case 'kwh':
-                var time_array = ['x'];
-                var data_array = [unit];
-
-                generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array);
+                case 'kWh':
+                generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
                 break;
-                case '1F':
-                var time_array = ['x'];
-                var data_array = [unit];
-
-                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A1');
-                generateChartOptions(chart, seriesLength, seriesCallback, time_array, data_array);
+                case 'A1':
+                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
+                generateChartOptions(chart, seriesLength, seriesCallback);
                 break;
-                case '3F':
-                var time_array = ['x'];
-                var data_array = [unit];
-
-                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, 'A3');
-                generateChartOptions(chart, seriesLength, seriesCallback, time_array, data_array);
+                case 'A3':
+                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings,unit);
+                generateChartOptions(chart, seriesLength, seriesCallback);
                 break;
             }
         } else {
@@ -301,15 +279,15 @@
 
         initChart(storeData, '#chart', unit);
 
-        if (unit == '1F' || unit == '3F') {
-            var $xAxisArray = [currentUsableFuseValue, storeData.recommendedFuseSize, storeData.calculatedMinFuseSize];
-            var maxValue = getMaxOfArray($xAxisArray);
-            chart.axis.range({max: {y: maxValue}, min: {y: 2}});
-
-            chart.ygrids.add([
-                {value: currentUsableFuseValue, text: 'Kasutatav peakaitsme suurus: ' + currentUsableFuseValue + 'A'}
-            ]);
-        }
+        // if (unit == 'A1' || unit == 'A3') {
+        //     var $xAxisArray = [currentUsableFuseValue, storeData.recommendedFuseSize, storeData.calculatedMinFuseSize];
+        //     var maxValue = getMaxOfArray($xAxisArray);
+        //     chart.axis.range({max: {y: maxValue}, min: {y: 2}});
+        //
+        //     chart.ygrids.add([
+        //         {value: currentUsableFuseValue, text: 'Kasutatav peakaitsme suurus: ' + currentUsableFuseValue + 'A'}
+        //     ]);
+        // }
 
         changeChartButtonState($this, unit);
     });
@@ -325,14 +303,28 @@
         }
     }
 
-    function generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array) {
+    function changeFormatter(domainDiff) {
+        if (domainDiff > 150) {
+            updateFormatter('big');
+        } else if (domainDiff <= 150 && domainDiff > 20) {
+            updateFormatter('middle');
+        } else {
+            updateFormatter('small');
+        }
+    }
+
+    function generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain0, domain1) {
         console.log('generateAllKWHDataChart');
+        var time_array = ['x'];
+        var data_array = ['kWhf'];
+
         updateFormatter('small');
+
         for (var i = 0; i<seriesLength; i++) {
-            var data = seriesGraphReadings[i].kWh;
-            // var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
-            time_array.push(moment.utc(seriesGraphReadings[i].time));
-            data_array.push(data);
+            if (moment.utc(seriesGraphReadings[i].time) >= moment.utc(domain0) && moment.utc(seriesGraphReadings[i].time) <= moment.utc(domain1)) {
+                time_array.push(moment.utc(seriesGraphReadings[i].time));
+                data_array.push(seriesGraphReadings[i].kWh);
+            }
         }
 
         console.log(time_array);
@@ -345,11 +337,15 @@
         });
     };
 
-    function generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array) {
+    function generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings) {
         console.log('generateSumKWHDataChart');
-        updateFormatter('middle');
+        var time_array = ['x'];
+        var data_array = ['kWh'];
         var day_array = [];
         var date_str = seriesGraphReadings[0].time.slice(0,10);
+
+        updateFormatter('middle');
+
         for (var i = 0; i<seriesLength; i++) {
 
             if (seriesGraphReadings[i].time.slice(0,10) != date_str) {
@@ -387,19 +383,25 @@
         });
     };
 
-    function generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, fuse) {
+    function generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, fuse, domain0, domain1) {
         console.log('generateAllFuseDataChart');
+        var time_array = ['x'];
+        var data_array = ['A1f'];
+
         updateFormatter('small');
+
         for (var i = 0; i<seriesLength; i++) {
-            var data;
-            if (fuse == 'A1') {
-                data = seriesGraphReadings[i].A1;
-            } else if (fuse == 'A3') {
-                data = seriesGraphReadings[i].A3;
+            if (moment.utc(seriesGraphReadings[i].time) >= moment.utc(domain0) && moment.utc(seriesGraphReadings[i].time) <= moment.utc(domain1)) {
+                var data;
+                if (fuse == 'A1') {
+                    data = seriesGraphReadings[i].A1;
+                } else if (fuse == 'A3') {
+                    data = seriesGraphReadings[i].A3;
+                }
+                // var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
+                time_array.push(moment.utc(seriesGraphReadings[i].time));
+                data_array.push(data);
             }
-            // var unix_timestamp = Date.parse(seriesGraphReadings[i].time)/1000;
-            time_array.push(moment.utc(seriesGraphReadings[i].time));
-            data_array.push(data);
         }
 
         console.log(time_array);
@@ -411,11 +413,15 @@
             ]
         });
     }
-    function generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, time_array, data_array, fuse) {
+    function generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, fuse) {
         console.log('generateAvgFuseDataChart');
-        updateFormatter('middle');
+        var time_array = ['x'];
+        var data_array = [fuse];
         var day_array = [];
         var date_str = seriesGraphReadings[0].time.slice(0,10);
+
+        updateFormatter('middle');
+
         for (var i = 0; i<seriesLength; i++) {
 
             if (seriesGraphReadings[i].time.slice(0,10) != date_str) {
@@ -458,7 +464,7 @@
         });
     }
 
-    function generateChartOptions(chart, seriesLength, seriesCallback, time_array, data_array) {
+    function generateChartOptions(chart, seriesLength, seriesCallback) {
         // add ygrid lines for recommended and required fuse
         if (seriesCallback.recommendedFuseSize == seriesCallback.calculatedMinFuseSize) {
             chart.ygrids.add([
@@ -474,20 +480,11 @@
         // set regions colors for fuse values
         setRegionsColors(chart, 0, 16, 'regionX');
 
-        // remove first element from array because it's string
-        data_array.shift();
         // take bigger fuse number
         var maxFuseNumber = Math.max(seriesCallback.recommendedFuseSize, seriesCallback.calculatedMinFuseSize);
-        // get max fuse value from data array
-        var maxFuseNumberFromDataArray = getMaxOfArray(data_array);
-        var maxRange;
-        if (maxFuseNumberFromDataArray < maxFuseNumber) {
-            maxRange = maxFuseNumber;
-        } else {
-            maxRange = maxFuseNumberFromDataArray;
-        }
+
         // set y axis range
-        chart.axis.range({max: {y: maxRange}, min: {y: 2}});
+        chart.axis.range({max: {y: maxFuseNumber}, min: {y: 2}});
 
         setZoomDomain(chart, firstDayInPreviousMonth());
     }
