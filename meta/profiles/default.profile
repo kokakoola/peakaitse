@@ -1,5 +1,5 @@
-webapps.dir=/Software/apache-tomcat-8.0.3/webapps
-log4j.filepath=/Software/apache-tomcat-8.0.3/conf/mainfuse.log4j.properties
+webapps.dir=/Software/apache-tomcat-8.0.14/webapps
+log4j.filepath=/Software/apache-tomcat-8.0.14/conf/mainfuse.log4j.properties
 
 mobileId.message=Halloo!
 mobileId.serviceName=Testimine
