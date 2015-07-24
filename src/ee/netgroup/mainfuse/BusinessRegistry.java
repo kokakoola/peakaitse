@@ -3,11 +3,8 @@ package ee.netgroup.mainfuse;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
-
 public class BusinessRegistry extends SoapAccessor {
 
-	private static Logger log = Logger.getLogger(BusinessRegistry.class);
 	private static String reprReqTpt;//paringesindus_v3-request template
 
 	public BusinessRegistry() {
@@ -26,7 +23,6 @@ public class BusinessRegistry extends SoapAccessor {
 				props.get("businessreg.password"),
 				idCode);
 		String serviceUrl = props.get("businessreg.serviceUrl");
-		log.debug(xml);
 		String rs = postSoapRequest(serviceUrl, xml);
 
 		ArrayList<OrganizationData> ret = new ArrayList<>();

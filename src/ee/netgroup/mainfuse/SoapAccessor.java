@@ -16,8 +16,11 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.Logger;
 
 abstract class SoapAccessor {
+
+	private static final Logger log = Logger.getLogger(SoapAccessor.class);
 
 	private HttpClient createTrustingHttpClient() throws Exception {
 		SSLContext ctx = SSLContext.getInstance("SSL");
@@ -48,6 +51,7 @@ abstract class SoapAccessor {
 		HttpPost p = new HttpPost(serviceUrl);
 		p.setHeader("Content-Type", "text/xml;charset=UTF-8");
 		p.setEntity(new StringEntity(xml));
+		log.debug("Sending request to "+serviceUrl);
 		HttpResponse r = h.execute(p);
 		StringBuffer sb = new StringBuffer();
 		BufferedReader bfr = new BufferedReader(new InputStreamReader(r.getEntity().getContent(), "utf8"));
@@ -57,10 +61,12 @@ abstract class SoapAccessor {
 			sb.append('\n');
 		}
 		bfr.close();
-		return sb.toString();
+		String ret = sb.toString();
+		log.debug("Got "+ret.length()+" bytes response from "+serviceUrl);
+		return ret;
 	}
 
-	protected String getResponseField(String response, String fieldName) {
+	public static String getResponseField(String response, String fieldName) {
 		int spos = 0;
 		int sidx;
 		do {
@@ -86,7 +92,7 @@ abstract class SoapAccessor {
 		return response.substring(sidx, eidx);
 	}
 
-	protected Collection<String> getImmediateSubitems(String xml, String parentElementName) {
+	public static Collection<String> getImmediateSubitems(String xml, String parentElementName) {
 		ArrayList<String> ret = new ArrayList<>();
 		int sidx = xml.indexOf("<" + parentElementName);
 		if (sidx < 0)

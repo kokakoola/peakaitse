@@ -4,7 +4,7 @@ import java.text.MessageFormat;
 
 import org.apache.log4j.Logger;
 
-import static ee.netgroup.mainfuse.MobileIdException.*;
+import static ee.netgroup.mainfuse.CommunicationException.*;
 
 public class MobileId extends SoapAccessor {
 
@@ -35,7 +35,7 @@ public class MobileId extends SoapAccessor {
 		String rs = postSoapRequest(serviceUrl, xml);
 		if (!"OK".equalsIgnoreCase(getResponseField(rs, "Status"))) {
 			log.debug("MobileAuthenticate failure response: " + rs);
-			throw new MobileIdException(ERR_TECHNICAL_STATUS_CODE, "Service MobileAuthenticate failed with code " + getResponseField(rs, "faultcode") + " and message: " + getResponseField(rs, "message"));
+			throw new CommunicationException(ERR_MID_TECHNICAL_STATUS_CODE, "Service MobileAuthenticate failed with code " + getResponseField(rs, "faultcode") + " and message: " + getResponseField(rs, "message"));
 		}
 		MobileIdAuthReference mair = new MobileIdAuthReference();
 		mair.sessionCode = getResponseField(rs, "Sesscode");
@@ -45,7 +45,7 @@ public class MobileId extends SoapAccessor {
 		mair.surname = getResponseField(rs, "UserSurname");
 		if (mair.sessionCode == null || mair.challengeId == null) {
 			log.debug("MobileAuthenticate returned no sessionCode/challengeId");
-			throw new MobileIdException(ERR_TECHNICAL_MISSING_CS, "MobileAuthenticate returned no sessionCode/challengeId");
+			throw new CommunicationException(ERR_MID_TECHNICAL_MISSING_CS, "MobileAuthenticate returned no sessionCode/challengeId");
 		}
 		return mair;
 	}

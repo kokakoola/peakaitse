@@ -3,6 +3,8 @@ package ee.netgroup.mainfuse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 
 import org.apache.http.HttpResponse;
@@ -15,11 +17,12 @@ import org.apache.log4j.Logger;
 public class EstfeedAccessor {
 
 	private static final Logger log = Logger.getLogger(EstfeedAccessor.class);
+	private static String serviceUrl;
 	private static String usagePtReqTpt;
+	private static long usagePtTimeout;
 	private static String usagePtRespTpt;
 	private static long transactionCounter = 0;
 	private static Hashtable<Long, TransactionDetails> transactionMap = new Hashtable<>();
-	private long msTimeout;
 
 	private class TransactionDetails {
 		Object mutex = new Object();
@@ -27,14 +30,15 @@ public class EstfeedAccessor {
 	}
 
 	public EstfeedAccessor(ServletUtil su) {
-		if (usagePtReqTpt == null) try {
+		if (serviceUrl == null) try {
+			serviceUrl = su.getProperty("estfeed.serviceUrl");
 			usagePtReqTpt = su.readResource("/resources/GetElectricityUsagePoints.request");
 			usagePtRespTpt = su.readResource("/resources/GetElectricityUsagePoints.response");
 			try {
-				msTimeout = Long.parseLong(su.getAllProps().get("estfeed.timeoutSeconds")) * 1000;
+				usagePtTimeout = Long.parseLong(su.getAllProps().get("estfeed.msTimeout.GetElectricityUsagePoints"));
 			}
 			catch(Exception x) {
-				msTimeout = 30000;
+				usagePtTimeout = 30000;
 			}
 		}
 		catch(Exception x) {
@@ -43,26 +47,42 @@ public class EstfeedAccessor {
 	}
 
 	/**
-	 * @param userCode id code or company registration code
+	 * @param identityCode id code or company registration code
+	 * @param identityType person/company
 	 */
-	public void getUsagePointsList(String userCode) throws Exception {
+	public Collection<UsagePointDetails> getUsagePointsList(String identityCode, String identityType) throws Exception {
 		long tranId = ++transactionCounter;
 		String xml = MessageFormat.format(
 				usagePtReqTpt,
 				tranId,
-				userCode);
-		runPublishSubscribeRequest(xml, tranId);
+				identityCode,
+				identityType);
+		ArrayList<UsagePointDetails> ret = new ArrayList<>();
+		String response = runPublishSubscribeRequest("GetElectricityUsagePoints", xml, tranId, usagePtTimeout);
+		if (response == null)
+			return ret;
+		Collection<String> responseItems = SoapAccessor.getImmediateSubitems(response, "LegalPerson");
+		if (responseItems != null) for(String subitem : responseItems) {
+			if (SoapAccessor.getResponseField(subitem, "UsagePointLocation") == null)
+				continue;
+			UsagePointDetails upd = new UsagePointDetails();
+			upd.eic = SoapAccessor.getResponseField(subitem, "EIC");
+			upd.address = SoapAccessor.getResponseField(subitem, "StreetDetail");
+			ret.add(upd);
+		}
+		log.debug("Received "+ret.size()+" EIC-s for "+identityCode);
+		return ret;
 	}
 
-	private String runPublishSubscribeRequest(String request, long transactionId) throws Exception {
+	private String runPublishSubscribeRequest(String serviceName, String request, long transactionId, long timeout) throws Exception {
 		HttpClient h = new DefaultHttpClient();
-		HttpPost p = new HttpPost("http://radon.netgroupdigital.com:8080/EstfeedServlet");
+		HttpPost p = new HttpPost(serviceUrl);
 		p.setHeader("Content-Type", "text/xml;charset=UTF-8");
 		p.setEntity(new StringEntity(request));
 
-		log.debug("Running MIME request");
+		log.debug("Running estfeed request "+serviceName);
 		HttpResponse r = h.execute(p);
-		log.debug("Got sync MIME response");
+		log.debug("Got synchronous response to "+serviceName);
 		StringBuffer sb = new StringBuffer();
 		BufferedReader bfr = new BufferedReader(new InputStreamReader(r.getEntity().getContent(), "utf8"));
 		String line;
@@ -71,15 +91,20 @@ public class EstfeedAccessor {
 			sb.append('\n');
 		}
 		bfr.close();
-		String syncRsp = sb.toString();
+		String response = sb.toString();
+		if (response.indexOf("<estfeed:acknowledgement") < 0)
+			throw new CommunicationException(CommunicationException.ERR_SERVER, SoapAccessor.getResponseField(response, "detail"));
 
 		try {
 			TransactionDetails td = new TransactionDetails();
 			transactionMap.put(transactionId, td);
 			synchronized (td.mutex) {
-				td.mutex.wait(msTimeout);
+				td.mutex.wait(timeout);
 			}
-			return transactionMap.get(transactionId).response;
+			String ret = transactionMap.get(transactionId).response;
+			if (ret == null)
+				log.warn("Request to "+serviceName+" timed out in "+timeout+"ms");
+			return ret;
 		}
 		finally {
 			transactionMap.remove(transactionId);

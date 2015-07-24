@@ -12,3 +12,6 @@ businessreg.password=testparool2
 url.startPage=https://localhost:8443/mainfuse/zzzindex.jsp
 url.idAuth=https://localhost:8444/mainfuse/idAuth
 url.dashboard=https://localhost:8443/mainfuse/index.html
+
+estfeed.serviceUrl=http://radon.netgroupdigital.com:8080/EstfeedServlet
+estfeed.msTimeout.GetElectricityUsagePoints=30000
