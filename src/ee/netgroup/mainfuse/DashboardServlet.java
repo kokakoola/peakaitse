@@ -26,6 +26,7 @@ public class DashboardServlet extends BaseServlet {
 				ArrayList<HashMap<String, String>> adrlist = assembleAdrList(su.getIdCode(req), su.getName(req), su.getSurname(req));
 		
 				rspObj.put("address", "Tulika põik 7-11");
+				rspObj.put("ˇeic", "7368956");
 				rspObj.put("addressList", adrlist);
 				rspObj.put("graphReadings", cons);
 				rspObj.put("recommendedFuseSize", 16);

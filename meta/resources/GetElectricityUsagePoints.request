@@ -5,7 +5,7 @@ Content-Type: text/xml; charset=UTF-8
 
 
 <estfeed:request xmlns:estfeed="http://estfeed.ee/xsd/estfeed-1.0.xsd">
- <transactionId>4</transactionId>
+ <transactionId>{0}</transactionId>
  <service>
   <code>GetElectricityUsagePoints</code>
   <version>v1</version>
@@ -15,7 +15,7 @@ Content-Type: text/xml; charset=UTF-8
 
 --haVcUmJkSGCWyYLYoukNggGGKftWbnXc
 Content-type: text/xml
-Estfeed-MandateObjectCode: 38903240046
+Estfeed-MandateObjectCode: {1}
 Estfeed-MandateObjectKind: LegalPerson
 
 <GetElectricityUsagePoints xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="GetElectricityUsagePoints.xsd">
