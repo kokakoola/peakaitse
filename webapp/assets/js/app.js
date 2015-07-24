@@ -53,11 +53,19 @@
     var storeData;
     var chart;
     var unit = 'kWh';
-    function getChartData(){
+
+    // change address and get new data
+    $('.js-addressList').on('change', function () {
+        var eic = $(this).val();
+        getChartData(eic);
+    });
+
+    function getChartData(eic){
         $.ajax({
             url: '../data/longtest.json',
             // url: 'data/longtest.json', // ux.netgroupdigital.com/peakaitse url uses GET
             // url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data', // uses POST method
+            data: { eic: eic },
             dataType: 'json',
             type: 'GET',
         })
@@ -82,12 +90,9 @@
     }
 
     function initChart(seriesCallback, chartId, unit) {
+        var chartDaysDifference = 20;
         var seriesGraphReadings = seriesCallback.graphReadings;
         var seriesLength = seriesGraphReadings.length;
-        var isZoomed = false;
-        var isZoomedBigger = false;
-        var isBrushed = false;
-        var isBrushedBigger = false;
         var isFirstLoad = true;
         var isFirstBrush = true;
         var isFirstZoom = true;
@@ -139,43 +144,34 @@
                         var domainDiff = daysDifference(domain[1], domain[0]);
                         console.log('onzoom domaindiff: ' + domainDiff);
 
+                        // change x axis format
                         changeFormatter(domainDiff);
 
                         // if domain difference is smaller than 20 eq 20 days then show full data chart
-                        if (domainDiff <= 20) {
+                        if (domainDiff <= chartDaysDifference) {
 
-                            if (!isZoomed && !isFirstZoom) {
-                                if (unit == 'A1' || unit == 'A3') {
-                                    generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, unit, domain[0], domain[1]);
-                                    // generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
-                                } else if (unit == 'kWh') {
-                                    generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain[0], domain[1]);
-                                    // generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
-                                }
-                            }
+                                debounce(function() {
+                                    if (unit == 'A1' || unit == 'A3') {
+                                        generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, unit, domain[0], domain[1]);
+                                    } else if (unit == 'kWh') {
+                                        generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain[0], domain[1]);
+                                    }
+                                }, 200);
 
-                            isZoomed = true;
-                            isZoomedBigger = false;
-                            isFirstZoom = false;
                         } else {
 
-                            if (!isZoomedBigger && !isFirstZoom) {
-                                if (unit == 'A1' || unit == 'A3') {
-                                    chart.unload({
-                                        ids: ['A1f', 'A3f']
-                                    });
-                                    // generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
-                                } else if (unit == 'kWh') {
-                                    chart.unload({
-                                        ids: ['kWhf']
-                                    });
-                                    // generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
-                                }
+                            if (!isFirstZoom) {
+                                debounce(function() {
+                                    if (unit == 'A1' || unit == 'A3') {
+                                        generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
+                                    } else if (unit == 'kWh') {
+                                        generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
+                                    }
+                                }, 200);
                             }
 
-                            isZoomedBigger = true;
-                            isZoomed = false;
                             isFirstZoom = false;
+
                         }
                     }
 
@@ -188,42 +184,30 @@
                     var domainDiff = daysDifference(domain[1], domain[0]);
                     console.log('onbrush domaindiff: ' + domainDiff);
 
+                    // change x axis format
                     changeFormatter(domainDiff);
 
                     // if domain difference is smaller than 35 eq 35 days then show full data chart
-                    if (domainDiff <= 20) {
+                    if (domainDiff <= chartDaysDifference) {
 
-                        if (!isFirstBrush) {
-                            setTimeout(function(){
-                                if (unit == 'A1' || unit == 'A3') {
-                                    generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, unit, domain[0], domain[1]);
-                                } else if (unit == 'kWh') {
-                                    generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain[0], domain[1]);
-                                }
-                            }, 500);
-                        }
+                        debounce(function(){
+                            if (unit == 'A1' || unit == 'A3') {
+                                generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, unit, domain[0], domain[1]);
+                            } else if (unit == 'kWh') {
+                                generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain[0], domain[1]);
+                            }
+                        }, 200);
 
-                        // isBrushed = true;
-                        isBrushedBigger = false;
-                        isFirstBrush = false;
                     } else {
 
-                        if (!isBrushedBigger && !isFirstBrush) {
+                        if (!isFirstBrush) {
                             if (unit == 'A1' || unit == 'A3') {
-                                chart.unload({
-                                    ids: ['A1f', 'A3f']
-                                });
-                                // generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
+                                generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
                             } else if (unit == 'kWh') {
-                                chart.unload({
-                                    ids: ['kWhf']
-                                });
-                                // generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
+                                generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
                             }
                         }
 
-                        isBrushedBigger = true;
-                        isBrushed = false;
                         isFirstBrush = false;
                     }
                 }
@@ -233,13 +217,16 @@
         if (seriesLength > 0) {
             switch(unit) {
                 case 'kWh':
+                updateFormatter('month');
                 generateSumKWHDataChart(chart, seriesLength, seriesGraphReadings);
                 break;
                 case 'A1':
+                updateFormatter('date');
                 generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings, unit);
                 generateChartOptions(chart, seriesLength, seriesCallback);
                 break;
                 case 'A3':
+                updateFormatter('date');
                 generateAvgFuseDataChart(chart, seriesLength, seriesGraphReadings,unit);
                 generateChartOptions(chart, seriesLength, seriesCallback);
                 break;
@@ -292,36 +279,47 @@
         changeChartButtonState($this, unit);
     });
 
+    // execute function only once in given time
+    var debounce = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    // update x axis format
     var axisFormatter;
     function updateFormatter(zoomLevel) {
-        if (zoomLevel == 'big') {
+        if (zoomLevel == 'month') {
             axisFormatter = d3.time.format('%B');
-        } else if (zoomLevel == 'middle') {
+        } else if (zoomLevel == 'date') {
             axisFormatter = d3.time.format('%d.%m');
-        } else if (zoomLevel == 'small') {
+        } else if (zoomLevel == 'datetime') {
             axisFormatter = d3.time.format('%H:%M %d.%m');
         }
     }
 
+    // change x axis format
     function changeFormatter(domainDiff) {
         if (domainDiff > 150) {
-            updateFormatter('big');
-        } else if (domainDiff <= 150 && domainDiff > 20) {
-            updateFormatter('middle');
+            updateFormatter('month');
+        } else if (domainDiff <= 150 && domainDiff > 7) {
+            updateFormatter('date');
         } else {
-            updateFormatter('small');
+            updateFormatter('datetime');
         }
     }
 
     function generateAllKWHDataChart(chart, seriesLength, seriesGraphReadings, domain0, domain1) {
         console.log('generateAllKWHDataChart');
         var time_array = ['x'];
-        var data_array = ['kWhf'];
-
-        updateFormatter('small');
+        var data_array = ['kWh'];
+        var domain0 = moment.utc(domain0).subtract(7, 'days');
+        var domain1 = moment.utc(domain1).add(7, 'days');
 
         for (var i = 0; i<seriesLength; i++) {
-            if (moment.utc(seriesGraphReadings[i].time) >= moment.utc(domain0) && moment.utc(seriesGraphReadings[i].time) <= moment.utc(domain1)) {
+            if (moment.utc(seriesGraphReadings[i].time) >= domain0 && moment.utc(seriesGraphReadings[i].time) <= domain1) {
                 time_array.push(moment.utc(seriesGraphReadings[i].time));
                 data_array.push(seriesGraphReadings[i].kWh);
             }
@@ -343,8 +341,6 @@
         var data_array = ['kWh'];
         var day_array = [];
         var date_str = seriesGraphReadings[0].time.slice(0,10);
-
-        updateFormatter('middle');
 
         for (var i = 0; i<seriesLength; i++) {
 
@@ -386,12 +382,12 @@
     function generateAllFuseDataChart(chart, seriesLength, seriesGraphReadings, fuse, domain0, domain1) {
         console.log('generateAllFuseDataChart');
         var time_array = ['x'];
-        var data_array = ['A1f'];
-
-        updateFormatter('small');
+        var data_array = [fuse];
+        var domain0 = moment.utc(domain0).subtract(7, 'days');
+        var domain1 = moment.utc(domain1).add(7, 'days');
 
         for (var i = 0; i<seriesLength; i++) {
-            if (moment.utc(seriesGraphReadings[i].time) >= moment.utc(domain0) && moment.utc(seriesGraphReadings[i].time) <= moment.utc(domain1)) {
+            if (moment.utc(seriesGraphReadings[i].time) >= domain0 && moment.utc(seriesGraphReadings[i].time) <= domain1) {
                 var data;
                 if (fuse == 'A1') {
                     data = seriesGraphReadings[i].A1;
@@ -419,8 +415,6 @@
         var data_array = [fuse];
         var day_array = [];
         var date_str = seriesGraphReadings[0].time.slice(0,10);
-
-        updateFormatter('middle');
 
         for (var i = 0; i<seriesLength; i++) {
 
@@ -508,6 +502,11 @@
         return new Date(now.getFullYear(), now.getMonth() - 1, 1);
     }
 
+    function lastMonth() {
+        var d = new Date();
+        return new Date(d.setDate(d.getDate() - 31));
+    }
+
     function lastWeek() {
         var d = new Date();
         return new Date(d.setDate(d.getDate() - 7));
@@ -547,18 +546,23 @@
         $activeButton.find('.glyphicon').removeClass('glyphicon-one-fine-empty-dot').addClass('glyphicon-ok-sign');
     }
 
+    d3.select('.js-month').on('click', function () {
+        updateFormatter('datetime');
+        setZoomDomain(chart, lastMonth());
+    });
+
     d3.select('.js-week').on('click', function () {
-        updateFormatter('small');
+        updateFormatter('datetime');
         setZoomDomain(chart, lastWeek());
     });
 
     d3.select('.js-day').on('click', function () {
-        updateFormatter('small');
+        updateFormatter('datetime');
         setZoomDomain(chart, lastDay());
     });
 
     d3.select('.js-unZoom').on('click', function () {
-        updateFormatter('big');
+        updateFormatter('month');
         chart.unzoom();
     });
 
