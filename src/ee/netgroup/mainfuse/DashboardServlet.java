@@ -26,6 +26,7 @@ public class DashboardServlet extends BaseServlet {
 				ArrayList<HashMap<String, String>> adrlist = assembleAdrList(su.getIdCode(req), su.getName(req), su.getSurname(req));
 		
 				rspObj.put("address", "Tulika põik 7-11");
+				rspObj.put("eic", "7368956");
 				rspObj.put("addressList", adrlist);
 				rspObj.put("graphReadings", cons);
 				rspObj.put("recommendedFuseSize", 16);
@@ -38,24 +39,31 @@ public class DashboardServlet extends BaseServlet {
 		}
 		catch(Exception x) {
 			log.error("", x);
-			rspObj.put("errorCode", MobileIdException.ERR_SERVER);
+			rspObj.put("errorCode", CommunicationException.ERR_SERVER);
 		}
 
 		String rspStr = new JSonSerializer().toJson(rspObj);
 		resp.getWriter().write(rspStr);
-		if (log.isDebugEnabled())
-			log.debug("Response to data-request: " + (rspStr.length() > 32 ? rspStr.substring(0, 32)+"..." : rspStr));
+		log.debug("Finished serving data-request");
+//		if (log.isDebugEnabled())
+//			log.debug("Response to data-request: " + (rspStr.length() > 32 ? rspStr.substring(0, 32)+"..." : rspStr));
 	}
 
 	private ArrayList<HashMap<String, String>> assembleAdrList(String idCode, String name, String surname) throws Exception {
 		ArrayList<HashMap<String, String>> ret = new ArrayList<>();
 
-		// Personal EIC
+		// Add personal EIC items
+		EstfeedAccessor efa = new EstfeedAccessor(su);
+		for(UsagePointDetails entry : efa.getUsagePointsList(idCode, "person"))
+			addAddressEntry(ret, idCode, name + " " + surname, entry.address, entry.eic, "ERA", "eraisik");
+
+		// TODO: remove this fake Personal EIC, which is used for prototyping only
 		addAddressEntry(ret, idCode, name + " " + surname, "Suvaline tn 3-2", null, "ERA", "eraisik");
 
-		// Company represenations
+		// EIC items associated with company represenations
 		for(OrganizationData repr : new BusinessRegistry().getRepresentations(idCode, su.getAllProps()))
-			addAddressEntry(ret, repr.code, repr.name, "Firma tee 15", null, repr.orgTypeCode, repr.orgType);
+			for(UsagePointDetails entry : efa.getUsagePointsList(repr.code, "company"))
+				addAddressEntry(ret, repr.code, repr.name, entry.address, entry.eic, repr.orgTypeCode, repr.orgType);
 
 		return ret;
 	}

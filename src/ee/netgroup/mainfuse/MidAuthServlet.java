@@ -32,7 +32,7 @@ public class MidAuthServlet extends BaseServlet {
 			req.setAttribute("challengeId", ref.challengeId);
 			req.getRequestDispatcher("zzzmidpin.jsp").forward(req, resp);
 			log.debug("Started authentication for "+phoneNo);
-		} catch(MobileIdException mie) {
+		} catch(CommunicationException mie) {
 			su.showError(req, resp, mie.getCode());
 		} catch (Exception e) {
 			throw new ServletException(e);

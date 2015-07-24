@@ -28,11 +28,11 @@ public class MidAuthStatusServlet extends BaseServlet {
 					su.createSession(req, ref.idCode, ref.name, ref.surname);
 				}
 			}
-			else statusCode = MobileIdException.ERR_AUTH_NOT_STARTED;
+			else statusCode = CommunicationException.ERR_MID_AUTH_NOT_STARTED;
 		}
 		catch(Exception x) {
 			log.error("", x);
-			statusCode = MobileIdException.ERR_SERVER;
+			statusCode = CommunicationException.ERR_SERVER;
 		}
 		HashMap<String, Object> rspObj = new HashMap<>();
 		rspObj.put("status", statusCode);

@@ -1,5 +1,5 @@
-webapps.dir=/Software/apache-tomcat-8.0.3/webapps
-log4j.filepath=/Software/apache-tomcat-8.0.3/conf/mainfuse.log4j.properties
+webapps.dir=/Software/apache-tomcat-8.0.14/webapps
+log4j.filepath=/Software/apache-tomcat-8.0.14/conf/mainfuse.log4j.properties
 
 mobileId.message=Halloo!
 mobileId.serviceName=Testimine
@@ -12,3 +12,6 @@ businessreg.password=testparool2
 url.startPage=https://localhost:8443/mainfuse/zzzindex.jsp
 url.idAuth=https://localhost:8444/mainfuse/idAuth
 url.dashboard=https://localhost:8443/mainfuse/index.html
+
+estfeed.serviceUrl=http://radon.netgroupdigital.com:8080/EstfeedServlet
+estfeed.msTimeout.GetElectricityUsagePoints=30000
