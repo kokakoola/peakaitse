@@ -6,9 +6,7 @@
     <property environment="env"/>
     <property name="profilename" value="meta/profiles/default.profile"/>
     <property file="${profilename}"/>
-    <tstamp>
-      <format property="timestamp" pattern="yyyyMMddhhmm"/>
-    </tstamp>
+    <delete file="build/classes/resources/profile.properties"/>
   </target>
 
   <target name="javac" depends="init">
@@ -26,7 +24,6 @@
   </target>
 
   <target name="war" depends="javac">
-    <copy file="${profilename}" tofile="build/classes/profile.properties"/>
     <war destfile="build/mainfuse.war" webxml="meta/web.xml">
       <fileset dir="webapp/app"/>
       <fileset dir="temphtml"/>
@@ -54,7 +51,7 @@
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/classes">
       <fileset dir="build/classes"/>
     </copy>
-    <copy file="${profilename}" tofile="${webapps.dir}/mainfuse/WEB-INF/classes/resources/profile.properties"/>
+    <copy todir="${webapps.dir}/mainfuse/WEB-INF" file="meta/web.xml"/>
   </target>
 
   <target name="clean">

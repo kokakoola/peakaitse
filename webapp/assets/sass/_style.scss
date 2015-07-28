@@ -1,3 +1,11 @@
+.col-xs-12 {
+    margin-bottom: 20px;
+}
+
+.text-inverse {
+    color: #fff;
+    font-size: 16px;
+}
 .page-loader {
     position: fixed;
     left: 0px;
@@ -6,7 +14,7 @@
     height: 100%;
     z-index: 9999;
     // background-color: rgba(229, 229, 229, .95);
-    background: linear-gradient(-90deg, #FF512F 10%, #F09819 90%);
+    background: linear-gradient(-90deg, $background-color-1 10%, $background-color-2 90%);
     opacity: 0.7;
     i {
         position: absolute;
@@ -22,14 +30,47 @@
 .navbar-brand  {
     color: inherit;
     opacity: 0.7;
-    -webkit-transition: opacity 1s; 
+    -webkit-transition: opacity 1s;
     transition: opacity 1s;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    font-weight: 400;
     &:hover {
         opacity: 1;
     }
 }
 
-button::-moz-focus-inner,
+.btn-link {
+    color: #FFF;
+    text-decoration: underline;
+    font-size: 16px;
+    font-weight: 500; 
+    text-shadow: none;
+    &:hover {
+        color: $background-color-2;
+    }
+}
+
+
+.login {
+    padding-top: 60px;
+    .mobile-id {
+        border-right: 1px solid rgba(255,255,255, 0.7);
+        padding-right: 30px;
+        label {
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .btn {
+            margin-left: 15px;
+        }
+    }
+    .id-card {
+        padding-left: 30px;
+    }
+}
+
+jpgn::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
 input[type="submit"]::-moz-focus-inner,
@@ -49,13 +90,14 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     margin-bottom: 0;
     font-weight: 300;
     z-index: 1;
+    padding-bottom: 20px;
     &.imaged {
         padding-top: 80px;
         animation-delay: 0.2s;
-        height: calc(100vh - 240px);
-        background: url('../img/lembe-aasorg.jpg') no-repeat;
+        height: calc(100vh - 190px);
+        background: url('../img/Kiisa-alajaam-5.jpg') no-repeat;
         background-size: cover;
-        blockquote, 
+        blockquote,
         p {
             color: #FFF;
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
@@ -65,8 +107,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
             font-weight: 300;
         }
         &:after {
-            content: linear-gradient(-45deg, #FF512F 10%, #F09819 90%);
-            opacity: 0.6;
+            content: linear-gradient(-45deg, $background-color-1 10%, $background-color-2 90%);
+            opacity: 0.7;
             position: absolute;
             left: 0;
             right: 0;
@@ -76,10 +118,10 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
         }
     }
     &.charted {
-        overflow: auto;
-        padding-bottom: 100px;
+            background: $gray;
         &:after {
-            content: linear-gradient(-45deg, #FF512F 10%, #F09819 90%);
+            content: linear-gradient(-45deg, $background-color-1 10%, $background-color-2 90%);
+            opacity: 0.7;
             position: absolute;
             left: 0;
             right: 0;
@@ -99,16 +141,17 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     color: #FFF;
     background-color: rgba(0, 0, 0, 0);
     border: 1px solid #fff;
-    -webkit-transition: background 1s; 
+    -webkit-transition: background 1s;
     transition: background 1s;
     &:active,
     &:focus,
     &:hover,
     &.active {
-        color: #FF512F;
+        color: $background-color-1;
         text-shadow: none;
         background-color: #FFF;
-        border-color: #F09819;
+        border-color: $background-color-2;
+        outline: none !important;
     }
 }
 
@@ -116,16 +159,16 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     color: $text-color;
     background-color: rgba(255, 255, 255, 1);
     border: 1px solid $gray-light-medium;
-    -webkit-transition: background 1s; 
+    -webkit-transition: background 1s;
     transition: background 1s;
     &:active,
     &:focus,
     &:hover,
     &.active {
-        color: #FF512F;
+        color: $background-color-1;
         text-shadow: none;
         background-color: #FFF;
-        border-color: #FF512F;
+        border-color: $background-color-1;
     }
 }
 
@@ -138,8 +181,21 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     animation-delay: 1.2s;
 }
 
+.animated {
+    &.first {
+        animation-delay: 1.1s;
+    }
+    &.second {
+        animation-delay: 1.8s;
+    }
+    &.third {
+        animation-delay: 3s;
+    }
+}
+
 .actionbar {
-    margin-bottom: 40px;
+    margin-bottom: 35px;
+    span, 
     .btn {
         margin-right: 10px;
     }
@@ -148,6 +204,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 .btn {
     .glyphicon {
         padding-right: 5px;
+        padding-left: 5px;
     }
 }
 
@@ -171,18 +228,26 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     }
 }
 
+.glyphicon.glyphicon-ok-sign {
+    margin-top: -1.8em;
+    margin-bottom: -4px;
+    overflow: hidden;
+    width: 31px;
+    &:before {
+        font-size: 1.1em;
+    }
+}
 
 footer {
     position: relative;
-    min-height: 100px;
-    padding: 20px 0;
+    min-height: 80px;
+    padding: 10px 0 0 0;
     a {
         text-align: center;
         padding: 10px 0;
         display: block;
-        height: 100px;
+        height: 80px;
         width: auto;
-        -webkit-transition: background 1s; 
         transition: background 1s;
         opacity: 0.7;
         &:hover {
@@ -242,7 +307,8 @@ footer {
 .c3-axis-y .tick text {
     color: white;
     fill: white;
-    opacity: 0.7;
+    opacity: 0.9;
+    font-weight: 500;
 }
 
 .c3-brush .extent {
@@ -253,3 +319,13 @@ footer {
     }
 }
 
+.c3-tooltip tr {
+  border: 1px solid #fff; 
+}
+
+.c3-tooltip th {
+  background-color: $gray-light;
+  font-size: 14px;
+  padding: 2px 5px;
+  text-align: left;
+  color: #FFF; }

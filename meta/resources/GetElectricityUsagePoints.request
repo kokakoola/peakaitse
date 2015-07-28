@@ -1,0 +1,27 @@
+Content-Type: multipart/related; boundary=haVcUmJkSGCWyYLYoukNggGGKftWbnXc
+
+--haVcUmJkSGCWyYLYoukNggGGKftWbnXc
+Content-Type: text/xml; charset=UTF-8
+
+
+<estfeed:request xmlns:estfeed="http://estfeed.ee/xsd/estfeed-1.0.xsd">
+ <transactionId>{0}</transactionId>
+ <service>
+  <code>GetElectricityUsagePoints</code>
+  <version>v1</version>
+  <kind>ElectricityUsagePoints</kind>
+ </service>
+</estfeed:request>
+
+--haVcUmJkSGCWyYLYoukNggGGKftWbnXc
+Content-type: text/xml
+Estfeed-MandateObjectCode: {1}
+Estfeed-MandateObjectKind: LegalPerson
+
+<GetElectricityUsagePoints xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="GetElectricityUsagePoints.xsd">
+  <LegalPerson>
+    <Kind>{2}</Kind>
+ <Country>EE</Country>
+  </LegalPerson>
+</GetElectricityUsagePoints>
+--haVcUmJkSGCWyYLYoukNggGGKftWbnXc--

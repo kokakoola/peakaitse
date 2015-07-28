@@ -35,6 +35,19 @@ module.exports = function(grunt) {
             }
         },
 
+        // autoprefixer
+        postcss: {
+			options: {
+				map: true,
+				processors: [
+					require('autoprefixer-core')({browsers: ['last 4 version']})
+				]
+			},
+			dist: {
+				src: 'app/assets/css/app.css'
+			}
+		},
+
         // concatenates js files to single file
         concat: {
             dist: {
@@ -102,7 +115,7 @@ module.exports = function(grunt) {
             },
             sass: {
                 files: ['assets/sass/{,*/}*.scss'],
-                tasks: ['sass:dev', 'sass:dist']
+                tasks: ['sass:dev']
             },
             concat: {
                 files: ['assets/js/{,*/}*.js'],
@@ -149,9 +162,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-sakugawa');
     grunt.loadNpmTasks('dbushell-grunt-mustatic');
+    grunt.loadNpmTasks('grunt-postcss');
 
     grunt.registerTask('default', ['init']);
-    grunt.registerTask('scss', ['sass:dev', 'sakugawa', 'sass:dist']);
+    grunt.registerTask('scss', ['sass:dev', 'postcss', 'sakugawa', 'sass:dist']);
     grunt.registerTask('js', ['concat', 'uglify']);
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('init', ['copy', 'scss', 'js', 'mustatic', 'serve']);

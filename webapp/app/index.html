@@ -40,7 +40,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="./">Paras Peakaitse</a>
+                    <a class="navbar-brand" href="./">- PARAS PEAKAITSE -</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -56,11 +56,11 @@
                             <li><a href="#">One more separated link</a></li>
                           </ul>
                         </li> -->
-                        
+
                         <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mart Aleksander Reinaas <span class="caret"></span></a>
+                          <a href="#" class="dropdown-toggle header-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span></span> <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <li><a href="#">Välju</a></li>
+                            <li><a href="./index.html">Välju</a></li>
                           </ul>
                         </li>
                     </ul>
@@ -68,53 +68,60 @@
             </div>
         </nav>
 
-        <section class="jumbotron intro">
-            <div class="container">
+        <section class="jumbotron imaged animated bounceInRight">
+            <div class="container " id="js-toGo">
                 <div class="row">
-                    <div class="col-xs-12">
-                    <div class="actionbar">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-outline btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Kullerkupu tee 8-421b, Kolga-Aabla vald, Pärnumaa <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a href="#">Kullerkupu tee 8-421b, Kolga-Aabla vald, Pärnumaa</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                          </ul>
-                        </div>
+                    <div class="col-xs-12 col-sm-10">
+                        <p>Sinu kodu peakaitse on nagu uks elektrivõrku. Peakaitse suurus määrab, kui võimsaid koduseadmeid saad üheaegselt kasutada. Külmik ja arvuti korraga vajavad väiksemat “ust” kui soojaveeboiler ja põrandaküte jne.
+                        </p>
+                        <p>
+                        On oluline, et elektritarbimise suurus ja peakaitse suurus oleksid omavahel tasakaalus. Majapidamiste peakaitsete suuruste järgi planeerib võrguettevõte alajaamade ja liinide tugevused. Kui vajalikust suuremaid peakaitsmid on palju, ehitatakse vajalikust tugevam, seega ka kallim võrk. Koduomanikule võib see tähendada võrguteenuse arvel suuremat ampritasu. Vali õige suurusega peakaitse – võidad sina, võidavad su naabrid, võidab keskkond!</p>
                     </div>
-                        <p>Allolevalt graafikult näete elektritarbimise koguseid ja tarbimisele vastavaid voolutugevusi peakaitsmes. Kõige madalamat tarbimiskogust ja voolu ning tiputarbimise kilovatt-tunde ja voolu amprites. Kui Teie kasutatavad voolutugevused jäävad alla peakaitsme nimivoolu, soovitame uurida elektriala spetsialistidelt peakaitsme vähendamist graafikul näidatud soovituslikule tasemele. </p>
+                </div>
+                <div class="row comeTogether">
+                    <div class="col-sm-9 col-sm-offset-1 text-right animated bounceInLeft">
+                        <blockquote class="blockquote-reverse">Kas Sinu kodu/ettevõtte elektrisüsteemi peakaitse on tarbimisega tasakaalus?</blockquote>
+                    </div>
+                    <div class="col-sm-1 animated bounceInRight">
+                        <br>
+                        <br>
+                        <a class="btn btn-outline-inverse btn-lg" id="js-Next">Vaata järgi <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="jumbotron charted animated bounceInRight">
-            <div class="container">
+            <div class="container hide login" id="js-toCome">
                 <div class="row">
-                    <div class="col-xs-12 ">
-                        <div class="actionbar">
-                            <button class="btn btn-outline-inverse btn-lg js-changeUnit" data-unit="kwh"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>Tarbimine kWh</button>
-                            <button class="btn btn-outline-inverse btn-lg js-changeUnit active" data-unit="1F"> <i class="glyphicon glyphicon-ok-sign"></i>1-faasiline peakaitse</button>
-                            <button class="btn btn-outline-inverse btn-lg js-changeUnit" data-unit="3F"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>3-faasiline peakaitse</button>
-                            <button class="btn btn-outline-inverse btn-lg js-unZoom"  data-toggle="tooltip" title="Hello World">Taasta algne vaade</button>
-                            <!-- <button class="btn btn-default js-week">Viimased 7 päeva</button>
-                            <button class="btn btn-default js-day">Viimane päev</button> -->
-                        </div>
-                        
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <p>ID-kaardiga sisselogimine on vajalik, et võiksime kindlad olla Sinu ligipääsus ainult neile tarbimisandmetele, mida Sul on õigus näha.
+                        </p>
                     </div>
-                    <div id="chart"></div>
+                    <div class="col-xs-12 col-sm-8 text-right mobile-id">
+                        <form action="" class="form-inline">
+                            <div class="form-group">
+                                <label for="phoneNumber" class="text-inverse">Telefoninumber</label>
+                                <input type="text" class="form-control input-lg" id="phoneNumber"  placeholder="5055555">
+                                <a class="btn btn-outline-inverse btn-lg" id="js-codeSent">Logi sisse Mobiil ID-ga <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 id-card">
+                        <a href="view.html" class="btn btn-outline-inverse btn-lg" id="js-goOnMobileID">Logi sisse ID-kaardiga <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+                        <p class="text-inverse hide" id="js-comeOnMobileID">
+                            Sinu telefonile on saadetud kinnituskood <strong>2375</strong>
+                            <a href="./" class="btn btn-link right">Katkesta</a>
+                        </p>
+                        <p class="text-inverse hide">
+                            Sul pole kehtivat mobiil-ID lepingut. 
+                            <a href="./" class="btn btn-link right">Katkesta</a>
+                        </p>
+                    </div>
+
                 </div>
             </div>
         </section>
-
-
         <footer>
             <div class="container">
-                <div class="row partner">
+                <div class="row partner animated bounceInRight first">
                     <div class="col-sm-4">
                         <a href="./" class="estfeed"></a>
                     </div>

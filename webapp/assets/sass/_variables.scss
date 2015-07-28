@@ -1,10 +1,31 @@
-$brand-primary:         darken(#428bca, 6.5%) !default; // #337ab7
+$brand-primary:         #E55D87;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 
 $gray-light-medium:             lighten($gray-base, 65.7%);
+
+// fox
+// $background-color-1: #F09819;
+// $background-color-2: #F09819;
+
+// rosewater
+// $background-color-1: $brand-primary;
+// $background-color-2: #5FC3E4;
+
+// mantle
+// $background-color-2: #24C6DC;
+// $background-color-1: #514A9D;
+
+
+// titanium
+// $background-color-2: #283048;
+// $background-color-1: #859398;
+
+// purple paradise
+$background-color-1: #1D2B64;
+$background-color-2: #F8CDDA;
 
 
 //== Scaffolding
@@ -37,3 +58,57 @@ $navbar-margin-bottom:             0;
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed)/2);
 
 $jumbotron-font-size:            20px;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius-base:         15px;
+$btn-border-radius-large:        25px;
+
+//== Forms
+//
+//##
+
+//** `<input>` background color
+$input-bg:                       rgba(255,255,255, 0.6);
+//** `<input disabled>` background color
+$input-bg-disabled:              $gray-lighter !default;
+
+//** Text color for `<input>`s
+$input-color:                    $gray-dark;
+//** `<input>` border color
+$input-border:                   #fff;
+
+// TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
+//** Default `.form-control` border radius
+// This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
+$input-border-radius:            $border-radius-base !default;
+//** Large `.form-control` border radius
+$input-border-radius-large:      25px;
+//** Small `.form-control` border radius
+$input-border-radius-small:      $border-radius-small !default;
+
+//** Border color for inputs on focus
+$input-border-focus:             $background-color-2;
+
+//** Placeholder text color
+$input-color-placeholder:        $gray;
+
+//** Default `.form-control` height
+$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
+//** Large `.form-control` height
+$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
+//** Small `.form-control` height
+$input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
+
+//** `.form-group` margin
+$form-group-margin-bottom:       15px !default;
+
+$legend-color:                   $gray-dark !default;
+$legend-border-color:            #e5e5e5 !default;
+
+//** Background color for textual input addons
+$input-group-addon-bg:           $gray-lighter !default;
+//** Border color for textual input addons
+$input-group-addon-border-color: $input-border !default;
+
+//** Disabled cursor for form controls and buttons.
+$cursor-disabled:                not-allowed !default;

@@ -1,0 +1,112 @@
+<section class="jumbotron intro">
+    <div class="container">
+        <div class="row">
+            <!-- <div class="actionbar">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <select class="form-control js-addressList"></select>
+                    </div>
+                </div>
+                <div class="col-sm-6 well">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-6 control-label" for="textinput">Kasutatav peakaitse A</label>
+                            <div class="col-md-6">
+                                <select class="form-control js-fuseList"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-6 control-label" for="textinput">Kasutatav peakaitse faas</label>
+                            <div class="col-md-6">
+                                <div class="radio">
+                                    <label for="radios-0">
+                                        <input type="radio" name="amp" id="radios-0" value="A1" checked="checked">
+                                        1 faasiline peakaitse
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="radios-1">
+                                        <input type="radio" name="amp" id="radios-1" value="A3">
+                                        3 faasiline peakaitse
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-offset-6">
+                                <button class="btn btn-primary js-showChart">Vaata graafikut</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> -->
+                <div class="col-xs-12 col-sm-12">
+                    <!-- Single button -->
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-lg btn-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Lepistiku 45-452 Tallinn 10234 EIC 34526463  <i class="glyphicon glyphicon-download"></i>  
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a href="#">Teine aadress</a></li>
+                              <li><a href="#">Kolmas aadress</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                <p>Allolevalt graafikult näete elektritarbimise koguseid ja tarbimisele vastavaid voolutugevusi peakaitsmes. Kõige madalamat tarbimiskogust ja voolu ning tiputarbimise kilovatt-tunde ja voolu amprites. Kui Teie kasutatavad voolutugevused jäävad alla peakaitsme nimivoolu, soovitame uurida elektriala spetsialistidelt peakaitsme vähendamist graafikul näidatud soovituslikule tasemele. </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="jumbotron charted animated bounceInRight first">
+    <div class="container">
+        <div class="row actionbar animated bounceInRight second">
+            <div class="col-xs-12 col-sm-3">
+                <button class="btn btn-block btn-outline-inverse btn-lg js-changeUnit active" data-unit="kWh"><i class="glyphicon glyphicon-ok-sign"></i>Tarbimine kWh</button>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <button class="btn btn-block btn-outline-inverse btn-lg js-changeUnit" data-unit="A1"> <i class="glyphicon glyphicon-one-fine-empty-dot"></i>1-faasiline peakaitse</button>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+            <button class="btn btn-block btn-outline-inverse btn-lg js-changeUnit" data-unit="A3"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>3-faasiline peakaitse</button>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <!-- Single button -->
+                <div class="btn-group btn-group-justified">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-lg btn-outline-inverse dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sinu peakaitsme suurus  <i class="glyphicon glyphicon-download"></i> 
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">10 A</a></li>
+                        <li><a href="#">16 A</a></li>
+                        <li><a href="#">20 A</a></li>
+                        <li><a href="#">25 A</a></li>
+                        <li><a href="#">32 A</a></li>
+                        <li><a href="#">40 A</a></li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row actionbar">
+            <div class="col-xs-12">
+                <div id="chart"></div>
+            </div>
+        </div>
+        <div class="row actionbar animated bounceInRight second">
+            <div class="col-xs-12 text-center">
+                <span class="text-inverse">Vaata ajavahemikku:</span>
+                    <button class="btn btn-outline-inverse js-unZoom"><i class="glyphicon glyphicon-ok-sign"></i>Viimane aasta</button>
+                    <button class="btn btn-outline-inverse js-month"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>Viimane kuu</button>
+                    <button class="btn btn-outline-inverse js-week"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>Viimane nädal</button>
+                    <button class="btn btn-outline-inverse js-day"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>Viimane päev</button>
+            </div>
+        </div>
+    </div>
+</section>
