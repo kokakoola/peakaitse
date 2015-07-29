@@ -6,6 +6,7 @@
     "bootstrap-sass-official": "*",
     "fontawesome": "*",
     "c3": "~0.4.10",
-    "moment": "~2.10.3"
+    "moment": "~2.10.3",
+    "animate.css": "~3.3.0"
   }
 }
