@@ -44,7 +44,7 @@ public class IdAuthServlet extends BaseServlet {
 		log.info("Successful id-card authentication by idCode="+idCode);
 		su.createSession(req, idCode, name, surname);
 		su.setRequestAttributes(req);
-		req.getRequestDispatcher("zzzidok.jsp").forward(req, resp);
+		req.getRequestDispatcher("view.html").forward(req, resp);
 	}
 
 }

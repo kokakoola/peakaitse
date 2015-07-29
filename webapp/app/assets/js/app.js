@@ -18917,11 +18917,12 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
     function getChartData(eic){
         $.ajax({
             // url: '../data/longtest.json',
-            url: 'data/longtest.json', // ux.netgroupdigital.com/peakaitse url uses GET
+            // url: 'data/longtest.json', // ux.netgroupdigital.com/peakaitse url uses GET
             // url: 'https://xenon.netgroupdigital.com:8443/mainfuse/data', // uses POST method
+            url: 'data',
             data: { eic: eic },
             dataType: 'json',
-            type: 'GET',
+            type: 'POST',
         })
         .done(function(data){
             console.log(data);
