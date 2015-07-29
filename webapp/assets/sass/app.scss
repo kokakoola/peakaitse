@@ -1,6 +1,7 @@
 // Core variables and mixins
 @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/variables";
 // App specific variables
+@import "../../node_modules/sass-font-face/_font-face.scss";
 @import "_variables";
 
 @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins";

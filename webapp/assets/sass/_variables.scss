@@ -25,7 +25,7 @@ $gray-light-medium:             lighten($gray-base, 65.7%);
 
 // purple paradise
 $background-color-1: #1D2B64;
-$background-color-2: #F8CDDA;
+$background-color-2: #F8CDDA; 
 
 
 //== Scaffolding
@@ -49,9 +49,13 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Open Sans", Arial, sans-serif;
+$font-regular: 'Open Sans Regular';
+
+$font-family-sans-serif:  $font-regular, Arial, sans-serif;
 $font-family-base:        $font-family-sans-serif;
-$headings-font-weight:    700;
+$headings-font-weight:    500;
+
+@include font-face($font-regular, '../fonts/', 'OpenSans-Regular', 'open_sansregular');
 
 $navbar-height:                    80px;
 $navbar-margin-bottom:             0;

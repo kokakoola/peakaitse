@@ -13,5 +13,8 @@
     "grunt-contrib-watch": "*",
     "grunt-postcss": "^0.5.5",
     "grunt-sakugawa": "*"
+  },
+  "dependencies": {
+    "sass-font-face": "^1.0.1"
   }
 }
