@@ -77,7 +77,7 @@ public class EstfeedAccessor {
 	private String runPublishSubscribeRequest(String serviceName, String request, long transactionId, long timeout) throws Exception {
 		HttpClient h = new DefaultHttpClient();
 		HttpPost p = new HttpPost(serviceUrl);
-		p.setHeader("Content-Type", "text/xml;charset=UTF-8");
+		p.setHeader("Content-Type", "multipart/related; boundary=haVcUmJkSGCWyYLYoukNggGGKftWbnXc");
 		p.setEntity(new StringEntity(request));
 
 		log.debug("Running estfeed request "+serviceName);
