@@ -41,7 +41,7 @@
   <target name="war" depends="javac,webfix">
     <war destfile="build/mainfuse.war" webxml="meta/web.xml">
       <fileset dir="webapp/app" excludes="index.html"/>
-      <fileset dir="build/index.jsp" includes="*jsp"/>
+      <fileset dir="build" includes="*jsp"/>
       <classes dir="build/classes"/>
       <lib dir="lib" excludes="**/servlet-*"/>
     </war>
