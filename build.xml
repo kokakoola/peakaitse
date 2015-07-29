@@ -23,10 +23,25 @@
     <copy tofile="build/classes/resources/profile.properties" file="${profilename}"/>
   </target>
 
-  <target name="war" depends="javac">
+  <target name="webfix" depends="init">
+    <delete file="build/index.jsp"/>
+    <copy file="webapp/app/index.html" tofile="build/index.jsp"/>
+    <replace file="build/index.jsp">
+      <replacetoken><![CDATA[<!doctype html>]]></replacetoken>
+      <replacevalue><![CDATA[<%@ page pageEncoding="UTF-8"%>
+<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request); %>
+<!doctype html>]]></replacevalue>
+    </replace>
+    <replace file="build/index.jsp">
+      <replacetoken><![CDATA[<a href="view.html"]]></replacetoken>
+      <replacevalue><![CDATA[<a href="<%= request.getAttribute("url.idAuth") %>"]]></replacevalue>
+    </replace>
+  </target>
+
+  <target name="war" depends="javac,webfix">
     <war destfile="build/mainfuse.war" webxml="meta/web.xml">
-      <fileset dir="webapp/app"/>
-      <fileset dir="temphtml"/>
+      <fileset dir="webapp/app" excludes="index.html"/>
+      <fileset dir="build/index.jsp" includes="*jsp"/>
       <classes dir="build/classes"/>
       <lib dir="lib" excludes="**/servlet-*"/>
     </war>
@@ -42,11 +57,11 @@
     <antcall target="war"/>
   </target>
 
-  <target name="localdeploy" depends="javac">
+  <target name="localdeploy" depends="javac,webfix">
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/classes"/>
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/lib"/>
-    <copy todir="${webapps.dir}/mainfuse"><fileset dir="temphtml"/></copy>
-    <copy todir="${webapps.dir}/mainfuse"><fileset dir="webapp/app"/></copy>
+    <copy todir="${webapps.dir}/mainfuse"><fileset dir="temphtml"/><fileset dir="build" includes="*jsp"/></copy>
+    <copy todir="${webapps.dir}/mainfuse"><fileset dir="webapp/app" excludes="index.html"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/lib"><fileset dir="lib" excludes="**/servlet-api*"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/classes">
       <fileset dir="build/classes"/>
