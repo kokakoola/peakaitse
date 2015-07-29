@@ -52570,7 +52570,7 @@
     40,
     64
   ],
-  "recommendedFuseSize": 16,
+  "recommendedFuseSize": 3,
   "addressList": [
     {
         "code": "11951282",
@@ -52592,5 +52592,5 @@
   "idCode": "37406110224",
   "surname": "SELGE",
   "name": "MARGUS",
-  "calculatedMinFuseSize": 20
+  "calculatedMinFuseSize": 6
 }
