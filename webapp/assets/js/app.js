@@ -145,6 +145,14 @@
                     }
                 }
             },
+            tooltip: {
+                format: {
+                    value: function(value, ratio, id, index) {
+                        var format = d3.format('.1f');
+                        return format(value);
+                    }
+                }
+            },
             grid: {
                 y: {
                     show: true
