@@ -31,6 +31,7 @@ public class EstfeedPublishServlet extends BaseServlet {
 		log.debug("Received asynchronous response from Estfeed, size="+mimeResponse.length()+" bytes");
 //		if (log.isDebugEnabled())
 //			log.debug(mimeResponse.length() > 512 ? mimeResponse.substring(0, 512)+"...("+mimeResponse.length()+" bytes)" : mimeResponse);
+		resp.setContentType("multipart/related; boundary=haVcUmJkSGCWyYLYoukNggGGKftWbnXc");
 		String response = efa.handleMimeResponse(mimeResponse);
 		resp.getWriter().print(response);
 	}

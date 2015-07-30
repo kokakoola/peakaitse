@@ -6,9 +6,9 @@ Content-Type: text/xml; charset=UTF-8
 <ns2:acknowledgement xmlns:ns2="http://estfeed.ee/xsd/estfeed-1.0.xsd">
     <transactionId>{0}</transactionId>
     <service>
-        <code>GetElectricityUsagePoints</code>
+        <code>GetElectricityConsumptionHistory</code>
         <version>v1</version>
-        <kind>ElectricityUsagePoints</kind>
+        <kind>ElectricityConsumptionHistory</kind>
     </service>
 </ns2:acknowledgement>
 

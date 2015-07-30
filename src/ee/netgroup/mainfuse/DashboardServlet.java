@@ -54,8 +54,10 @@ public class DashboardServlet extends BaseServlet {
 
 		// Add personal EIC items
 		EstfeedAccessor efa = new EstfeedAccessor(su);
-		for(UsagePointDetails entry : efa.getUsagePointsList(idCode, "person"))
+		for(UsagePointDetails entry : efa.getUsagePointsList(idCode, "person")) {
 			addAddressEntry(ret, idCode, name + " " + surname, entry.address, entry.eic, "ERA", "eraisik");
+			efa.getUsageHistory(entry.eic);
+		}
 
 		// TODO: remove this fake Personal EIC, which is used for prototyping only
 		addAddressEntry(ret, idCode, name + " " + surname, "Suvaline tn 3-2", null, "ERA", "eraisik");

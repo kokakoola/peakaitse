@@ -1,9 +1,9 @@
-﻿--haVcUmJkSGCWyYLYoukNggGGKftWbnXc
+--haVcUmJkSGCWyYLYoukNggGGKftWbnXc
 Content-Type: text/xml; charset=UTF-8
 
 
 <estfeed:request xmlns:estfeed="http://estfeed.ee/xsd/estfeed-1.0.xsd">
- <transactionId>4765657</transactionId>
+ <transactionId>{0}</transactionId>
  <service>
   <code>GetElectricityConsumptionHistory</code>
   <version>v1</version>
@@ -13,12 +13,12 @@ Content-Type: text/xml; charset=UTF-8
 
 --haVcUmJkSGCWyYLYoukNggGGKftWbnXc
 Content-type: text/xml
-Estfeed-MandateObjectCode: 38ZEE-00423902-0
+Estfeed-MandateObjectCode: {1}
 Estfeed-MandateObjectKind: UsagePoint
 
 <GetElectricityConsumptionHistory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="GetElectricityConsumptionHistory.xsd">
   <LegalPerson>
- <LegalPersonEIC>38X-AVP-T6B400B1</LegalPersonEIC>
+ <LegalPersonEIC>{1}</LegalPersonEIC>
   </LegalPerson>
   <TimePeriod>2014-07-29T00:00Z/2015-07-29T00:00Z</TimePeriod>
 </GetElectricityConsumptionHistory>

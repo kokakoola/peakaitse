@@ -15,3 +15,4 @@ url.dashboard=https://xenon.netgroupdigital.com:8443/mainfuse/index.html
 
 estfeed.serviceUrl=http://radon.netgroupdigital.com:8080/EstfeedServlet
 estfeed.msTimeout.GetElectricityUsagePoints=30000
+estfeed.msTimeout.GetElectricityConsumptionHistory=30000
