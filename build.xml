@@ -25,22 +25,36 @@
 
   <target name="webfix" depends="init">
     <delete file="build/index.jsp"/>
+    <delete file="build/view.jsp"/>
+    <copy todir="build"><fileset dir="html"/></copy>
     <copy file="webapp/app/index.html" tofile="build/index.jsp"/>
-    <replace file="build/index.jsp">
-      <replacetoken><![CDATA[<!doctype html>]]></replacetoken>
-      <replacevalue><![CDATA[<%@ page pageEncoding="UTF-8"%>
+    <copy file="webapp/app/view.html" tofile="build/view.jsp"/>
+    <replace>
+      <fileset dir="build" includes="index.jsp view.jsp"/>
+        <replacefilter>
+          <replacetoken><![CDATA[<!doctype html>]]></replacetoken>
+          <replacevalue><![CDATA[<%@ page pageEncoding="UTF-8"%>
 <% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request); %>
 <!doctype html>]]></replacevalue>
-    </replace>
-    <replace file="build/index.jsp">
-      <replacetoken><![CDATA[<a href="view.html"]]></replacetoken>
-      <replacevalue><![CDATA[<a href="<%= request.getAttribute("url.idAuth") %>"]]></replacevalue>
+        </replacefilter>
+        <replacefilter>
+          <replacetoken><![CDATA[<a href="view.html"]]></replacetoken>
+          <replacevalue><![CDATA[<a href="<%= request.getAttribute("url.idAuth") %>"]]></replacevalue>
+        </replacefilter>
+        <replacefilter>
+          <replacetoken><![CDATA[<a href="./index.html"]]></replacetoken>
+          <replacevalue><![CDATA[<a href="<%= request.getAttribute("url.startPage") %>"]]></replacevalue>
+        </replacefilter>
+        <replacefilter>
+          <replacetoken><![CDATA[<a href="index.html"]]></replacetoken>
+          <replacevalue><![CDATA[<a href="<%= request.getAttribute("url.startPage") %>"]]></replacevalue>
+        </replacefilter>
     </replace>
   </target>
 
   <target name="war" depends="javac,webfix">
     <war destfile="build/mainfuse.war" webxml="meta/web.xml">
-      <fileset dir="webapp/app" excludes="index.html"/>
+      <fileset dir="webapp/app" excludes="index.html view.html"/>
       <fileset dir="build" includes="*jsp"/>
       <classes dir="build/classes"/>
       <lib dir="lib" excludes="**/servlet-*"/>
@@ -60,7 +74,7 @@
   <target name="localdeploy" depends="javac,webfix">
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/classes"/>
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/lib"/>
-    <copy todir="${webapps.dir}/mainfuse"><fileset dir="temphtml"/><fileset dir="build" includes="*jsp"/></copy>
+    <copy todir="${webapps.dir}/mainfuse"><fileset dir="html"/><fileset dir="build" includes="*jsp"/></copy>
     <copy todir="${webapps.dir}/mainfuse"><fileset dir="webapp/app" excludes="index.html"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/lib"><fileset dir="lib" excludes="**/servlet-api*"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/classes">

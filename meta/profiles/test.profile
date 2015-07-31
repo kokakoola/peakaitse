@@ -9,9 +9,9 @@ businessreg.serviceUrl=http://demo-ariregxml.rik.ee:81
 businessreg.username=TESTKASUTAJA2
 businessreg.password=testparool2
 
-url.startPage=https://xenon.netgroupdigital.com:8443/mainfuse/zzzindex.jsp
+url.startPage=https://xenon.netgroupdigital.com:8443/mainfuse
 url.idAuth=https://xenon.netgroupdigital.com:8444/mainfuse/idAuth
-url.dashboard=https://xenon.netgroupdigital.com:8443/mainfuse/index.html
+url.dashboard=https://xenon.netgroupdigital.com:8443/mainfuse/view.jsp
 
 estfeed.serviceUrl=http://radon.netgroupdigital.com:8080/EstfeedServlet
 estfeed.msTimeout.GetElectricityUsagePoints=30000
