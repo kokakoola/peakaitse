@@ -118,7 +118,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
         }
     }
     &.charted {
-            background: $gray;
+            background: steelblue;
         &:after {
             content: linear-gradient(-45deg, $background-color-1 10%, $background-color-2 90%);
             opacity: 0.7;

@@ -112,12 +112,12 @@
                             <!-- Single button -->
                             <div class="btn-group btn-group-justified">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-lg btn-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-lg btn-outline dropdown-toggle" id="js-firstAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Lepistiku 45-452 Tallinn 10234 EIC 34526463  <i class="glyphicon glyphicon-download"></i>  
                                     </button>
-                                    <ul class="dropdown-menu">
-                                      <li><a href="#">Teine aadress</a></li>
-                                      <li><a href="#">Kolmas aadress</a></li>
+                                    <ul class="dropdown-menu js-addressList">
+                                      <!-- <li><a href="#">Teine aadress</a></li>
+                                      <li><a href="#">Kolmas aadress</a></li> -->
                                     </ul>
                                 </div>
                             </div>
@@ -148,13 +148,7 @@
                               <button type="button" class="btn btn-lg btn-outline-inverse dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Sinu peakaitsme suurus  <i class="glyphicon glyphicon-download"></i> 
                               </button>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">10 A</a></li>
-                                <li><a href="#">16 A</a></li>
-                                <li><a href="#">20 A</a></li>
-                                <li><a href="#">25 A</a></li>
-                                <li><a href="#">32 A</a></li>
-                                <li><a href="#">40 A</a></li>
+                              <ul class="dropdown-menu js-fuseList">
                               </ul>
                             </div>
                         </div>
@@ -193,6 +187,10 @@
                 </div>
             </div>
         </footer>
+
+        <div id="loader" class="page-loader">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
 
         <script src="assets/js/vendor/jquery.min.js"></script>
         <script src="assets/js/app.js"></script>
