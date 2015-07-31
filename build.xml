@@ -34,7 +34,7 @@
         <replacefilter>
           <replacetoken><![CDATA[<!doctype html>]]></replacetoken>
           <replacevalue><![CDATA[<%@ page pageEncoding="UTF-8"%>
-<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request); %>
+<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request, null); %>
 <!doctype html>]]></replacevalue>
         </replacefilter>
         <replacefilter>

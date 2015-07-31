@@ -1,6 +1,7 @@
 package ee.netgroup.mainfuse;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,10 +29,12 @@ public class MidAuthServlet extends BaseServlet {
 					su.getProperty("mobileId.serviceUrl")
 			);
 			req.getSession(true).setAttribute("midRef", ref);
-			su.setRequestAttributes(req);
-			req.setAttribute("challengeId", ref.challengeId);
-			req.getRequestDispatcher("zzzmidpin.jsp").forward(req, resp);
 			log.debug("Started authentication for "+phoneNo);
+
+			HashMap<String, Object> rspObj = new HashMap<>();
+			rspObj.put("challengeId", ref.challengeId);
+			su.setRequestAttributes(req, rspObj);
+			resp.getWriter().write(new JSonSerializer().toJson(rspObj));
 		} catch(CommunicationException mie) {
 			su.showError(req, resp, mie.getCode());
 		} catch (Exception e) {

@@ -1,4 +1,4 @@
-﻿<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request); %>
+﻿<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request, null); %>
 <body>
 <a href="<%= request.getAttribute("url.idAuth") %>">Logi sisse id-kaardiga</a><br>
 <form method="post" action="midAuth">

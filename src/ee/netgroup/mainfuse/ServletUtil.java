@@ -2,6 +2,7 @@ package ee.netgroup.mainfuse;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.function.BiConsumer;
 
 import javax.servlet.ServletException;
@@ -22,13 +23,16 @@ public class ServletUtil {
 		}
 	}
 
-	public void setRequestAttributes(final HttpServletRequest req) {
+	public void setRequestAttributes(final HttpServletRequest req, final HashMap<String, Object> jsonObj) {
 		props.getProperties().forEach(new BiConsumer<Object, Object>() {
 			@Override
 			public void accept(Object t, Object u) {
 				String atrname = (String) t;
-				if (atrname.startsWith("url."))
+				if (atrname.startsWith("url.")) {
 					req.setAttribute(atrname, u);
+					if (jsonObj != null)
+						jsonObj.put(atrname.substring(4)+"Url", u);
+				}
 			}
 		});
 	}

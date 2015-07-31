@@ -37,6 +37,7 @@ public class MidAuthStatusServlet extends BaseServlet {
 
 		HashMap<String, Object> rspObj = new HashMap<>();
 		rspObj.put("status", statusCode);
+		su.setRequestAttributes(req, rspObj);
 		resp.getWriter().write(new JSonSerializer().toJson(rspObj));
 	}
 
