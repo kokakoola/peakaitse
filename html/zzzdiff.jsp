@@ -1,7 +1,5 @@
 <%@ page pageEncoding="UTF-8"%>
 <% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request); %>
-<%@ page pageEncoding="UTF-8"%>
-<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request); %>
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
@@ -26,22 +24,6 @@
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-    <script>
-        function midAuth() {
-        	r=new XMLHttpRequest();
-        	r.open("POST","midAuth",true);
-        	r.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        	r.onreadystatechange=function()
-        	  {
-        	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        	    {
-        	    alert('Saadetud');
-        	    }
-        	  }
-        	s = "phoneNo="+document.getElementById('phoneNumber').value;
-        	r.send(s);
-        }
-        </script>
     </head>
     <body>
         <!--[if lt IE 10]>
@@ -89,7 +71,7 @@
             <div class="container " id="js-toGo">
                 <div class="row">
                     <div class="col-xs-12 col-sm-10">
-                        <p>Sinu kodu peakaitse on nagu uks elektrivõrku. Peakaitse suurus määrab, kui võimsaid koduseadmeid saad üheaegselt kasutada. Külmik ja arvuti korraga vajavad väiksemat ��?ust” kui soojaveeboiler ja põrandaküte jne.
+                        <p>Sinu kodu peakaitse on nagu uks elektrivõrku. Peakaitse suurus määrab, kui võimsaid koduseadmeid saad üheaegselt kasutada. Külmik ja arvuti korraga vajavad väiksemat �?ust” kui soojaveeboiler ja põrandaküte jne.
                         </p>
                         <p>
                         On oluline, et elektritarbimise suurus ja peakaitse suurus oleksid omavahel tasakaalus. Majapidamiste peakaitsete suuruste järgi planeerib võrguettevõte alajaamade ja liinide tugevused. Kui vajalikust suuremaid peakaitsmid on palju, ehitatakse vajalikust tugevam, seega ka kallim võrk. Koduomanikule võib see tähendada võrguteenuse arvel suuremat ampritasu. Vali õige suurusega peakaitse – võidad sina, võidavad su naabrid, võidab keskkond!</p>
@@ -113,11 +95,11 @@
                         </p>
                     </div>
                     <div class="col-xs-12 col-sm-8 text-right mobile-id">
-                        <form action="midAuth" method="post" name="phonenoform" class="form-inline">
+                        <form action="" class="form-inline">
                             <div class="form-group">
                                 <label for="phoneNumber" class="text-inverse">Telefoninumber</label>
                                 <input type="text" class="form-control input-lg" id="phoneNumber"  placeholder="5055555">
-                                <button onclick="javascript: midAuth()" class="btn btn-outline-inverse btn-lg" id="js-codeSent">Logi sisse Mobiil ID-ga <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+                                <a class="btn btn-outline-inverse btn-lg" id="js-codeSent">Logi sisse Mobiil ID-ga <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
                             </div>
                         </form>
                     </div>
