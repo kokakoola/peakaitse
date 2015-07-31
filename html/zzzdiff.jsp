@@ -1,3 +1,5 @@
+<%@ page pageEncoding="UTF-8"%>
+<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request, null); %>
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
@@ -22,6 +24,67 @@
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+    <script>
+        function midAuth() {
+        	xhr=new XMLHttpRequest();
+        	xhr.open("POST","midAuth",true);
+        	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        	xhr.onreadystatechange=function()
+        	  {
+        	  if (xhr.readyState==4 && xhr.status==200)
+        	    {
+                      data = JSON.parse(xhr.responseText);
+                      document.getElementById('challengeId').innerHTML = data.challengeId;
+                      poll();
+        	    }
+        	  }
+        	s = "phoneNo="+document.getElementById('phoneNumber').value;
+        	xhr.send(s);
+        }
+        function poll() {
+        	xhr=new XMLHttpRequest();
+        	xhr.open("POST","midStatus",true);
+        	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        	xhr.onreadystatechange=function()
+        	  {
+        	  if (xhr.readyState==4 && xhr.status==200)
+        	    {
+                      data = JSON.parse(xhr.responseText);
+                        switch(data.status) {
+                          case 'OUTSTANDING_TRANSACTION':
+                            setTimeout(function() {poll();}, 2000);
+                            break;
+                          case 'USER_AUTHENTICATED':
+                            document.location.href=data.dashboardUrl;
+                            break;
+                          default:
+					// json.status võimalikud väärtused:
+					// NOT_VALID – toiming on lõppenud, kuid kasutaja poolt tekitatud signatuur ei ole kehtiv
+					// EXPIRED_TRANSACTION – tegevus on aegunud
+					// USER_CANCEL – kasutaja katkestas
+					// MID_NOT_READY - Mobiil-ID funktsionaalsus ei ole veel kasutatav, proovida mõne aja pärast uuesti
+					// PHONE_ABSENT – telefon ei ole levis
+					// SENDING_ERROR – Muu sõnumi saatmise viga (telefon ei suuda sõnumit vastu võtta, sõnumikeskus häiritud)
+					// SIM_ERROR – SIM rakenduse viga
+					// INTERNAL_ERROR – teenuse tehniline viga
+					// AUTH_NOT_STARTED - autentimist pole alustatud: saab juhtuda siis, kui keegi otse URL-ga sellele PIN-lehele
+					// SEE_SERVER_LOG - vea põhjust vaata serveri logifailist
+                            el = document.getElementById('errorMessage');
+                            el.innerHTML=data.status;
+                            alert("class:"+el.className);
+                            if (el.className.endsWith('hide')) {
+                              cl = el.className.substring(0, el.className.length - 4);
+                              alert("class:"+cl);
+                              el.className = cl;
+                            }
+                            break;
+			}
+        	    }
+        	  }
+        	s = "phoneNo="+document.getElementById('phoneNumber').value;
+        	xhr.send(s);
+        }
+        </script>
     </head>
     <body>
         <!--[if lt IE 10]>
@@ -57,7 +120,7 @@
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle header-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span></span> <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <li><a href="./index.html">Välju</a></li>
+                            <li><a href="<%= request.getAttribute("url.startPage") %>">Välju</a></li>
                           </ul>
                         </li>
                     </ul>
@@ -69,7 +132,7 @@
             <div class="container " id="js-toGo">
                 <div class="row">
                     <div class="col-xs-12 col-sm-10">
-                        <p>Sinu kodu peakaitse on nagu uks elektrivõrku. Peakaitse suurus määrab, kui võimsaid koduseadmeid saad üheaegselt kasutada. Külmik ja arvuti korraga vajavad väiksemat “ust” kui soojaveeboiler ja põrandaküte jne.
+                        <p>Sinu kodu peakaitse on nagu uks elektrivõrku. Peakaitse suurus määrab, kui võimsaid koduseadmeid saad üheaegselt kasutada. Külmik ja arvuti korraga vajavad väiksemat ��?ust” kui soojaveeboiler ja põrandaküte jne.
                         </p>
                         <p>
                         On oluline, et elektritarbimise suurus ja peakaitse suurus oleksid omavahel tasakaalus. Majapidamiste peakaitsete suuruste järgi planeerib võrguettevõte alajaamade ja liinide tugevused. Kui vajalikust suuremaid peakaitsmid on palju, ehitatakse vajalikust tugevam, seega ka kallim võrk. Koduomanikule võib see tähendada võrguteenuse arvel suuremat ampritasu. Vali õige suurusega peakaitse – võidad sina, võidavad su naabrid, võidab keskkond!</p>
@@ -97,7 +160,7 @@
                             <div class="form-group">
                                 <label for="phoneNumber" class="text-inverse">Telefoninumber</label>
                                 <input type="text" class="form-control input-lg" id="phoneNumber"  placeholder="5055555">
-                                <button onclick="javascript: midAuth()" class="btn btn-outline-inverse btn-lg" id="js-codeSent">Logi sisse Mobiil ID-ga <i class="glyphicon glyphicon-circle-arrow-right"></i></button>
+                                <button onclick="javascript: midAuth()" class="btn btn-outline-inverse btn-lg" id="js-codeSent">Logi sisse Mobiil ID-ga <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
                             </div>
                         </form>
                     </div>
@@ -131,68 +194,6 @@
                 </div>
             </div>
         </footer>
-
-
-        <div id="loader" class="page-loader">
-            <i class="fa fa-spinner fa-spin"></i>
-        </div>
-
-    <script>
-    function midAuth() {
-      xhr=new XMLHttpRequest();
-      xhr.open("POST","midAuth",true);
-      xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-      xhr.onreadystatechange=function() {
-        if (xhr.readyState==4 && xhr.status==200) {
-          data = JSON.parse(xhr.responseText);
-          document.getElementById('challengeId').innerHTML = data.challengeId;
-          midPoll();
-        }
-      }
-      s = "phoneNo="+document.getElementById('phoneNumber').value;
-      xhr.send(s);
-    }
-
-    function midPoll() {
-      xhr=new XMLHttpRequest();
-      xhr.open("POST","midStatus",true);
-      xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-      xhr.onreadystatechange=function() {
-        if (xhr.readyState==4 && xhr.status==200) {
-          data = JSON.parse(xhr.responseText);
-          switch(data.status) {
-            case 'OUTSTANDING_TRANSACTION':
-              setTimeout(function() {midPoll();}, 2000);
-              break;
-            case 'USER_AUTHENTICATED':
-              document.location.href=data.dashboardUrl;
-              break;
-            default:
-					// data.status võimalikud väärtused:
-					// NOT_VALID – toiming on lõppenud, kuid kasutaja poolt tekitatud signatuur ei ole kehtiv
-					// EXPIRED_TRANSACTION – tegevus on aegunud
-					// USER_CANCEL – kasutaja katkestas
-					// MID_NOT_READY - Mobiil-ID funktsionaalsus ei ole veel kasutatav, proovida mõne aja pärast uuesti
-					// PHONE_ABSENT – telefon ei ole levis
-					// SENDING_ERROR – Muu sõnumi saatmise viga (telefon ei suuda sõnumit vastu võtta, sõnumikeskus häiritud)
-					// SIM_ERROR – SIM rakenduse viga
-					// INTERNAL_ERROR – teenuse tehniline viga
-					// AUTH_NOT_STARTED - autentimist pole alustatud: saab juhtuda siis, kui keegi otse URL-ga sellele PIN-lehele
-					// SEE_SERVER_LOG - vea põhjust vaata serveri logifailist
-              el = document.getElementById('errorMessage');
-              el.innerHTML=data.status;
-              if (el.className.endsWith('hide')) {
-                cl = el.className.substring(0, el.className.length - 4);
-                el.className = cl;
-              }
-              break;
-          }
-        }
-      }
-      s = "phoneNo="+document.getElementById('phoneNumber').value;
-      xhr.send(s);
-    }
-    </script>
 
         <script src="assets/js/vendor/jquery.min.js"></script>
         <script src="assets/js/app.js"></script>

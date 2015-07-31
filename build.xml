@@ -34,7 +34,7 @@
         <replacefilter>
           <replacetoken><![CDATA[<!doctype html>]]></replacetoken>
           <replacevalue><![CDATA[<%@ page pageEncoding="UTF-8"%>
-<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request); %>
+<% new ee.netgroup.mainfuse.ServletUtil().setRequestAttributes(request, null); %>
 <!doctype html>]]></replacevalue>
         </replacefilter>
         <replacefilter>
@@ -75,7 +75,7 @@
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/classes"/>
     <mkdir dir="${webapps.dir}/mainfuse/WEB-INF/lib"/>
     <copy todir="${webapps.dir}/mainfuse"><fileset dir="html"/><fileset dir="build" includes="*jsp"/></copy>
-    <copy todir="${webapps.dir}/mainfuse"><fileset dir="webapp/app" excludes="index.html"/></copy>
+    <copy todir="${webapps.dir}/mainfuse"><fileset dir="webapp/app" excludes="index.html view.html"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/lib"><fileset dir="lib" excludes="**/servlet-api*"/></copy>
     <copy todir="${webapps.dir}/mainfuse/WEB-INF/classes">
       <fileset dir="build/classes"/>

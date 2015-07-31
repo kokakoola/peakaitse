@@ -67,6 +67,7 @@ public class DashboardServlet extends BaseServlet {
 		}
 
 		String rspStr = new JSonSerializer().toJson(rspObj);
+		su.setRequestAttributes(req, rspObj);
 		resp.getWriter().write(rspStr);
 		log.debug("Finished serving data-request");
 	}

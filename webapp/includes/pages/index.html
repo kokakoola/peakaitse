@@ -26,21 +26,21 @@
                 </p>
             </div>
             <div class="col-xs-12 col-sm-8 text-right mobile-id">
-                <form action="" class="form-inline">
+                <form action="midAuth" method="post" name="phonenoform" class="form-inline">
                     <div class="form-group">
                         <label for="phoneNumber" class="text-inverse">Telefoninumber</label>
                         <input type="text" class="form-control input-lg" id="phoneNumber"  placeholder="5055555">
-                        <a class="btn btn-outline-inverse btn-lg" id="js-codeSent">Logi sisse Mobiil ID-ga <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+                        <button onclick="javascript: midAuth()" class="btn btn-outline-inverse btn-lg" id="js-codeSent">Logi sisse Mobiil ID-ga <i class="glyphicon glyphicon-circle-arrow-right"></i></button>
                     </div>
                 </form>
             </div>
             <div class="col-xs-12 col-sm-4 id-card">
                 <button onclick="window.location.href='view.html'" class="btn btn-outline-inverse btn-lg" id="js-goOnMobileID">Logi sisse ID-kaardiga <i class="glyphicon glyphicon-circle-arrow-right"></i></button>
                 <p class="text-inverse success hide" id="js-comeOnMobileID">
-                    Sinu telefonile on saadetud kinnituskood <strong>2375</strong>
+                    Sinu telefonile on saadetud kinnituskood <div id="challengeId">0000</div>
                     <a href="" class="btn btn-link right">Katkesta</a>
                 </p>
-                <p class="text-inverse error hide">
+                <p class="text-inverse error hide" id="errorMessage">
                     Sul pole kehtivat mobiil-ID lepingut. 
                     <a href="" class="btn btn-link right">Katkesta</a>
                 </p>
