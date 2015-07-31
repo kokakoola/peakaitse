@@ -3,9 +3,7 @@ package ee.netgroup.mainfuse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
+import java.util.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -16,6 +14,7 @@ import org.apache.log4j.Logger;
 
 public class EstfeedAccessor {
 
+	public static final String EIC_SEP = "/";
 	private static final Logger log = Logger.getLogger(EstfeedAccessor.class);
 	private static String serviceUrl;
 	private static String usagePtReqTpt;
@@ -62,14 +61,15 @@ public class EstfeedAccessor {
 	 * @param identityCode id code or company registration code
 	 * @param identityType person/company
 	 */
-	public Collection<UsagePointDetails> getUsagePointsList(String identityCode, String identityType) throws Exception {
-		ArrayList<UsagePointDetails> ret = new ArrayList<>();
+	public CustomerDetails getCustomerData(String identityCode, String identityType) throws Exception {
+		CustomerDetails ret = new CustomerDetails();
 		Object[] params = {++transactionCounter, identityCode, identityType};
 		String response;
 		try {
 			response = runPublishSubscribeRequest(usagePtReqTpt, usagePtRespTpt, params, usagePtTimeout);
 			if (response == null)
 				return ret;
+			else logResponse("POINTS ASYNC RESPONSE", response);
 		}
 		catch(CommunicationException ce) {
 			log.error("", ce);
@@ -77,6 +77,7 @@ public class EstfeedAccessor {
 		}
 
 
+		ret.customerEic = SoapAccessor.getResponseField(response, "EIC");
 		Collection<String> responseItems = SoapAccessor.getImmediateSubitems(response, "LegalPerson");
 		if (responseItems != null) for(String subitem : responseItems) {
 			if (SoapAccessor.getResponseField(subitem, "UsagePointLocation") == null)
@@ -84,19 +85,31 @@ public class EstfeedAccessor {
 			UsagePointDetails upd = new UsagePointDetails();
 			upd.eic = SoapAccessor.getResponseField(subitem, "EIC");
 			upd.address = SoapAccessor.getResponseField(subitem, "StreetDetail");
-			ret.add(upd);
+			ret.usagePoints.add(upd);
 		}
-		log.debug("Received "+ret.size()+" EIC-s for "+identityCode);
+		log.debug("Received "+ret.usagePoints.size()+" EIC-s for "+identityCode);
 		return ret;
 	}
 
-	public String getUsageHistory(String eic) throws Exception {
-		Object[] params = {++transactionCounter, eic};
+	public Collection<ReadingDetails> getUsageHistory(String customerEic, String usagePointEic) throws Exception {
+		Object[] params = {++transactionCounter, customerEic, usagePointEic};
 		try {
 			String response = runPublishSubscribeRequest(usageHistReqTpt, usageHistRespTpt, params, usageHistTimeout);
 			if (response != null)
 				logResponse("HISTORY ASYNC RESPONSE", response);
-			return response;
+			Collection<String> readings = SoapAccessor.getImmediateSubitems(response, "MeterReading");
+			ArrayList<ReadingDetails> ret = new ArrayList<ReadingDetails>();
+			for(String reading : readings) try {
+				ReadingDetails rd = new ReadingDetails();
+				rd.period = SoapAccessor.getResponseField(reading, "TimePeriod");
+				if (rd.period == null) continue;
+				rd.value = Float.parseFloat(SoapAccessor.getResponseField(reading, "Value"));
+				ret.add(rd);
+			}
+			catch(Exception x) {
+				log.warn("Ignoring reading "+cut(reading, 128));
+			}
+			return ret;
 		}
 		catch(CommunicationException ce) {
 			log.error("", ce);
@@ -144,7 +157,7 @@ public class EstfeedAccessor {
 		String response = sb.toString();
 
 		if (response.indexOf("<estfeed:acknowledgement") < 0)
-			throw new CommunicationException(CommunicationException.ERR_SERVER, cut128(SoapAccessor.getResponseField(response, "detail")));
+			throw new CommunicationException(CommunicationException.ERR_SERVER, cut(SoapAccessor.getResponseField(response, "detail"), 128));
 
 		try {
 			TransactionDetails td = new TransactionDetails();
@@ -164,21 +177,17 @@ public class EstfeedAccessor {
 		}
 	}
 
-	private String cut128(String text) {
+	private String cut(String text, int maxsz) {
 		int len = text.length();
-		if (len > 128)
-			text = text.substring(0, 64) + "..." + text.substring(len - 64);
-		if (text.indexOf('\n') >= 0)
-			text = text.substring(0, text.indexOf('\n'));
+		if (len > maxsz)
+			text = text.substring(0, maxsz/2) + "..." + text.substring(len - maxsz/2);
+		text = text.replaceAll("\n", "/").replaceAll("\r", "/");
 		return text;
 	}
 
 	private void logResponse(String boundary, String response) {
-		int rlen = response.length();
-		if (rlen > 1000)
-			response = response.substring(0, 500) + "..." + response.substring(rlen - 500);
 		response = "\n==================== " + boundary + "====================\n" +
-			response + "\n==================== END " + boundary + "====================";
+			cut(response, 1000) + "\n==================== END " + boundary + "====================";
 		log.debug(response);
 	}
 

@@ -13,7 +13,7 @@ Content-Type: text/xml; charset=UTF-8
 
 --haVcUmJkSGCWyYLYoukNggGGKftWbnXc
 Content-type: text/xml
-Estfeed-MandateObjectCode: {1}
+Estfeed-MandateObjectCode: {2}
 Estfeed-MandateObjectKind: UsagePoint
 
 <GetElectricityConsumptionHistory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="GetElectricityConsumptionHistory.xsd">
