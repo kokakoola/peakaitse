@@ -101,13 +101,12 @@
             storeData = data;
 
             $('.header-toggle span:first-child').text(data.name + ' ' + data.surname);
-            $('#js-firstAddress').text(data.address + ', eic: ' + eic);
             $.each(data.addressList, function (i, item) {
-                $('.js-addressList').append('<li><a href="#" id="' + item.eic + '"' + (data.address==item.address ? 'selected' : '') + '>' + item.address + ', eic: ' + item.eic + '</a></li>');
+                $('.js-addressList').append('<option value="' + item.eic + '"' + (data.address==item.address ? 'selected' : '') + '>' + item.address + ', eic: ' + item.eic + '</option>');
             });
 
             $.each(data.fuseValues, function (i, item) {
-                $('.js-fuseList').append('<li><a href="#" id="'+ item +'">' + item + '</a></li>');
+                $('.js-fuseList').append('<option value="'+ item +'">' + item + 'A</option>');
             });
         })
         .fail(function(jqXHR, status){
@@ -302,15 +301,15 @@
 
         initChart(storeData, '#chart', unit);
 
-        // if (unit == 'A1' || unit == 'A3') {
-        //     var $xAxisArray = [currentUsableFuseValue, storeData.recommendedFuseSize, storeData.calculatedMinFuseSize];
-        //     var maxValue = getMaxOfArray($xAxisArray);
-        //     chart.axis.range({max: {y: maxValue}, min: {y: 2}});
-        //
-        //     chart.ygrids.add([
-        //         {value: currentUsableFuseValue, text: 'Kasutatav peakaitsme suurus: ' + currentUsableFuseValue + 'A'}
-        //     ]);
-        // }
+        if (unit == 'A1' || unit == 'A3') {
+            var $xAxisArray = [currentUsableFuseValue, storeData.recommendedFuseSize, storeData.calculatedMinFuseSize];
+            var maxValue = getMaxOfArray($xAxisArray);
+            chart.axis.range({max: {y: maxValue}, min: {y: 2}});
+        
+            chart.ygrids.add([
+                {value: currentUsableFuseValue, text: 'Kasutatav peakaitsme suurus: ' + currentUsableFuseValue + 'A'}
+            ]);
+        }
 
         changeChartButtonState($this, unit);
     });
@@ -502,7 +501,7 @@
             ]);
         } else {
             chart.ygrids.add([
-                {value: seriesCallback.recommendedFuseSize, text: 'Soovitatav peakaitse: ' + seriesCallback.recommendedFuseSize + 'A <strong> foo </strong>'},
+                {value: seriesCallback.recommendedFuseSize, text: 'Soovitatav peakaitse: ' + seriesCallback.recommendedFuseSize + 'A'},
                 {value: seriesCallback.calculatedMinFuseSize, text: 'Peakaitse tarbimise ühtlustamisel: ' + seriesCallback.calculatedMinFuseSize + 'A'}
             ]);
         }
@@ -571,6 +570,7 @@
 
     function changeChartButtonState($button, unit) {
         var $activeButton;
+        console.log(activeButton)
         $.each($button, function (i, item) {
             if ($(item).data('unit') == unit) {
                 $activeButton = $(item);

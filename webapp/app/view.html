@@ -109,20 +109,23 @@
                         </div>
                     </div> -->
                         <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <select class="form-control js-addressList"></select>
+                            </div>
                             <!-- Single button -->
-                            <div class="btn-group btn-group-justified">
+                            <!-- <div class="btn-group btn-group-justified">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-lg btn-outline dropdown-toggle" id="js-firstAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Lepistiku 45-452 Tallinn 10234 EIC 34526463  <i class="glyphicon glyphicon-download"></i>  
                                     </button>
                                     <ul class="dropdown-menu js-addressList">
-                                      <!-- <li><a href="#">Teine aadress</a></li>
-                                      <li><a href="#">Kolmas aadress</a></li> -->
+                                      <li><a href="#">Teine aadress</a></li>
+                                      <li><a href="#">Kolmas aadress</a></li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
+                            </div> -->
+                    </div>
+                    <div class="col-sm-12">
                         <p>Allolevalt graafikult näete elektritarbimise koguseid ja tarbimisele vastavaid voolutugevusi peakaitsmes. Kõige madalamat tarbimiskogust ja voolu ning tiputarbimise kilovatt-tunde ja voolu amprites. Kui Teie kasutatavad voolutugevused jäävad alla peakaitsme nimivoolu, soovitame uurida elektriala spetsialistidelt peakaitsme vähendamist graafikul näidatud soovituslikule tasemele. </p>
                     </div>
                 </div>
@@ -132,18 +135,21 @@
         <section class="jumbotron charted animated bounceInRight first">
             <div class="container">
                 <div class="row actionbar animated bounceInRight second">
-                    <div class="col-xs-12 col-sm-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
                         <button class="btn btn-block btn-outline-inverse btn-lg js-changeUnit active" data-unit="kWh"><i class="glyphicon glyphicon-ok-sign"></i>Tarbimine kWh</button>
                     </div>
-                    <div class="col-xs-12 col-sm-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
                         <button class="btn btn-block btn-outline-inverse btn-lg js-changeUnit" data-unit="A1"> <i class="glyphicon glyphicon-one-fine-empty-dot"></i>1-faasiline peakaitse</button>
                     </div>
-                    <div class="col-xs-12 col-sm-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
                     <button class="btn btn-block btn-outline-inverse btn-lg js-changeUnit" data-unit="A3"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>3-faasiline peakaitse</button>
                     </div>
-                    <div class="col-xs-12 col-sm-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <select class="form-control inverse js-fuseList"></select>
+                        </div>
                         <!-- Single button -->
-                        <div class="btn-group btn-group-justified">
+        <!--                 <div class="btn-group btn-group-justified">
                             <div class="btn-group">
                               <button type="button" class="btn btn-lg btn-outline-inverse dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Sinu peakaitsme suurus  <i class="glyphicon glyphicon-download"></i> 
@@ -151,7 +157,7 @@
                               <ul class="dropdown-menu js-fuseList">
                               </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -160,13 +166,25 @@
                         <div id="chart"></div>
                     </div>
                 </div>
-                <div class="row actionbar animated bounceInRight second">
-                    <div class="col-xs-12 text-center">
+                <div class="row actionbar animated bounceInRight second under-chart">
+                    <div class="col-xs-12">
                         <span class="text-inverse">Vaata ajavahemikku:</span>
                             <button class="btn btn-outline-inverse js-unZoom"><i class="glyphicon glyphicon-ok-sign"></i>Viimane aasta</button>
                             <button class="btn btn-outline-inverse js-month"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>Viimane kuu</button>
                             <button class="btn btn-outline-inverse js-week"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>Viimane nädal</button>
                             <button class="btn btn-outline-inverse js-day"><i class="glyphicon glyphicon-one-fine-empty-dot"></i>Viimane päev</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3>Peakaitse tarbimise ühtlustamisel: </h3>
+                        <p>
+                            Soovitus põhineb sellel, et oleme arvutanud suure hulga tarbijate keskmise ja Teie tarbimise ühtluse teguri. Kui Teie tegur on väiksem ehk tarbimiskäitumine on tavalisest ebaühtlasem, siis tarbimise ühtlustamisel on võimalik peakaitset vähendada veelgi.  
+                        </p>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3>Soovitatav peakaitse: </h3>
+                        <p>
+                            Soovitus põhineb sellel, et oleme ligikaudselt arvutanud vaadeldaval perioodil Teie peakaitset läbinud suurima voolu ja leidnud sellele voolule paraja nominaalse peakaitsme suuruse. 
+                        </p>
                     </div>
                 </div>
             </div>
@@ -176,13 +194,13 @@
             <div class="container">
                 <div class="row partner animated bounceInRight first">
                     <div class="col-sm-4">
-                        <a href="./" class="estfeed"></a>
+                        <a href="http://estfeed.ee/" target="_blank" class="estfeed" alt="estfeed"></a>
                     </div>
                     <div class="col-sm-4">
-                        <a href="./" class="elektrilevi"></a>
+                        <a href="https://www.elektrilevi.ee/et/avaleht" target="_blank" class="elektrilevi" alt="elektrilevi"></a>
                     </div>
                     <div class="col-sm-4">
-                        <a href="./" class="nwg"></a>
+                        <a href="http://eeagrants.org/" target="_blank" class="nwg" alt="norway grants"></a>
                     </div>
                 </div>
             </div>

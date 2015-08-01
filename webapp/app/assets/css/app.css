@@ -3148,7 +3148,7 @@ output {
   background-color: rgba(255, 255, 255, 0.6);
   background-image: none;
   border: 1px solid #fff;
-  border-radius: 4px;
+  border-radius: 15px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -9752,6 +9752,59 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   color: inherit;
 }
 
+select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-border-radius: 25px;
+  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+  -moz-border-radius: 25px;
+  /* Firefox 1-3.6 */
+  border-radius: 25px;
+  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+  height: 46px;
+  border-color: #a8a8a8;
+  background: white url("../img/glyphicons-201-download-blue.png") no-repeat 97% center;
+  background-size: auto 47%;
+  font-size: 16px;
+  padding: 10px 20px;
+  text-center: !important;
+  -webkit-transition: background 1s;
+  transition: background 1s;
+}
+@media (min-width: 1200px) {
+  select.form-control {
+    font-size: 18px;
+  }
+}
+select.form-control:active, select.form-control:focus, select.form-control:hover {
+  color: #1D2B64;
+  text-shadow: none;
+  background-color: #FFF;
+  border-color: #1D2B64;
+}
+select.form-control.inverse {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0) url("../img/glyphicons-201-download-white.png") no-repeat 90% center;
+  background-size: auto 47%;
+  color: #fff;
+  border-color: #fff;
+  -webkit-transition: background 1s;
+  transition: background 1s;
+}
+select.form-control.inverse:active, select.form-control.inverse:focus, select.form-control.inverse:hover {
+  color: #1D2B64;
+  background-image: url("../img/glyphicons-201-download-blue.png");
+  text-shadow: none;
+  background-color: #FFF;
+  border-color: #F8CDDA;
+  outline: none !important;
+}
+
+select ::-ms-expand {
+  display: none;
+}
+
 .jumbotron {
   position: relative;
   -webkit-font-smoothing: antialiased;
@@ -9788,6 +9841,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 .jumbotron.charted {
   background: steelblue;
+  color: #fff;
 }
 .jumbotron.charted:after {
   content: linear-gradient(-45deg, #1D2B64 10%, #F8CDDA 90%);
@@ -9799,6 +9853,9 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   bottom: 0;
   z-index: -1;
   height: 100%;
+}
+.jumbotron.charted p {
+  font-size: 16px;
 }
 .jumbotron p {
   font-weight: 400;
@@ -9837,6 +9894,12 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 .btn-lg, .btn-group-lg > .btn {
   border-radius: 25px;
   padding: 10px 18px;
+  font-size: 16px;
+}
+@media (min-width: 1200px) {
+  .btn-lg, .btn-group-lg > .btn {
+    font-size: 18px;
+  }
 }
 
 .comeTogether .animated {
@@ -9861,9 +9924,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   margin-right: 10px;
 }
 
-.btn .glyphicon {
+.charted .btn .glyphicon {
   padding-right: 5px;
-  padding-left: 5px;
 }
 
 .glyphicon.glyphicon-one-fine-full-dot {
@@ -9890,10 +9952,27 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   margin-top: -1.8em;
   margin-bottom: -4px;
   overflow: hidden;
-  width: 31px;
 }
 .glyphicon.glyphicon-ok-sign:before {
   font-size: 1.1em;
+}
+
+.under-chart .col-xs-12 {
+  text-align: left;
+}
+@media (min-width: 992px) {
+  .under-chart .col-xs-12 {
+    text-align: center;
+  }
+}
+.under-chart .col-xs-12 .btn {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+@media (min-width: 992px) {
+  .under-chart .col-xs-12 {
+    margin-bottom: 0;
+  }
 }
 
 footer {
